@@ -1,0 +1,11 @@
+# Dependencies for PlanScope Scrapers
+
+# Stage 1 - Selenium scraper
+selenium>=4.0.0
+
+# Stage 2 & 3 - API fetching and AI analysis
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+openai>=1.0.0
+python-dotenv>=1.0.0
+

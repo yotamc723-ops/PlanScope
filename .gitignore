@@ -1,0 +1,23 @@
+# ============================================
+# Environment Variables and Secrets
+# ============================================
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# API Keys and Credentials
+keys.txt
+secrets.txt
+credentials.json
+service-account.json
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Firebase Secrets
+.firebaserc.local
+.runtimeconfig.json

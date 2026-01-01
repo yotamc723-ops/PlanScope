@@ -1,0 +1,624 @@
+2025-12-30 20:49:56,599 - INFO - Loaded 0 already-processed permits from processed_permits.txt
+2025-12-30 20:50:03,348 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:50:09,099 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:50:18,196 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:50:25,660 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:58:07,808 - INFO - Loaded 0 already-processed permits from processed_permits.txt
+2025-12-30 20:58:15,688 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:58:27,819 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:58:38,650 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:58:49,438 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:58:58,698 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:59:06,972 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:59:14,454 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:59:27,480 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:59:27,486 - INFO - Saved permit 20250029 to opportunities.json
+2025-12-30 20:59:44,625 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 20:59:55,082 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:00:06,118 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:00:16,887 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:00:25,325 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:00:41,257 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:00:52,171 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:01:03,010 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:01:13,039 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:01:25,880 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:01:37,074 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:01:49,207 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:02:03,322 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:02:18,746 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:02:18,763 - INFO - Saved permit 20250063 to opportunities.json
+2025-12-30 21:02:27,943 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:02:44,849 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:02:44,866 - INFO - Saved permit 20250069 to opportunities.json
+2025-12-30 21:03:02,586 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:03:02,612 - INFO - Saved permit 20250079 to opportunities.json
+2025-12-30 21:03:17,821 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:03:33,527 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:03:57,036 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:03:57,068 - INFO - Saved permit 20250091 to opportunities.json
+2025-12-30 21:04:08,854 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:04:27,555 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:04:27,559 - INFO - Saved permit 20250098 to opportunities.json
+2025-12-30 21:04:37,941 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:04:46,627 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:05:09,088 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:05:09,153 - INFO - Saved permit 20250113 to opportunities.json
+2025-12-30 21:05:27,731 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:05:27,751 - INFO - Saved permit 20250114 to opportunities.json
+2025-12-30 21:05:37,698 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:05:56,613 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:05:56,619 - INFO - Saved permit 20250121 to opportunities.json
+2025-12-30 21:06:11,199 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:06:11,206 - INFO - Saved permit 20250123 to opportunities.json
+2025-12-30 21:06:37,592 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:06:37,598 - INFO - Saved permit 20250124 to opportunities.json
+2025-12-30 21:06:47,757 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:06:47,765 - INFO - Saved permit 20250125 to opportunities.json
+2025-12-30 21:06:50,751 - WARNING - Permit 20250126: div#mahut not found in response
+2025-12-30 21:06:53,719 - WARNING - Permit 20250127: div#mahut not found in response
+2025-12-30 21:06:56,749 - WARNING - Permit 20250128: div#mahut not found in response
+2025-12-30 21:06:59,705 - WARNING - Permit 20250134: div#mahut not found in response
+2025-12-30 21:07:02,679 - WARNING - Permit 20250135: div#mahut not found in response
+2025-12-30 21:07:05,656 - WARNING - Permit 20250136: div#mahut not found in response
+2025-12-30 21:07:08,652 - WARNING - Permit 20250137: div#mahut not found in response
+2025-12-30 21:07:12,027 - WARNING - Permit 20250141: div#mahut not found in response
+2025-12-30 21:07:15,373 - WARNING - Permit 20250144: div#mahut not found in response
+2025-12-30 21:19:17,919 - INFO - Loaded 48 already-processed permits from processed_permits.txt
+2025-12-30 21:19:24,792 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:19:36,265 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:19:44,620 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:19:58,787 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:19:58,791 - INFO - Saved permit 20250152 to opportunities.json
+2025-12-30 21:20:09,474 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:20:26,753 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:20:26,807 - INFO - Saved permit 20250160 to opportunities.json
+2025-12-30 21:20:40,660 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:20:40,703 - INFO - Saved permit 20250165 to opportunities.json
+2025-12-30 21:20:57,126 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:20:57,143 - INFO - Saved permit 20250171 to opportunities.json
+2025-12-30 21:21:09,066 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:21:09,137 - INFO - Saved permit 20250172 to opportunities.json
+2025-12-30 21:21:19,023 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:21:48,063 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:21:59,848 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:21:59,870 - INFO - Saved permit 20250175 to opportunities.json
+2025-12-30 21:22:08,632 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:22:21,339 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:22:32,253 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:22:41,483 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:22:50,271 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:23:05,284 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:23:05,321 - INFO - Saved permit 20250183 to opportunities.json
+2025-12-30 21:23:19,672 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:23:27,797 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:23:58,481 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:23:58,519 - INFO - Saved permit 20250191 to opportunities.json
+2025-12-30 21:24:15,230 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:24:15,239 - INFO - Saved permit 20250192 to opportunities.json
+2025-12-30 21:24:28,492 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:24:28,511 - INFO - Saved permit 20250194 to opportunities.json
+2025-12-30 21:24:35,638 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:24:50,261 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:24:50,285 - INFO - Saved permit 20250196 to opportunities.json
+2025-12-30 21:25:02,489 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:25:02,516 - INFO - Saved permit 20250197 to opportunities.json
+2025-12-30 21:25:14,246 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:25:25,277 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:25:33,165 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:25:46,284 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:25:46,312 - INFO - Saved permit 20250217 to opportunities.json
+2025-12-30 21:26:17,503 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:26:27,275 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:26:35,170 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:26:43,508 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:26:52,103 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:27:02,203 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:27:10,487 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:27:27,294 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:27:27,318 - INFO - Saved permit 20250241 to opportunities.json
+2025-12-30 21:27:39,706 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:27:39,739 - INFO - Saved permit 20250242 to opportunities.json
+2025-12-30 21:27:47,839 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:28:18,125 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:28:35,720 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:28:35,749 - INFO - Saved permit 20250254 to opportunities.json
+2025-12-30 21:28:46,378 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:28:56,332 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:29:05,171 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:29:19,331 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:29:31,758 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:29:46,760 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:29:46,769 - INFO - Saved permit 20250263 to opportunities.json
+2025-12-30 21:29:59,373 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:30:03,782 - WARNING - Permit 20250270: div#mahut not found in response
+2025-12-30 21:30:06,416 - WARNING - Permit 20250277: div#mahut not found in response
+2025-12-30 21:30:10,265 - WARNING - Permit 20250279: div#mahut not found in response
+2025-12-30 21:30:15,537 - WARNING - Permit 20250281: div#mahut not found in response
+2025-12-30 21:30:19,141 - WARNING - Permit 20250283: div#mahut not found in response
+2025-12-30 21:30:21,622 - WARNING - Permit 20250286: div#mahut not found in response
+2025-12-30 21:30:25,830 - WARNING - Permit 20250289: div#mahut not found in response
+2025-12-30 21:30:30,559 - WARNING - Permit 20250290: div#mahut not found in response
+2025-12-30 21:30:33,280 - WARNING - Permit 20250291: div#mahut not found in response
+2025-12-30 21:30:35,914 - WARNING - Permit 20250293: div#mahut not found in response
+2025-12-30 21:30:40,839 - WARNING - Permit 20250294: div#mahut not found in response
+2025-12-30 21:30:43,826 - WARNING - Permit 20250296: div#mahut not found in response
+2025-12-30 21:30:48,240 - WARNING - Permit 20250299: div#mahut not found in response
+2025-12-30 21:30:51,342 - WARNING - Permit 20250302: div#mahut not found in response
+2025-12-30 21:30:56,233 - WARNING - Permit 20250303: div#mahut not found in response
+2025-12-30 21:31:01,195 - WARNING - Permit 20250306: div#mahut not found in response
+2025-12-30 21:31:04,633 - WARNING - Permit 20250309: div#mahut not found in response
+2025-12-30 21:31:07,270 - WARNING - Permit 20250311: div#mahut not found in response
+2025-12-30 21:31:12,592 - WARNING - Permit 20250313: div#mahut not found in response
+2025-12-30 21:31:17,656 - WARNING - Permit 20250323: div#mahut not found in response
+2025-12-30 21:31:21,488 - WARNING - Permit 20250325: div#mahut not found in response
+2025-12-30 21:31:24,872 - WARNING - Permit 20250343: div#mahut not found in response
+2025-12-30 21:31:28,195 - WARNING - Permit 20250344: div#mahut not found in response
+2025-12-30 21:31:32,413 - WARNING - Permit 20250345: div#mahut not found in response
+2025-12-30 21:31:35,328 - WARNING - Permit 20250347: div#mahut not found in response
+2025-12-30 21:31:38,834 - WARNING - Permit 20250349: div#mahut not found in response
+2025-12-30 21:31:42,790 - WARNING - Permit 20250350: div#mahut not found in response
+2025-12-30 21:31:46,394 - WARNING - Permit 20250351: div#mahut not found in response
+2025-12-30 21:31:51,639 - WARNING - Permit 20250352: div#mahut not found in response
+2025-12-30 21:31:55,233 - WARNING - Permit 20250356: div#mahut not found in response
+2025-12-30 21:31:58,929 - WARNING - Permit 20250361: div#mahut not found in response
+2025-12-30 21:32:02,893 - WARNING - Permit 20250363: div#mahut not found in response
+2025-12-30 21:32:05,918 - WARNING - Permit 20250366: div#mahut not found in response
+2025-12-30 21:38:36,747 - INFO - Loaded 97 already-processed permits from processed_permits.txt
+2025-12-30 21:38:54,351 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:38:54,365 - INFO - Saved permit 20250270 to opportunities.json
+2025-12-30 21:39:13,923 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:39:13,931 - INFO - Saved permit 20250277 to opportunities.json
+2025-12-30 21:39:26,963 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:39:36,580 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:39:48,489 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:40:00,842 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:40:15,027 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:40:30,467 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:40:42,851 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:40:55,566 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:40:55,575 - INFO - Saved permit 20250293 to opportunities.json
+2025-12-30 21:41:24,639 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:41:31,250 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:41:43,233 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:41:43,244 - INFO - Saved permit 20250299 to opportunities.json
+2025-12-30 21:41:59,383 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:41:59,391 - INFO - Saved permit 20250302 to opportunities.json
+2025-12-30 21:42:10,409 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:42:10,417 - INFO - Saved permit 20250303 to opportunities.json
+2025-12-30 21:42:24,654 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:42:24,665 - INFO - Saved permit 20250306 to opportunities.json
+2025-12-30 21:42:38,660 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:42:49,755 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:42:59,794 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:43:11,410 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:43:11,419 - INFO - Saved permit 20250323 to opportunities.json
+2025-12-30 21:43:45,433 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:43:55,348 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:44:09,582 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:44:09,594 - INFO - Saved permit 20250344 to opportunities.json
+2025-12-30 21:44:24,021 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:44:24,029 - INFO - Saved permit 20250345 to opportunities.json
+2025-12-30 21:44:31,959 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:44:43,242 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:45:01,794 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:45:01,805 - INFO - Saved permit 20250350 to opportunities.json
+2025-12-30 21:45:17,820 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:45:27,890 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:45:38,349 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:46:10,141 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:46:31,555 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:46:43,152 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:46:53,668 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:47:03,411 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:47:11,876 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:47:29,239 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:47:29,250 - INFO - Saved permit 20250374 to opportunities.json
+2025-12-30 21:47:40,974 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:47:54,766 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:48:06,469 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:48:50,085 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:48:50,094 - INFO - Saved permit 20250387 to opportunities.json
+2025-12-30 21:49:14,590 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:49:14,599 - INFO - Saved permit 20250388 to opportunities.json
+2025-12-30 21:49:29,558 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:49:42,563 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:49:58,603 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:49:58,613 - INFO - Saved permit 20250392 to opportunities.json
+2025-12-30 21:50:13,968 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:50:26,249 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:50:41,807 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:51:00,615 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:51:03,430 - WARNING - Permit 20250400: div#mahut not found in response
+2025-12-30 21:51:06,074 - WARNING - Permit 20250403: div#mahut not found in response
+2025-12-30 21:51:11,181 - WARNING - Permit 20250405: div#mahut not found in response
+2025-12-30 21:51:16,288 - WARNING - Permit 20250406: div#mahut not found in response
+2025-12-30 21:51:21,458 - WARNING - Permit 20250407: div#mahut not found in response
+2025-12-30 21:51:24,465 - WARNING - Permit 20250408: div#mahut not found in response
+2025-12-30 21:51:26,940 - WARNING - Permit 20250410: div#mahut not found in response
+2025-12-30 21:51:29,834 - WARNING - Permit 20250411: div#mahut not found in response
+2025-12-30 21:51:35,389 - WARNING - Permit 20250412: div#mahut not found in response
+2025-12-30 21:51:39,252 - WARNING - Permit 20250416: div#mahut not found in response
+2025-12-30 21:55:51,212 - INFO - Loaded 146 already-processed permits from processed_permits.txt
+2025-12-30 21:55:57,199 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:56:19,154 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:56:19,166 - INFO - Saved permit 20250403 to opportunities.json
+2025-12-30 21:56:30,166 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:56:40,952 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:56:56,472 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:56:56,484 - INFO - Saved permit 20250407 to opportunities.json
+2025-12-30 21:57:15,131 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:57:15,143 - INFO - Saved permit 20250408 to opportunities.json
+2025-12-30 21:57:25,923 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:57:41,137 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:57:41,149 - INFO - Saved permit 20250411 to opportunities.json
+2025-12-30 21:57:51,389 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:58:08,088 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:58:08,101 - INFO - Saved permit 20250416 to opportunities.json
+2025-12-30 21:58:37,674 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:58:55,587 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:58:55,599 - INFO - Saved permit 20250427 to opportunities.json
+2025-12-30 21:59:04,388 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:59:15,586 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:59:35,839 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:59:35,854 - INFO - Saved permit 20250436 to opportunities.json
+2025-12-30 21:59:49,134 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 21:59:57,121 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:00:10,394 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:00:20,978 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:00:31,454 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:01:01,816 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:01:17,517 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:01:17,531 - INFO - Saved permit 20250451 to opportunities.json
+2025-12-30 22:01:31,055 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:01:45,590 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:02:11,015 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:02:11,032 - INFO - Saved permit 20250457 to opportunities.json
+2025-12-30 22:02:24,470 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:02:37,374 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:02:46,431 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:02:56,422 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:03:12,139 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:03:44,022 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:03:58,507 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:03:58,525 - INFO - Saved permit 20250483 to opportunities.json
+2025-12-30 22:04:20,964 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:04:33,790 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:04:50,681 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:05:03,459 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:05:16,430 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:05:16,445 - INFO - Saved permit 20250492 to opportunities.json
+2025-12-30 22:05:33,825 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:05:48,972 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:06:00,243 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:06:32,348 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:06:53,161 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:06:53,175 - INFO - Saved permit 20250521 to opportunities.json
+2025-12-30 22:07:06,578 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:07:31,401 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:07:31,413 - INFO - Saved permit 20250525 to opportunities.json
+2025-12-30 22:07:42,567 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:07:53,444 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:08:03,567 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:08:06,445 - WARNING - Permit 20250540: div#mahut not found in response
+2025-12-30 22:08:10,320 - WARNING - Permit 20250542: div#mahut not found in response
+2025-12-30 22:12:02,559 - INFO - Loaded 193 already-processed permits from processed_permits.txt
+2025-12-30 22:12:03,187 - WARNING - Permit 20250540: div#mahut not found in response
+2025-12-30 22:12:13,446 - INFO - Loaded 193 already-processed permits from processed_permits.txt
+2025-12-30 22:12:13,943 - WARNING - Permit 20250540: div#mahut not found in response
+2025-12-30 22:13:45,108 - INFO - Loaded 193 already-processed permits from processed_permits.txt
+2025-12-30 22:13:51,271 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:14:00,932 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:14:12,352 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:18:33,174 - INFO - Loaded 196 already-processed permits from processed_permits.txt
+2025-12-30 22:18:39,393 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:18:55,885 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:18:55,896 - INFO - Saved permit 20250545 to opportunities.json
+2025-12-30 22:19:10,559 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:19:10,584 - INFO - Saved permit 20250553 to opportunities.json
+2025-12-30 22:19:18,108 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:19:27,400 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:19:34,962 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:19:42,765 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:19:51,995 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:20:00,111 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:20:08,560 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:20:36,297 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:20:45,602 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:20:54,263 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:21:03,934 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:21:14,866 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:21:25,028 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:21:36,875 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:21:56,891 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:21:56,906 - INFO - Saved permit 20250590 to opportunities.json
+2025-12-30 22:22:05,495 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:22:17,378 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:22:48,048 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:23:01,297 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:23:12,783 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:23:30,795 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:23:30,842 - INFO - Saved permit 20250597 to opportunities.json
+2025-12-30 22:23:42,320 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:23:51,558 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:24:05,864 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:24:17,879 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:24:31,266 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:24:49,021 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:24:49,035 - INFO - Saved permit 20250606 to opportunities.json
+2025-12-30 22:25:20,245 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:25:31,544 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:25:40,257 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:25:50,650 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:25:59,659 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:26:11,817 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:26:11,861 - INFO - Saved permit 20250619 to opportunities.json
+2025-12-30 22:26:19,666 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:26:28,177 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:26:38,081 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:26:53,824 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:27:24,746 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:27:37,063 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:27:37,097 - INFO - Saved permit 20250633 to opportunities.json
+2025-12-30 22:27:43,674 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:27:50,809 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:28:01,778 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:28:12,172 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:28:27,239 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:28:27,272 - INFO - Saved permit 20250646 to opportunities.json
+2025-12-30 22:28:39,938 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:28:39,975 - INFO - Saved permit 20250648 to opportunities.json
+2025-12-30 22:28:54,100 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 22:28:54,158 - INFO - Saved permit 20250649 to opportunities.json
+2025-12-30 22:28:58,038 - WARNING - Permit 20250651: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-30 22:29:38,541 - WARNING - Permit 20250651: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-30 22:30:19,059 - ERROR - Permit 20250651: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-30 22:30:21,903 - WARNING - Permit 20250652: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-30 22:31:02,339 - WARNING - Permit 20250652: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-30 22:31:42,782 - ERROR - Permit 20250652: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-30 22:31:45,655 - WARNING - Permit 20250653: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-30 22:32:26,256 - WARNING - Permit 20250653: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-30 22:33:06,787 - ERROR - Permit 20250653: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-30 22:33:12,083 - WARNING - Permit 20250659: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-30 22:33:52,561 - WARNING - Permit 20250659: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-30 22:34:32,982 - ERROR - Permit 20250659: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-30 22:34:38,124 - WARNING - Permit 20250660: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-30 23:44:30,627 - INFO - Loaded 245 already-processed permits from processed_permits.txt
+2025-12-30 23:44:38,931 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:44:47,877 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:45:25,978 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:45:25,995 - INFO - Saved permit 20250653 to opportunities.json
+2025-12-30 23:45:45,257 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:45:45,306 - INFO - Saved permit 20250659 to opportunities.json
+2025-12-30 23:45:59,910 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:46:13,113 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:46:29,457 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:46:42,229 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:46:53,356 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:47:05,335 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:47:40,077 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:47:40,115 - INFO - Saved permit 20250666 to opportunities.json
+2025-12-30 23:47:51,924 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:48:03,546 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:48:17,944 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:48:35,225 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:48:46,672 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:48:55,962 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:49:09,909 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:49:24,006 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:49:32,949 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:50:10,580 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:50:10,596 - INFO - Saved permit 20250701 to opportunities.json
+2025-12-30 23:50:24,549 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:50:34,209 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:50:51,164 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:51:03,012 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:51:15,488 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:51:28,664 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:51:41,815 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:52:00,548 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:52:00,585 - INFO - Saved permit 20250722 to opportunities.json
+2025-12-30 23:52:14,788 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:52:14,824 - INFO - Saved permit 20250726 to opportunities.json
+2025-12-30 23:52:47,159 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:52:58,043 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:53:09,857 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:53:31,898 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:53:31,929 - INFO - Saved permit 20250734 to opportunities.json
+2025-12-30 23:53:41,240 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:53:48,571 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:54:00,417 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:54:10,795 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:54:23,562 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:54:23,592 - INFO - Saved permit 20250750 to opportunities.json
+2025-12-30 23:54:34,751 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:55:06,729 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:55:18,432 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:55:29,771 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:55:42,682 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:56:07,799 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:56:07,819 - INFO - Saved permit 20250768 to opportunities.json
+2025-12-30 23:56:20,127 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:56:27,430 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:56:34,556 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:56:46,911 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-30 23:56:52,083 - WARNING - Permit 20250782: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-30 23:57:32,531 - WARNING - Permit 20250782: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-30 23:58:13,018 - ERROR - Permit 20250782: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-30 23:58:16,350 - WARNING - Permit 20250793: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-30 23:58:56,817 - WARNING - Permit 20250793: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-30 23:59:37,385 - ERROR - Permit 20250793: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-30 23:59:40,010 - WARNING - Permit 20250794: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:00:20,492 - WARNING - Permit 20250794: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:01:00,987 - ERROR - Permit 20250794: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:01:14,904 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:01:47,070 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:01:58,079 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:02:13,795 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:02:42,249 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:02:42,270 - INFO - Saved permit 20250805 to opportunities.json
+2025-12-31 00:02:59,428 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:02:59,480 - INFO - Saved permit 20250806 to opportunities.json
+2025-12-31 00:03:18,635 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:03:18,679 - INFO - Saved permit 20250807 to opportunities.json
+2025-12-31 00:03:30,598 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:03:49,871 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:03:49,936 - INFO - Saved permit 20250814 to opportunities.json
+2025-12-31 00:04:23,659 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:04:23,694 - INFO - Saved permit 20250815 to opportunities.json
+2025-12-31 00:04:38,118 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:04:38,133 - INFO - Saved permit 20250816 to opportunities.json
+2025-12-31 00:05:14,239 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:05:14,255 - INFO - Saved permit 20250817 to opportunities.json
+2025-12-31 00:05:40,412 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:05:40,467 - INFO - Saved permit 20250818 to opportunities.json
+2025-12-31 00:05:51,073 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:06:03,709 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:06:03,751 - INFO - Saved permit 20250823 to opportunities.json
+2025-12-31 00:06:14,004 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:06:32,620 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:06:42,997 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:06:50,448 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:07:00,698 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:07:14,522 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:07:46,454 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:07:55,871 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:08:03,395 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:08:16,212 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:08:26,091 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:08:38,095 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:08:50,672 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:09:07,278 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:09:07,322 - INFO - Saved permit 20250844 to opportunities.json
+2025-12-31 00:09:19,906 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:09:33,750 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:09:33,785 - INFO - Saved permit 20250865 to opportunities.json
+2025-12-31 00:10:04,071 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:10:11,784 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:10:21,855 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:10:32,741 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:10:42,304 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:10:54,074 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:11:02,744 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:11:20,990 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:11:21,008 - INFO - Saved permit 20250883 to opportunities.json
+2025-12-31 00:11:34,965 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:11:48,691 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:11:48,736 - INFO - Saved permit 20250885 to opportunities.json
+2025-12-31 00:12:24,900 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:12:24,948 - INFO - Saved permit 20250886 to opportunities.json
+2025-12-31 00:12:41,351 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:12:54,435 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:13:07,376 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:13:20,168 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:13:46,780 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:13:46,824 - INFO - Saved permit 20250902 to opportunities.json
+2025-12-31 00:14:03,484 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:14:03,530 - INFO - Saved permit 20250903 to opportunities.json
+2025-12-31 00:14:18,022 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 00:14:21,905 - WARNING - Permit 20250909: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:15:02,396 - WARNING - Permit 20250909: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:15:42,867 - ERROR - Permit 20250909: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:15:47,442 - WARNING - Permit 20250920: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:16:28,001 - WARNING - Permit 20250920: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:17:08,847 - ERROR - Permit 20250920: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:17:13,594 - WARNING - Permit 20250922: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:17:54,111 - WARNING - Permit 20250922: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:18:35,536 - ERROR - Permit 20250922: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:18:38,899 - WARNING - Permit 20250923: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:19:19,356 - WARNING - Permit 20250923: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:19:59,803 - ERROR - Permit 20250923: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:20:02,927 - WARNING - Permit 20250926: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:20:43,363 - WARNING - Permit 20250926: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:21:23,839 - ERROR - Permit 20250926: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:21:27,727 - WARNING - Permit 20250927: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:22:08,129 - WARNING - Permit 20250927: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:22:48,569 - ERROR - Permit 20250927: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:22:53,182 - WARNING - Permit 20250928: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:23:33,629 - WARNING - Permit 20250928: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:24:14,067 - ERROR - Permit 20250928: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:24:18,890 - WARNING - Permit 20250929: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:24:59,391 - WARNING - Permit 20250929: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:25:39,907 - ERROR - Permit 20250929: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:25:43,510 - WARNING - Permit 20250930: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:26:24,102 - WARNING - Permit 20250930: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:27:04,958 - ERROR - Permit 20250930: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:27:09,915 - WARNING - Permit 20250931: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:27:50,328 - WARNING - Permit 20250931: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:28:30,811 - ERROR - Permit 20250931: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:28:34,251 - WARNING - Permit 20250934: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:29:14,747 - WARNING - Permit 20250934: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:29:55,262 - ERROR - Permit 20250934: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:29:58,240 - WARNING - Permit 20250936: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:30:38,755 - WARNING - Permit 20250936: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:31:19,466 - ERROR - Permit 20250936: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:31:23,177 - WARNING - Permit 20250937: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:32:03,608 - WARNING - Permit 20250937: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:32:44,054 - ERROR - Permit 20250937: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:32:48,946 - WARNING - Permit 20250940: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:33:29,421 - WARNING - Permit 20250940: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:34:09,873 - ERROR - Permit 20250940: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:34:13,072 - WARNING - Permit 20250941: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:34:53,493 - WARNING - Permit 20250941: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:35:34,021 - ERROR - Permit 20250941: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:35:38,649 - WARNING - Permit 20250942: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:36:19,074 - WARNING - Permit 20250942: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:36:59,643 - ERROR - Permit 20250942: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:37:04,746 - WARNING - Permit 20250943: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:37:45,394 - WARNING - Permit 20250943: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:38:25,901 - ERROR - Permit 20250943: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:38:30,226 - WARNING - Permit 20250945: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:39:10,678 - WARNING - Permit 20250945: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:39:51,202 - ERROR - Permit 20250945: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:39:54,981 - WARNING - Permit 20250949: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:40:35,426 - WARNING - Permit 20250949: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:41:15,908 - ERROR - Permit 20250949: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:41:19,173 - WARNING - Permit 20250954: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:41:59,663 - WARNING - Permit 20250954: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:42:40,444 - ERROR - Permit 20250954: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:42:44,970 - WARNING - Permit 20250955: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:43:25,409 - WARNING - Permit 20250955: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:44:05,991 - ERROR - Permit 20250955: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:44:09,391 - WARNING - Permit 20250956: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:44:49,805 - WARNING - Permit 20250956: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:45:30,291 - ERROR - Permit 20250956: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:45:34,821 - WARNING - Permit 20250958: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:46:15,255 - WARNING - Permit 20250958: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:46:55,667 - ERROR - Permit 20250958: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 00:47:00,485 - WARNING - Permit 20250959: CAPTCHA detected (div#mahut not found), waiting 40s before retry 1/2...
+2025-12-31 00:47:40,897 - WARNING - Permit 20250959: CAPTCHA detected (div#mahut not found), waiting 40s before retry 2/2...
+2025-12-31 00:48:21,317 - ERROR - Permit 20250959: div#mahut not found after 3 attempts (likely CAPTCHA)
+2025-12-31 23:50:17,292 - INFO - Loaded 346 already-processed permits from processed_permits.txt
+2025-12-31 23:50:31,920 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:50:31,949 - INFO - Saved permit 20250909 to opportunities.json
+2025-12-31 23:50:49,748 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:50:49,766 - INFO - Saved permit 20250920 to opportunities.json
+2025-12-31 23:51:02,336 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:51:02,361 - INFO - Saved permit 20250922 to opportunities.json
+2025-12-31 23:51:12,611 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:51:23,721 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:51:37,811 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:52:00,200 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:52:14,956 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:52:27,938 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:52:40,721 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:53:13,543 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:53:33,379 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:53:33,400 - INFO - Saved permit 20250936 to opportunities.json
+2025-12-31 23:53:49,919 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:53:49,937 - INFO - Saved permit 20250937 to opportunities.json
+2025-12-31 23:54:00,334 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:54:11,732 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:54:44,735 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:54:44,755 - INFO - Saved permit 20250942 to opportunities.json
+2025-12-31 23:54:53,481 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:55:12,653 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:55:23,909 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:55:43,541 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:55:43,566 - INFO - Saved permit 20250954 to opportunities.json
+2025-12-31 23:56:18,228 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:56:18,265 - INFO - Saved permit 20250955 to opportunities.json
+2025-12-31 23:56:41,836 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:56:41,878 - INFO - Saved permit 20250956 to opportunities.json
+2025-12-31 23:56:52,593 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-31 23:56:59,984 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

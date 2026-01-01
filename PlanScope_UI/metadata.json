@@ -1,0 +1,5 @@
+{
+  "name": "Municipal Dashboard",
+  "description": "A Google-style SaaS dashboard for viewing municipal meetings and construction permits with a clean, Hebrew interface.",
+  "requestFramePermissions": []
+}
