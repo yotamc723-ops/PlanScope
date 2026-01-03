@@ -18,6 +18,7 @@ import random
 import logging
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
+from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
@@ -28,8 +29,21 @@ from dotenv import load_dotenv
 # CONFIGURATION
 # ============================================================================
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from /Users/yotamcohen/Desktop/PlanScope/.env or .env.example
+# Path goes 3 levels up: permits/ -> PlanScope_Scrapers/ -> PlanScope/
+base_dir = Path(__file__).parent.parent.parent
+env_path = base_dir / '.env'
+env_example_path = base_dir / '.env.example'
+
+if env_path.exists():
+    load_dotenv(env_path)
+    print(f"✅ Loaded environment from: {env_path}")
+elif env_example_path.exists():
+    load_dotenv(env_example_path)
+    print(f"⚠️  Loaded environment from EXAMPLE file: {env_example_path}")
+else:
+    print(f"⚠️  No .env file found at {base_dir}")
+    print("   Relying on system environment variables.")
 
 # API endpoint template
 API_URL_TEMPLATE = (
@@ -75,6 +89,7 @@ RELEVANT OPPORTUNITIES include:
 - Major renovations creating new residential units
 - Mixed-use developments with residential components
 - Big updrades to infrastructures, public transportation and enviromental bit upgrades.
+- Destruction and construction of new buildings.
 
 NOT RELEVANT (ignore):
 Treat as NOT relevant any permit that describes only small, non-value-adding work and does NOT include major construction/expansion or creation of new residential units.
@@ -319,7 +334,7 @@ def log_model_request(permit_id: str, user_content: str):
         print(f"ERROR: Could not write to {log_file_path}: {e}")
 
 
-def analyze_with_ai(mahut_text: str, permit_id: str, client: OpenAI, max_retries: int = 3) -> dict | None:
+def analyze_with_ai(mahut_text: str, permit_id: str, client: OpenAI, max_retries: int = 3) -> Optional[dict]:
     """
     Send "מהות הבקשה" text to GPT-5-mini for investor opportunity analysis.
     Includes retry logic with exponential backoff for transient failures.

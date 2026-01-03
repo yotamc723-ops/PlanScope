@@ -1,0 +1,42 @@
+[
+  {
+    "permit_id": "20250350",
+    "meeting_id": "20250020",
+    "meeting_date": "29/12/2025",
+    "meeting_url": "https://handasi.complot.co.il/magicscripts/mgrqispi.dll?appname=cixpa&prgname=GetVaadaFile&siteid=81&t=1&v=20250020&arguments=siteid,t,v",
+    "essence": "תכנית שינויים להיתר מס' 20191730 מתאריך13.12.2021 .",
+    "decision_status": "הוחלט לאשר"
+  },
+  {
+    "permit_id": "20250883",
+    "meeting_id": "20250020",
+    "meeting_date": "29/12/2025",
+    "meeting_url": "https://handasi.complot.co.il/magicscripts/mgrqispi.dll?appname=cixpa&prgname=GetVaadaFile&siteid=81&t=1&v=20250020&arguments=siteid,t,v",
+    "essence": "הריסת מבנה מגורים ברחוב יוספטל 105 בכולל קומת עמודים ו 4 קומות מגורים",
+    "decision_status": "הוחלט לאשר"
+  },
+  {
+    "permit_id": "20250886",
+    "meeting_id": "20250020",
+    "meeting_date": "29/12/2025",
+    "meeting_url": "https://handasi.complot.co.il/magicscripts/mgrqispi.dll?appname=cixpa&prgname=GetVaadaFile&siteid=81&t=1&v=20250020&arguments=siteid,t,v",
+    "essence": "הריסת שני מבני מגורים ברחוב יוספטל 107/109 הכוללים קומת עמודים ו 4 קומות מגורים.",
+    "decision_status": "הוחלט לאשר"
+  },
+  {
+    "permit_id": "20250955",
+    "meeting_id": "20250020",
+    "meeting_date": "29/12/2025",
+    "meeting_url": "https://handasi.complot.co.il/magicscripts/mgrqispi.dll?appname=cixpa&prgname=GetVaadaFile&siteid=81&t=1&v=20250020&arguments=siteid,t,v",
+    "essence": "הריסת 5 מבני מגורים קיימים בני 5 קומות במגרשים 200+300 .",
+    "decision_status": "הוחלט לאשר"
+  },
+  {
+    "permit_id": "20250956",
+    "meeting_id": "20250020",
+    "meeting_date": "29/12/2025",
+    "meeting_url": "https://handasi.complot.co.il/magicscripts/mgrqispi.dll?appname=cixpa&prgname=GetVaadaFile&siteid=81&t=1&v=20250020&arguments=siteid,t,v",
+    "essence": "הריסת 3 מבני מגורים קיימים בני 5 קומות במגרש 301",
+    "decision_status": "הוחלט לאשר"
+  }
+]

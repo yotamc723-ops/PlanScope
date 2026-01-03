@@ -4,12 +4,14 @@ import os
 import re
 import time
 import pdfplumber
+from pathlib import Path
 from openai import OpenAI
 from dotenv import load_dotenv
 from typing import List, Dict, Any
 
-# טעינת קובץ .env
-load_dotenv()
+# טעינת קובץ .env מהתיקייה הראשית
+root_dir = Path(__file__).parent.parent.parent
+load_dotenv(root_dir / '.env')
 
 # --- הגדרות ---
 INPUT_CSV = "meeting_index.csv"

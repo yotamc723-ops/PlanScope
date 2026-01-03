@@ -38,7 +38,7 @@ def scrape_bat_yam_taba():
         return
     
     # כתובת האתר (ניתן לשנות אם הכתובת הספציפית שונה)
-    base_url = "https://batyam.complot.co.il/binyan/#search/GetTabaByNumber&siteid=81&n=502&l=false&arguments=siteid,n,l"
+    base_url = "#search/GetTabaByNumber&siteid=81&n=502&l=false&arguments=siteid,n,l"
     
     results_data = []
 
