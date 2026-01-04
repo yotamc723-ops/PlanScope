@@ -107,23 +107,36 @@ SYSTEM_PROMPT = """You are a real estate investment analyst specializing in Isra
 
 You will receive the "מהות הבקשה" (Request Intention) text from a Bat Yam building permit. Analyze it and determine if it represents a valuable investment opportunity.
 
+CRITICAL SEMANTIC INSTRUCTION:
+Focus on both the ACTION (e.g., "Building", "Constructing") and the OBJECT/ASSET (e.g., "Office Tower", "4 Residential Buildings").
+If the text mentions a major asset type (like a new building, tower, or complex) as the subject of the request, treat it as RELEVANT even if the specific verb "construction" is missing or implied.
+
 RELEVANT OPPORTUNITIES include:
+
+1. Residential Projects & Expansions:
 - תמ"א 38 (Tama 38) - earthquake reinforcement with added units
-- פינוי בינוי (Pinui Binui) - demolition and reconstruction  
+- פינוי בינוי (Pinui Binui) - demolition and reconstruction
 - הריסה ובנייה (Demolition and Construction)
-- New residential projects with multiple units
-- מגדל מגורים (Residential tower)
+- New residential projects (e.g., "Residential complex", "New apartments")
+- מגדל מגורים (Residential tower) - mention of the tower itself
 - Addition of floors or significant expansions
 - Major renovations creating new residential units
-- Mixed-use developments with residential components
-- Big updrades to infrastructures, public transportation and enviromental bit upgrades.
-- Destruction and construction of new buildings.
-- Anything about building new apartments
+- Destruction and construction of new buildings
 
+2. Commercial, Employment & Mixed-Use Assets:
+- Mixed-use developments (e.g., Residential + Commercial)
+- Office Buildings: Office towers, business centers, corporate hubs (e.g., "4 Office buildings", "Employment center").
+- Industrial Buildings: Logistics centers, factories, warehouses, and industrial parks.
+- Employment Centers: High-tech parks and specialized commercial zones.
+
+3. Major Infrastructure:
+- Big upgrades to infrastructures, public transportation, and environmental upgrades.
+
+GENERAL RULE FOR RELEVANCE:
+Any permit that implies the creation, establishment, or existence of a new standalone structure, a new wing, or a major complex is RELEVANT.
 NOT RELEVANT (ignore):
-Treat as NOT relevant any permit that describes only small, non-value-adding work and does NOT include major construction/expansion or creation of new residential units.
-Examples: balcony closure, pergola, signs, small repairs/minor renovations, interior-only changes, storage room, fence, AC/ventilation installations.
-
+Treat as NOT relevant any permit that describes only small, non-value-adding work and does NOT include major construction/expansion or creation of new residential/commercial units.
+Examples: balcony closure, pergola, signs, small repairs/minor renovations, interior-only changes, storage room, fence, AC/ventilation installations, sealing changes, accessibility ramps (unless part of a larger project)
 
 OUTPUT FORMAT (JSON only, no markdown, no code blocks):
 {
@@ -379,14 +392,15 @@ def _parse_meetings(soup: BeautifulSoup) -> List[Dict[str, Any]]:
 def _parse_request_info(soup: BeautifulSoup) -> Dict[str, Optional[str]]:
     info_table = soup.select_one("#info-main table tbody")
     if not info_table:
-        return {"request_type": None, "main_use": None}
+        return {"request_type": None, "main_use": None, "request_description": None}
 
     rows = info_table.select("tr")
     # Get the second td (index 1) which contains the value, not the label (first td)
-    # Row 2 = סוג הבקשה (request type), Row 3 = שימוש עיקרי (main use)
+    # Row 2 = סוג הבקשה (request type), Row 3 = שימוש עיקרי (main use), Row 4 = תיאור הבקשה (request description)
     request_type = _get_text(rows[2].find_all("td")[1]) if len(rows) >= 3 and len(rows[2].find_all("td")) > 1 else None
     main_use = _get_text(rows[3].find_all("td")[1]) if len(rows) >= 4 and len(rows[3].find_all("td")) > 1 else None
-    return {"request_type": request_type, "main_use": main_use}
+    request_description = _get_text(rows[4].find_all("td")[1]) if len(rows) >= 5 and len(rows[4].find_all("td")) > 1 else None
+    return {"request_type": request_type, "main_use": main_use, "request_description": request_description}
 
 
 def _parse_address(soup: BeautifulSoup) -> Optional[str]:
@@ -528,6 +542,7 @@ def fetch_permit_data(permit_id: str, max_retries: int = 2) -> Tuple[Optional[st
             metadata = {
                 "request_type": request_info.get("request_type"),
                 "main_use": request_info.get("main_use"),
+                "request_description": request_info.get("request_description"),
                 "address": address,
                 "applicants": applicants,
                 "parcels": parcels,
