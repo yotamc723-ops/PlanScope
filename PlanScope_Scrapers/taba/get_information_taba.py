@@ -14,6 +14,7 @@ import random
 import string
 from dotenv import load_dotenv
 import urllib3
+from datetime import datetime  # <--- שינוי 1: הוספת ייבוא datetime
 
 # Suppress SSL warnings since verify=False is often needed for proxies
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -451,10 +452,14 @@ def format_json_compact_history(data):
 
 def main():
     input_csv = 'bat_yam_taba_list.csv'
-    output_json = 'bat_yam_plans_data.json'
+    
+    # <--- שינוי 2: שם קובץ דינמי לפי התאריך של היום
+    today_str = datetime.now().strftime('%Y_%m_%d')
+    output_json = f'bat_yam_plans_data_{today_str}.json'
     
     print("=" * 60)
     print("🚀 Starting Bat Yam TABA Scraper")
+    print(f"📅 Daily Output File: {output_json}")  # לוג המאשר את שם הקובץ החדש
     print("=" * 60)
     print(f"Proxy Configured: {USE_PROXY}")
     

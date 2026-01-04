@@ -1,0 +1,18 @@
+{
+    "generated_at": "2026-01-03 23:46:25",
+    "summary": {
+        "total_plans_scanned": 177,
+        "new_plans_discovered": 1,
+        "status_changes": 0,
+        "new_history_events": 0,
+        "new_meetings": 0
+    },
+    "changes": [
+        {
+            "type": "NEW_PLAN",
+            "plan_number": "502-1480565",
+            "plan_name": "בי/921/מק דרך מנחם בגין (חלקה 50) - בת ים",
+            "details": "תוכנית חדשה נכנסה למאגר"
+        }
+    ]
+}
