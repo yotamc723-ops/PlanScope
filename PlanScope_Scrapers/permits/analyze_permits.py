@@ -15,7 +15,9 @@ import os
 import json
 import time
 import random
+import re
 import logging
+import string
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 from pathlib import Path
@@ -24,6 +26,10 @@ import requests
 from bs4 import BeautifulSoup
 from openai import OpenAI
 from dotenv import load_dotenv
+import urllib3
+
+# Suppress SSL warnings since verify=False is often needed for proxies
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # ============================================================================
 # CONFIGURATION
@@ -44,6 +50,28 @@ elif env_example_path.exists():
 else:
     print(f"⚠️  No .env file found at {base_dir}")
     print("   Relying on system environment variables.")
+
+# ============================================================================
+# PROXY CONFIGURATION
+# ============================================================================
+
+USE_PROXY = True  # שנה ל-False אם אתה רוצה לעבוד בלי פרוקסי
+
+# פרטי הפרוקסי (קבל אותם מהדשבורד של Bright Data / הספק שלך)
+PROXY_HOST = os.getenv("PROXY_HOST", "zproxy.lum-superproxy.io")
+PROXY_PORT = os.getenv("PROXY_PORT", "22225")  # Default Bright Data residential port
+
+# טעינת שם המשתמש והסיסמה משתני הסביבה
+# For Bright Data, username format is usually: brd-customer-{customer_id}-zone-{zone_name}
+PROXY_USER = os.getenv("PROXY_USER")
+PROXY_PASS = os.getenv("PROXY_PASS")
+
+# SSL Verification setting
+VERIFY_SSL = False
+
+# ============================================================================
+# END OF PROXY CONFIGURATION
+# ============================================================================
 
 # API endpoint template
 API_URL_TEMPLATE = (
@@ -90,6 +118,7 @@ RELEVANT OPPORTUNITIES include:
 - Mixed-use developments with residential components
 - Big updrades to infrastructures, public transportation and enviromental bit upgrades.
 - Destruction and construction of new buildings.
+- Anything about building new apartments
 
 NOT RELEVANT (ignore):
 Treat as NOT relevant any permit that describes only small, non-value-adding work and does NOT include major construction/expansion or creation of new residential units.
@@ -132,6 +161,82 @@ logger = logging.getLogger(__name__)
 # FUNCTIONS
 # ============================================================================
 
+def get_proxy_dict(session_id=None):
+    """
+    Builds the proxy dictionary for requests.
+    """
+    if not USE_PROXY:
+        return None
+    
+    current_user = PROXY_USER
+    
+    # בדיקה שהמשתמש הזין פרטים
+    if not current_user or not PROXY_PASS:
+        print("⚠️  Error: Proxy is enabled but PROXY_USER or PROXY_PASS are missing from .env!")
+        return None
+    
+    # Bright Data Logic: Force Israel targeting and Session rotation
+    if 'brd-customer' in current_user:
+        # Force Israel targeting if not already in username
+        if '-country-' not in current_user:
+             current_user = f"{current_user}-country-il"
+        
+        # IP Rotation Logic
+        if session_id:
+            current_user = f"{current_user}-session-{session_id}"
+
+    # Construct the URL with authentication
+    proxy_url = f"http://{current_user}:{PROXY_PASS}@{PROXY_HOST}:{PROXY_PORT}"
+    
+    return {
+        "http": proxy_url,
+        "https": proxy_url,
+    }
+
+
+def test_proxy_connection():
+    """Test if proxy is working."""
+    if not USE_PROXY:
+        return True
+    
+    # Use a random session for the test to ensure we get a fresh IP
+    rand_session = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
+    proxies = get_proxy_dict(session_id=rand_session)
+    
+    if not proxies:
+        return False
+
+    print(f"   Testing connection to {PROXY_HOST}...")
+    
+    try:
+        # Test with a simple request to check IP
+        test_response = requests.get(
+            "https://httpbin.org/ip",
+            proxies=proxies,
+            timeout=20,
+            verify=VERIFY_SSL
+        )
+        if test_response.status_code == 200:
+            ip_info = test_response.json()
+            origin_ip = ip_info.get('origin')
+            print(f"   ✅ Proxy Connected! External IP: {origin_ip}")
+            return True
+        else:
+            print(f"   ⚠️  Proxy test returned status {test_response.status_code}")
+            return False
+
+    except requests.exceptions.ProxyError as e:
+        print(f"   ❌ Proxy Error: Failed to connect. Check Host/Port/User/Pass.")
+        print(f"      Details: {e}")
+        return False
+    except requests.exceptions.SSLError as e:
+        print(f"   ❌ SSL Error. Try setting VERIFY_SSL = False.")
+        return False
+    except Exception as e:
+        print(f"   ❌ Connection failed: {e}")
+        return False
+
+
 def _get_text(el) -> Optional[str]:
     """Return stripped text from a BeautifulSoup element, cleaned of control characters."""
     if not el:
@@ -140,6 +245,135 @@ def _get_text(el) -> Optional[str]:
     # Clean up invisible Unicode control characters (RLM U+200F, LRM U+200E)
     txt = txt.replace('\u200f', '').replace('\u200e', '').strip()
     return txt if txt else None
+
+
+def _has_meetings(soup: BeautifulSoup) -> bool:
+    """Check if permit has meetings by looking for span.spn in btn-meetings."""
+    btn_meetings = soup.find('div', id='btn-meetings')
+    if not btn_meetings:
+        return False
+    
+    count_span = btn_meetings.find('span', class_='spn')
+    if count_span:
+        count_text = count_span.get_text(strip=True)
+        match = re.search(r'\((\d+)\)', count_text)
+        if match:
+            count = int(match.group(1))
+            return count > 0
+    return False
+
+
+def _parse_meetings(soup: BeautifulSoup) -> List[Dict[str, Any]]:
+    """Parse meetings table structure robustly."""
+    meetings = []
+    
+    table_div = soup.find('div', id='table-meetings')
+    if not table_div:
+        return []
+        
+    main_table = table_div.find('table')
+    if not main_table:
+        return []
+        
+    tbody = main_table.find('tbody')
+    if not tbody:
+        return []
+
+    all_rows = tbody.find_all('tr', recursive=False)
+    i = 0
+    
+    while i < len(all_rows):
+        row = all_rows[i]
+        classes = row.get('class', [])
+        
+        # Look for accordion-toggle row (meeting header row)
+        if 'accordion-toggle' in classes:
+            cols = row.find_all('td', recursive=False)
+            meeting_id = None
+            meeting_date = None
+            meeting_url = None
+            
+            # Method 1: Find meeting_id from link
+            meeting_link = row.find('a', href=lambda x: x and 'getMeeting' in str(x))
+            
+            if meeting_link:
+                meeting_id = _get_text(meeting_link)
+                onclick = meeting_link.get('href', '')
+                match = re.search(r'getMeeting\((\d+),(\d+)\)', onclick)
+                if match:
+                    meeting_type = match.group(1)
+                    meeting_num = match.group(2)
+                    meeting_url = f"https://handasi.complot.co.il/magicscripts/mgrqispi.dll?appname=cixpa&prgname=GetVaadaFile&siteid=81&t={meeting_type}&v={meeting_num}&arguments=siteid,t,v"
+            
+            # Method 2: Fallback - find meeting number in tds
+            if not meeting_id:
+                for col in cols:
+                    text = _get_text(col)
+                    if text and re.match(r'^\d{8,}$', text.strip()):
+                        meeting_id = text.strip()
+                        break
+            
+            # Find meeting_date
+            for col in cols:
+                text = _get_text(col)
+                if text and re.match(r'^\d{2}/\d{2}/\d{4}$', text.strip()):
+                    meeting_date = text.strip()
+                    break
+            
+            # Now look for the corresponding hiddenRow with details
+            essence = None
+            decision_status = None
+            
+            j = i + 1
+            while j < len(all_rows):
+                next_row = all_rows[j]
+                next_classes = next_row.get('class', [])
+                
+                if 'accordion-toggle' in next_classes:
+                    break
+                
+                hidden_td = next_row.find('td', class_='hiddenRow')
+                if hidden_td or 'hiddenRow' in next_classes:
+                    details_div = (
+                        next_row.find('div', class_=lambda x: x and 'accordian-body' in str(x).lower()) or
+                        next_row.find('div', class_=lambda x: x and 'accordion-body' in str(x).lower()) or
+                        next_row.find('div', id=lambda x: x and str(meeting_id) in str(x))
+                    )
+                    
+                    if details_div:
+                        section_tables = details_div.find_all('table')
+                        for table in section_tables:
+                            thead = table.find('thead')
+                            if not thead: continue
+                            th = thead.find('th')
+                            if not th: continue
+                            th_text = _get_text(th)
+                            if not th_text: continue
+                            
+                            table_tbody = table.find('tbody')
+                            if not table_tbody: continue
+                            content_td = table_tbody.find('td')
+                            if not content_td: continue
+                            content = _get_text(content_td)
+                            
+                            if 'מהות' in th_text:
+                                essence = content
+                            elif 'החלטות' in th_text:
+                                decision_status = content
+                    break
+                j += 1
+
+            if meeting_id:
+                meetings.append({
+                    'meeting_id': meeting_id,
+                    'meeting_date': meeting_date,
+                    'meeting_url': meeting_url,
+                    'essence': essence,
+                    'decision_status': decision_status
+                })
+        i += 1
+        
+    return meetings
 
 
 def _parse_request_info(soup: BeautifulSoup) -> Dict[str, Optional[str]]:
@@ -242,9 +476,13 @@ def fetch_permit_data(permit_id: str, max_retries: int = 2) -> Tuple[Optional[st
     """
     url = API_URL_TEMPLATE.format(permit_id=permit_id)
     
+    # Generate a random session ID for proxy rotation
+    session_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
+    proxies = get_proxy_dict(session_id=session_id)
+    
     for attempt in range(max_retries + 1):
         try:
-            response = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+            response = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT, proxies=proxies, verify=VERIFY_SSL)
             response.raise_for_status()
             
             # Ensure proper encoding for Hebrew text
@@ -281,6 +519,11 @@ def fetch_permit_data(permit_id: str, max_retries: int = 2) -> Tuple[Optional[st
             applicants = _parse_applicants(soup)
             parcels = _parse_parcels(soup)
             history = _parse_history(soup)
+            
+            # Parse meeting history
+            meeting_history = []
+            if _has_meetings(soup):
+                meeting_history = _parse_meetings(soup)
 
             metadata = {
                 "request_type": request_info.get("request_type"),
@@ -289,6 +532,7 @@ def fetch_permit_data(permit_id: str, max_retries: int = 2) -> Tuple[Optional[st
                 "applicants": applicants,
                 "parcels": parcels,
                 "history": history,
+                "meeting_history": meeting_history,
             }
 
             return mahut_text, metadata
@@ -516,6 +760,16 @@ def main():
     # Initialize OpenAI client
     client = OpenAI(api_key=api_key)
     print("OK: OpenAI client initialized")
+    
+    # Test proxy connection
+    print(f"Proxy Configured: {USE_PROXY}")
+    if USE_PROXY:
+        if not test_proxy_connection():
+            print("\n❌ Proxy Connection FAILED.")
+            print("   Please check your .env file credentials.")
+            print("   Continuing without proxy might result in blocking...\n")
+            # uncomment next line to stop on error
+            # return
     
     # Initialize debug requests file (clear previous content)
     script_dir = os.path.dirname(os.path.abspath(__file__))
