@@ -58,8 +58,8 @@ else:
 USE_PROXY = True  # שנה ל-False אם אתה רוצה לעבוד בלי פרוקסי
 
 # פרטי הפרוקסי (קבל אותם מהדשבורד של Bright Data / הספק שלך)
-PROXY_HOST = os.getenv("PROXY_HOST", "zproxy.lum-superproxy.io")
-PROXY_PORT = os.getenv("PROXY_PORT", "22225")  # Default Bright Data residential port
+PROXY_HOST = os.getenv("PROXY_HOST", "brd.superproxy.io")
+PROXY_PORT = os.getenv("PROXY_PORT", "33335")  # Default Bright Data residential port
 
 # טעינת שם המשתמש והסיסמה משתני הסביבה
 # For Bright Data, username format is usually: brd-customer-{customer_id}-zone-{zone_name}
@@ -101,6 +101,7 @@ PERMIT_FILE = "permit_numbers.txt"
 OUTPUT_FILE = "opportunities.json"
 ERROR_LOG_FILE = "errors.log"
 DEBUG_REQUESTS_FILE = "model_requests.txt"
+SKIPPED_PERMITS_FILE = "skipped_permits.txt"
 
 # LLM System Prompt for investor opportunity analysis
 SYSTEM_PROMPT = """You are a real estate investment analyst specializing in Israeli construction permits.
@@ -248,6 +249,18 @@ def test_proxy_connection():
     except Exception as e:
         print(f"   ❌ Connection failed: {e}")
         return False
+
+
+def flip_text(text: str) -> str:
+    """
+    Reverses text if it contains Hebrew characters (for correct console display).
+    """
+    if not text:
+        return text
+    # Check if string contains Hebrew
+    if any("\u0590" <= char <= "\u05EA" for char in text):
+        return text[::-1]
+    return text
 
 
 def _get_text(el) -> Optional[str]:
@@ -471,19 +484,12 @@ def _parse_history(soup: BeautifulSoup) -> List[Dict[str, Optional[str]]]:
 
 def fetch_permit_data(permit_id: str, max_retries: int = 2) -> Tuple[Optional[str], Dict[str, Any]]:
     """
-    Fetch HTML from API and extract:
-      - "מהות הבקשה" text (mahut_text)
-      - request type, main use
-      - address
-      - applicants (requestor/owner/author)
-      - parcels (gush/helka)
-      - events history
-    
-    Includes CAPTCHA detection and retry logic.
+    Fetch HTML from API and extract data.
+    Strict Proxy Mode: Retries with proxy on failure, does NOT fall back to direct connection.
     
     Args:
         permit_id: The permit number to fetch
-        max_retries: Maximum number of retry attempts for CAPTCHA (default: 2)
+        max_retries: Maximum number of retry attempts for CAPTCHA/Proxy errors (default: 2)
         
     Returns:
         (mahut_text, metadata_dict)
@@ -497,6 +503,15 @@ def fetch_permit_data(permit_id: str, max_retries: int = 2) -> Tuple[Optional[st
     for attempt in range(max_retries + 1):
         try:
             response = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT, proxies=proxies, verify=VERIFY_SSL)
+            
+            # Special handling for 429 from Server
+            if response.status_code == 429:
+                wait_time = 40 * (attempt + 1)
+                logger.warning(f"Permit {permit_id}: Server Rate Limit (429). Waiting {wait_time}s...")
+                print(f"   ⚠️ Server Rate Limit (429). Cooling down {wait_time}s...")
+                time.sleep(wait_time)
+                continue
+
             response.raise_for_status()
             
             # Ensure proper encoding for Hebrew text
@@ -551,13 +566,34 @@ def fetch_permit_data(permit_id: str, max_retries: int = 2) -> Tuple[Optional[st
             }
 
             return mahut_text, metadata
+
+        except requests.exceptions.ProxyError as e:
+            # Handle Proxy Rate Limits specifically (tunnel 429)
+            error_str = str(e).lower()
+            if "429" in error_str or "exceeded" in error_str:
+                wait_time = 30 * (attempt + 1)
+                logger.warning(f"Permit {permit_id}: Proxy Limit (429) hit. Waiting {wait_time}s...")
+                print(f"   ⚠️ Proxy Limit Reached (429). Cooling down {wait_time}s...")
+                time.sleep(wait_time)
+                
+                # Rotate session ID to try getting a fresh IP/Session
+                session_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
+                proxies = get_proxy_dict(session_id=session_id)
+                continue
+            else:
+                # Other proxy errors (connection refused, etc)
+                logger.error(f"Permit {permit_id}: Proxy connection failed - {e}")
+                time.sleep(5)
+                continue
                 
         except requests.exceptions.Timeout:
             logger.error(f"Permit {permit_id}: Request timeout after {REQUEST_TIMEOUT}s")
             return None, {}
         except requests.exceptions.RequestException as e:
             logger.error(f"Permit {permit_id}: Request failed - {e}")
-            return None, {}
+            # If it's a 502/503 from proxy, wait a bit
+            time.sleep(5)
+            continue
         except Exception as e:
             logger.error(f"Permit {permit_id}: Unexpected error - {e}")
             return None, {}
@@ -756,6 +792,28 @@ def save_opportunity_incremental(opportunity: Dict[str, Any], output_file: str =
         logger.error(f"Failed to append {permit_id} to {relevant_file}: {e}")
 
 
+def log_skipped_permit(permit_id: str, mahut_text: str):
+    """
+    Log skipped permit requests to a text file.
+    Format: permit_number: מהות הבקשה/
+    """
+    try:
+        # Ensure text is clean and on one line (remove newlines from description)
+        if mahut_text:
+            clean_text = mahut_text.replace('\n', ' ').replace('\r', '').strip()
+        else:
+            clean_text = "No text available"
+
+        # Format with trailing slash as requested: "id: text/"
+        entry = f"{permit_id}: {clean_text}/\n"
+        
+        with open(SKIPPED_PERMITS_FILE, 'a', encoding='utf-8') as f:
+            f.write(entry)
+            
+    except Exception as e:
+        logger.error(f"Failed to log skipped permit {permit_id}: {e}")
+
+
 def main():
     """
     Main workflow: read permits, fetch data, analyze with AI, save results.
@@ -845,9 +903,9 @@ def main():
                 'error': 'Failed to fetch or extract מהות הבקשה'
             })
             mark_permit_processed(permit_id)  # Mark as processed even if failed
-            # Smart throttle: random delay
-            delay = random.uniform(REQUEST_DELAY_MIN, REQUEST_DELAY_MAX)
-            time.sleep(delay)
+            # Smart throttle: random delay (REMOVED)
+            # delay = random.uniform(REQUEST_DELAY_MIN, REQUEST_DELAY_MAX)
+            # time.sleep(delay)
             requests_in_batch += 1
             continue
         
@@ -864,7 +922,7 @@ def main():
         elif result.get('is_relevant', False):
             project_type = result.get('project_type', 'Unknown')
             try:
-                print(f"OK: RELEVANT - {project_type}")
+                print(f"OK: RELEVANT - {flip_text(project_type)}")
             except UnicodeEncodeError:
                 print(f"OK: RELEVANT (permit {permit_id})")
             # Attach parsed metadata
@@ -874,26 +932,31 @@ def main():
             save_opportunity_incremental(enriched, OUTPUT_FILE, "relevant_permits.txt")
             relevant_count += 1
             mark_permit_processed(permit_id)  # Mark as processed
+
         else:
             reason = result.get('reason', 'Not relevant')
             # Encode reason safely for console (Windows console can't handle Hebrew)
             try:
-                print(f"SKIP: Not relevant - {reason[:40]}...")
+                print(f"SKIP: Not relevant - {flip_text(reason)}")
             except UnicodeEncodeError:
                 print(f"SKIP: Not relevant (permit {permit_id})")
+            
+            # Log skipped permit
+            log_skipped_permit(permit_id, mahut_text)
+            
             mark_permit_processed(permit_id)  # Mark as processed
         
         processed += 1
         requests_in_batch += 1
         
-        # Smart throttle: random delay between requests
-        delay = random.uniform(REQUEST_DELAY_MIN, REQUEST_DELAY_MAX)
-        time.sleep(delay)
+        # Smart throttle: random delay between requests (REMOVED)
+        # delay = random.uniform(REQUEST_DELAY_MIN, REQUEST_DELAY_MAX)
+        # time.sleep(delay)
         
         # Batch cooldown: every 10 requests, take a longer break
         if requests_in_batch >= BATCH_SIZE and i < len(permit_ids):
-            print(f"\n⏸️  Batch cooldown: Processed {BATCH_SIZE} requests, pausing for {BATCH_COOLDOWN}s to avoid blocking...")
-            time.sleep(BATCH_COOLDOWN)
+            print(f"\n⏸️  Batch cooldown: Processed {BATCH_SIZE} requests, pausing for {BATCH_COOLDOWN}s to avoid blocking... (SKIPPED)")
+            # time.sleep(BATCH_COOLDOWN)
             requests_in_batch = 0  # Reset counter
             print("✅ Cooldown complete, resuming...\n")
     
@@ -920,7 +983,7 @@ def main():
             print(f"\nTop Opportunities:")
             for opp in saved_opportunities[-5:]:  # Show last 5 from this run
                 try:
-                    print(f"  - {opp['permit_id']}: {opp.get('project_type', 'N/A')}")
+                    print(f"  - {opp['permit_id']}: {flip_text(opp.get('project_type', 'N/A'))}")
                     if opp.get('num_units'):
                         print(f"    Units: {opp['num_units']}")
                 except UnicodeEncodeError:
@@ -931,4 +994,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
