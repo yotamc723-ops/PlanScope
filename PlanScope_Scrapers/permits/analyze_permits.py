@@ -18,6 +18,8 @@ import random
 import re
 import logging
 import string
+import threading
+import concurrent.futures
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 from pathlib import Path
@@ -99,6 +101,7 @@ REQUEST_TIMEOUT = 30
 # Files
 PERMIT_FILE = "permit_numbers.txt"
 OUTPUT_FILE = "opportunities.json"
+OUTPUT_FILE_JSONL = "opportunities.jsonl"
 ERROR_LOG_FILE = "errors.log"
 DEBUG_REQUESTS_FILE = "model_requests.txt"
 SKIPPED_PERMITS_FILE = "skipped_permits.txt"
@@ -123,6 +126,7 @@ RELEVANT OPPORTUNITIES include:
 - Addition of floors or significant expansions
 - Major renovations creating new residential units
 - Destruction and construction of new buildings
+- Improving few or more apartments at a time (Construction, adding balconies, etc.).
 
 2. Commercial, Employment & Mixed-Use Assets:
 - Mixed-use developments (e.g., Residential + Commercial)
@@ -155,6 +159,15 @@ If NOT relevant:
   "permit_id": "...",
   "reason": "brief explanation"
 }"""
+
+# ============================================================================
+# LOCKS FOR THREAD SAFETY
+# ============================================================================
+opportunities_lock = threading.Lock()
+processed_lock = threading.Lock()
+relevant_lock = threading.Lock()
+skipped_lock = threading.Lock()
+log_lock = threading.Lock()
 
 # ============================================================================
 # LOGGING SETUP
@@ -617,13 +630,14 @@ def log_model_request(permit_id: str, user_content: str):
     cleaned_content = user_content.replace('\u200f', '').replace('\u200e', '')
     
     try:
-        with open(log_file_path, 'a', encoding='utf-8-sig') as f:
-            f.write("=" * 80 + "\n")
-            f.write(f"ID: {permit_id}\n")
-            f.write(f"Request:\n{cleaned_content}\n")
-            f.write("=" * 80 + "\n\n")
-            f.flush()  # Force write to disk immediately
-            os.fsync(f.fileno())  # Force OS to write to disk
+        with log_lock:
+            with open(log_file_path, 'a', encoding='utf-8-sig') as f:
+                f.write("=" * 80 + "\n")
+                f.write(f"ID: {permit_id}\n")
+                f.write(f"Request:\n{cleaned_content}\n")
+                f.write("=" * 80 + "\n\n")
+                f.flush()  # Force write to disk immediately
+                os.fsync(f.fileno())  # Force OS to write to disk
     except Exception as e:
         logger.error(f"Failed to write to debug file: {e}")
         print(f"ERROR: Could not write to {log_file_path}: {e}")
@@ -745,49 +759,40 @@ def mark_permit_processed(permit_id: str, processed_file: str = "processed_permi
         processed_file: Path to file tracking all processed permits
     """
     try:
-        with open(processed_file, 'a', encoding='utf-8') as f:
-            f.write(f"{permit_id}\n")
+        with processed_lock:
+            with open(processed_file, 'a', encoding='utf-8') as f:
+                f.write(f"{permit_id}\n")
     except Exception as e:
         logger.error(f"Failed to mark {permit_id} as processed: {e}")
 
 
-def save_opportunity_incremental(opportunity: Dict[str, Any], output_file: str = "opportunities.json", relevant_file: str = "relevant_permits.txt"):
+def save_opportunity_incremental(opportunity: Dict[str, Any], output_file: str = "opportunities.jsonl", relevant_file: str = "relevant_permits.txt"):
     """
-    Save a single relevant opportunity to JSON file immediately (incremental save).
-    Also append the permit ID to relevant_permits.txt for resume capability.
+    Save a single relevant opportunity to JSONL file immediately (incremental save).
+    Data persistence optimized for high concurrency O(1) appends.
     
     Args:
         opportunity: Dictionary containing permit data
-        output_file: Path to JSON file
+        output_file: Path to JSONL file
         relevant_file: Path to file tracking processed relevant permits
     """
     permit_id = opportunity.get('permit_id', 'unknown')
     
-    # Load existing opportunities
-    opportunities = []
-    if os.path.exists(output_file):
-        try:
-            with open(output_file, 'r', encoding='utf-8') as f:
-                opportunities = json.load(f)
-        except (json.JSONDecodeError, FileNotFoundError):
-            logger.warning(f"Could not load existing {output_file}, starting fresh")
-            opportunities = []
-    
-    # Append new opportunity
-    opportunities.append(opportunity)
-    
-    # Save back to JSON
+    # Save to JSONL (Append-Only, Fast, Thread-Safe with Lock)
     try:
-        with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(opportunities, f, ensure_ascii=False, indent=2)
-        logger.info(f"Saved permit {permit_id} to {output_file}")
+        json_line = json.dumps(opportunity, ensure_ascii=False) + '\n'
+        with opportunities_lock:
+            with open(OUTPUT_FILE_JSONL, 'a', encoding='utf-8') as f:
+                f.write(json_line)
+        # logger.info(f"Saved permit {permit_id} to {OUTPUT_FILE_JSONL}")
     except Exception as e:
-        logger.error(f"Failed to save opportunity {permit_id}: {e}")
+        logger.error(f"Failed to save opportunity {permit_id} to JSONL: {e}")
     
     # Append to relevant_permits.txt for resume capability
     try:
-        with open(relevant_file, 'a', encoding='utf-8') as f:
-            f.write(f"{permit_id}\n")
+        with relevant_lock:
+            with open(relevant_file, 'a', encoding='utf-8') as f:
+                f.write(f"{permit_id}\n")
     except Exception as e:
         logger.error(f"Failed to append {permit_id} to {relevant_file}: {e}")
 
@@ -807,14 +812,15 @@ def log_skipped_permit(permit_id: str, mahut_text: str):
         # Format with trailing slash as requested: "id: text/"
         entry = f"{permit_id}: {clean_text}/\n"
         
-        with open(SKIPPED_PERMITS_FILE, 'a', encoding='utf-8') as f:
-            f.write(entry)
+        with skipped_lock:
+            with open(SKIPPED_PERMITS_FILE, 'a', encoding='utf-8') as f:
+                f.write(entry)
             
     except Exception as e:
         logger.error(f"Failed to log skipped permit {permit_id}: {e}")
 
 
-def main():
+def old_main():
     """
     Main workflow: read permits, fetch data, analyze with AI, save results.
     """
@@ -990,6 +996,271 @@ def main():
                     print(f"  - {opp['permit_id']} (see opportunities.json for details)")
         except Exception as e:
             logger.warning(f"Could not read opportunities for summary: {e}")
+
+
+def convert_jsonl_to_json(jsonl_file: str = "opportunities.jsonl", json_file: str = "opportunities.json"):
+    """
+    Convert the robust JSONL file to a standard JSON array.
+    Merges with existing JSON file if present to preserve history.
+    """
+    print(f"\nConverting {jsonl_file} to {json_file}...")
+    
+    if not os.path.exists(jsonl_file):
+        print(f"   ⚠️ File {jsonl_file} does not exist (no new data?).")
+        return
+
+    new_items = []
+    try:
+        with open(jsonl_file, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        new_items.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        logger.warning(f"Skipped invalid JSON line in {jsonl_file}")
+    except Exception as e:
+        logger.error(f"Failed to read JSONL file: {e}")
+        print(f"   ❌ Failed to read {jsonl_file}: {e}")
+        return
+
+    # Load existing JSON if it exists
+    existing_items = []
+    if os.path.exists(json_file):
+        try:
+            with open(json_file, 'r', encoding='utf-8') as f:
+                existing_items = json.load(f)
+        except (json.JSONDecodeError, FileNotFoundError):
+            pass
+
+    # Deduplicate by permit_id (New items overwrite old items if duplicate)
+    combined_map = {item.get('permit_id'): item for item in existing_items}
+    for item in new_items:
+        combined_map[item.get('permit_id')] = item
+    
+    final_list = list(combined_map.values())
+
+    # Write final JSON
+    try:
+        with open(json_file, 'w', encoding='utf-8') as f:
+            json.dump(final_list, f, ensure_ascii=False, indent=2)
+        print(f"   ✅ Converted {len(new_items)} new items. Total in JSON: {len(final_list)}")
+        
+        # Cleanup JSONL file after successful conversion
+        try:
+            os.remove(jsonl_file)
+            print(f"   🗑️  Cleaned up {jsonl_file}")
+        except OSError:
+            pass
+            
+    except Exception as e:
+        logger.error(f"Failed to write final JSON: {e}")
+        print(f"   ❌ Failed to write final JSON: {e}")
+
+
+def sort_opportunities_by_date(output_file: str = "opportunities.json"):
+    """
+    Sort the opportunities in the JSON file by date (latest event date).
+    """
+    print(f"\nSorting {output_file} by date...")
+    try:
+        with opportunities_lock:
+            if not os.path.exists(output_file):
+                print(f"   ⚠️ File {output_file} does not exist.")
+                return
+
+            with open(output_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            if not data:
+                print("   ⚠️ No data to sort.")
+                return
+
+            # Helper to extract date from history
+            def get_sort_date(item):
+                if not item.get('history'):
+                    return datetime.min
+                # Try to parse dates from history events
+                latest_date = datetime.min
+                for event in item['history']:
+                    date_str = event.get('event_date')
+                    if date_str:
+                        try:
+                            dt = datetime.strptime(date_str, '%d/%m/%Y')
+                            if dt > latest_date:
+                                latest_date = dt
+                        except ValueError:
+                            pass
+                return latest_date
+
+            # Sort descending (newest first)
+            data.sort(key=get_sort_date, reverse=True)
+
+            with open(output_file, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            
+            print(f"   ✅ Sorted {len(data)} opportunities by date.")
+
+    except Exception as e:
+        logger.error(f"Failed to sort opportunities: {e}")
+        print(f"   ❌ Failed to sort opportunities: {e}")
+
+
+def process_permit(permit_id: str, client: OpenAI, results: Dict[str, int]) -> None:
+    """
+    Worker function to process a single permit.
+    """
+    try:
+        # Fetch data from API
+        mahut_text, metadata = fetch_permit_data(permit_id)
+        
+        if not mahut_text:
+            logger.warning(f"Permit {permit_id}: Failed to fetch or extract text")
+            mark_permit_processed(permit_id)
+            with results['lock']:
+                results['errors'] += 1
+            return
+
+        # Analyze with AI
+        result = analyze_with_ai(mahut_text, permit_id, client)
+        
+        if result is None:
+            logger.error(f"Permit {permit_id}: AI analysis failed")
+            mark_permit_processed(permit_id)
+            with results['lock']:
+                results['errors'] += 1
+            return
+
+        if result.get('is_relevant', False):
+            project_type = result.get('project_type', 'Unknown')
+            # enrich with metadata
+            enriched = {**result, **metadata}
+            
+            save_opportunity_incremental(enriched, OUTPUT_FILE, "relevant_permits.txt")
+            mark_permit_processed(permit_id)
+            
+            with results['lock']:
+                results['relevant'] += 1
+            
+            try:
+                print(f"✅ [{permit_id}] RELEVANT: {flip_text(project_type)}")
+            except:
+                print(f"✅ [{permit_id}] RELEVANT")
+
+        else:
+            reason = result.get('reason', 'Not relevant')
+            log_skipped_permit(permit_id, mahut_text)
+            mark_permit_processed(permit_id)
+            
+            try:
+                # print(f"   [{permit_id}] Skip: {flip_text(reason)}") 
+                pass 
+            except:
+                pass
+
+        with results['lock']:
+            results['processed'] += 1
+            total = results['total']
+            current = results['processed']
+            if current % 10 == 0 or current == total:
+                print(f"Progress: {current}/{total}...")
+
+    except Exception as e:
+        logger.error(f"Error processing permit {permit_id}: {e}")
+        with results['lock']:
+            results['errors'] += 1
+
+
+def main():
+    """
+    Main workflow: read permits, fetch data, analyze with AI, save results.
+    Refactored for parallel execution.
+    """
+    print("=" * 60)
+    print("Bat Yam Building Permit Analyzer - Parallel Version")
+    print("=" * 60)
+    
+    # Check for API key
+    api_key = os.getenv('OPENAI_API_KEY')
+    if not api_key or 'your-key' in api_key:
+        print("\nERROR: OPENAI_API_KEY not configured!")
+        return
+    
+    # Initialize OpenAI client
+    client = OpenAI(api_key=api_key)
+    print("OK: OpenAI client initialized")
+    
+    # Test proxy connection
+    print(f"Proxy Configured: {USE_PROXY}")
+    if USE_PROXY:
+        if not test_proxy_connection():
+            print("\n❌ Proxy Connection FAILED. Check credentials.")
+    
+    # Initialize debug requests file
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    log_file_path = os.path.join(script_dir, DEBUG_REQUESTS_FILE)
+    try:
+        with open(log_file_path, 'w', encoding='utf-8-sig') as f:
+            f.write("Model Requests Debug Log\n" + "=" * 80 + "\n\n")
+    except Exception:
+        pass
+    
+    # Read permit IDs
+    try:
+        with open(PERMIT_FILE, 'r', encoding='utf-8') as f:
+            permit_ids = [line.strip() for line in f if line.strip()]
+        print(f"OK: Loaded {len(permit_ids)} permit IDs from {PERMIT_FILE}")
+    except FileNotFoundError:
+        print(f"\nERROR: {PERMIT_FILE} not found!")
+        return
+    
+    # Filter processed
+    already_processed = load_processed_permits("processed_permits.txt")
+    if already_processed:
+        permit_ids_to_process = [pid for pid in permit_ids if pid not in already_processed]
+        print(f"Skipping {len(permit_ids) - len(permit_ids_to_process)} already processed.")
+        permit_ids = permit_ids_to_process
+    
+    if not permit_ids:
+        print("All permits processed!")
+        sort_opportunities_by_date(OUTPUT_FILE)
+        return
+    
+    # Shared results counter
+    results_tracker = {
+        'processed': 0,
+        'relevant': 0,
+        'errors': 0,
+        'total': len(permit_ids),
+        'lock': threading.Lock()
+    }
+    
+    print(f"\nStarting parallel execution with 7 workers for {len(permit_ids)} permits...")
+    
+    start_time = time.time()
+    
+    # Parallel Execution
+    with concurrent.futures.ThreadPoolExecutor(max_workers=7) as executor:
+        futures = [
+            executor.submit(process_permit, pid, client, results_tracker)
+            for pid in permit_ids
+        ]
+        concurrent.futures.wait(futures)
+        
+    duration = time.time() - start_time
+    print(f"\nProcessing completed in {duration:.2f} seconds.")
+    
+    # Convert JSONL to JSON
+    convert_jsonl_to_json(OUTPUT_FILE_JSONL, OUTPUT_FILE)
+    
+    # Sort results
+    sort_opportunities_by_date(OUTPUT_FILE)
+    
+    # Summary
+    print(f"\nSummary:")
+    print(f"  - Total processed: {results_tracker['processed']}")
+    print(f"  - Opportunities found: {results_tracker['relevant']}")
+    print(f"  - Errors: {results_tracker['errors']}")
 
 
 if __name__ == "__main__":

@@ -7,14 +7,16 @@ import time
 import re
 import urllib.parse
 from io import StringIO
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 from pathlib import Path
 import os
 import random
 import string
+import threading
+import concurrent.futures
 from dotenv import load_dotenv
 import urllib3
-from datetime import datetime  # <--- שינוי 1: הוספת ייבוא datetime
+from datetime import datetime
 
 # Suppress SSL warnings since verify=False is often needed for proxies
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -56,9 +58,17 @@ PROXY_PASS = os.getenv("PROXY_PASS")
 # SSL Verification setting
 VERIFY_SSL = False
 
+# WORKER CONFIGURATION
+MAX_WORKERS = 7
+
 # ============================================================================
 # END OF CONFIGURATION
 # ============================================================================
+
+# ============================================================================
+# THREAD SAFETY LOCKS
+# ============================================================================
+output_lock = threading.Lock()
 
 # ============================================================================
 # HELPER FUNCTIONS
@@ -197,7 +207,7 @@ def scrape_plan(serial_id, taba_number, max_retries=3, max_captcha_retries=3):
     response = None
     captcha_retry_count = 0
     
-    print(f"  📡 Requesting ID {serial_id}...")
+    # print(f"  📡 Requesting ID {serial_id}...")
     
     for attempt in range(1, max_retries + 1):
         try:
@@ -211,7 +221,7 @@ def scrape_plan(serial_id, taba_number, max_retries=3, max_captcha_retries=3):
             
             # Handle 502 Bad Gateway (common with proxies)
             if response.status_code == 502:
-                print(f"     ⚠️  502 Proxy Gateway Error - Retrying...")
+                # print(f"     ⚠️  502 Proxy Gateway Error - Retrying...")
                 time.sleep(2)
                 continue
             
@@ -222,18 +232,18 @@ def scrape_plan(serial_id, taba_number, max_retries=3, max_captcha_retries=3):
                 captcha_retry_count += 1
                 if captcha_retry_count <= max_captcha_retries:
                     wait_time = random.randint(30, 40)
-                    print(f"     ⚠️  CAPTCHA detected! Waiting {wait_time}s...")
+                    print(f"     ⚠️  CAPTCHA detected for {taba_number}! Waiting {wait_time}s...")
                     time.sleep(wait_time)
                     continue
                 else:
-                    print(f"     ❌ CAPTCHA block persistent. Skipping.")
+                    print(f"     ❌ CAPTCHA block persistent for {taba_number}. Skipping.")
                     return None
             
             # Success
             break
             
         except Exception as e:
-            print(f"     ❌ Error (Attempt {attempt}): {str(e)[:100]}")
+            # print(f"     ❌ Error for {taba_number} (Attempt {attempt}): {str(e)[:100]}")
             if attempt < max_retries:
                 time.sleep(3)
             else:
@@ -330,10 +340,10 @@ def scrape_plan(serial_id, taba_number, max_retries=3, max_captcha_retries=3):
         plan_data["meeting_history"] = []
 
     # Summary log
-    info_count = len(plan_data['general_info'])
-    hist_count = len(plan_data['history'])
-    meet_count = len(plan_data['meeting_history'])
-    print(f"     ✓ Extracted: Info({info_count}), History({hist_count}), Meetings({meet_count})")
+    # info_count = len(plan_data['general_info'])
+    # hist_count = len(plan_data['history'])
+    # meet_count = len(plan_data['meeting_history'])
+    # print(f"     ✓ Extracted: Info({info_count}), History({hist_count}), Meetings({meet_count})")
     
     return plan_data
 
@@ -407,6 +417,8 @@ def _parse_plan_meetings(soup: BeautifulSoup) -> List[Dict[str, Any]]:
 def load_existing_plans(output_json):
     scraped_plans = set()
     existing_data = []
+    
+    # Check JSON file
     if os.path.exists(output_json):
         try:
             with open(output_json, 'r', encoding='utf-8') as f:
@@ -416,8 +428,9 @@ def load_existing_plans(output_json):
                     for plan in existing_data:
                         if isinstance(plan, dict) and 'plan_number' in plan:
                             scraped_plans.add(str(plan['plan_number']))
-            print(f"Found {len(scraped_plans)} already scraped plans.")
+            print(f"Found {len(scraped_plans)} already scraped plans in JSON.")
         except: pass
+        
     return scraped_plans, existing_data
 
 def format_json_compact_history(data):
@@ -450,16 +463,99 @@ def format_json_compact_history(data):
     json_str = compress_array_field(json_str, "meeting_history")
     return json_str
 
+def save_plan_incremental_jsonl(plan_data: Dict[str, Any], output_file_jsonl: str):
+    """
+    Save a single plan to JSONL file immediately.
+    """
+    try:
+        json_line = json.dumps(plan_data, ensure_ascii=False) + '\n'
+        with output_lock:
+            with open(output_file_jsonl, 'a', encoding='utf-8') as f:
+                f.write(json_line)
+    except Exception as e:
+        print(f"Failed to save plan {plan_data.get('plan_number')} to JSONL: {e}")
+
+def convert_jsonl_to_json(input_jsonl: str, output_json: str, existing_data: list = None):
+    """
+    Convert JSONL file to JSON, merging with existing data.
+    """
+    all_data = existing_data[:] if existing_data else []
+    
+    # Check if JSONL exists
+    if os.path.exists(input_jsonl):
+        print(f"Reading temporary data from {input_jsonl}...")
+        try:
+            with open(input_jsonl, 'r', encoding='utf-8') as f:
+                for line in f:
+                    if line.strip():
+                        try:
+                            data = json.loads(line)
+                            all_data.append(data)
+                        except json.JSONDecodeError:
+                            pass
+        except Exception as e:
+            print(f"Error reading JSONL: {e}")
+            
+    # Remove duplicates based on plan_number, keeping the latest one
+    # (assuming later in the list = newer or same)
+    unique_map = {}
+    for item in all_data:
+        if 'plan_number' in item:
+            unique_map[str(item['plan_number'])] = item
+            
+    final_list = list(unique_map.values())
+    
+    print(f"Saving {len(final_list)} total plans to {output_json}...")
+    try:
+        formatted_json = format_json_compact_history(final_list)
+        with open(output_json, 'w', encoding='utf-8') as f:
+            f.write(formatted_json)
+        # Optional: Remove JSONL after successful save? 
+        # For safety/debugging, we might keep it or rename it. 
+        # But per standard practice in previous file, we leave it or overwrite next time.
+        # Here we will just leave it.
+    except Exception as e:
+        print(f"Error saving final JSON: {e}")
+
+def process_plan(row, output_jsonl):
+    """
+    Worker function to process a single plan.
+    """
+    taba_number = row['Taba_Number']
+    serial_id = row['Serial_ID']
+    
+    # print(f"Scraping {taba_number}...")
+    data = scrape_plan(serial_id, taba_number)
+    
+    if data:
+        # Add success status if not present
+        if 'status' not in data:
+            data['status'] = 'success'
+        save_plan_incremental_jsonl(data, output_jsonl)
+        print(f"✅ Saved {taba_number}")
+        return True
+    else:
+        print(f"❌ Failed to scrape {taba_number}. Saving failure record.")
+        failed_record = {
+            "plan_number": taba_number,
+            "status": "failed",
+            "last_attempt": datetime.now().isoformat()
+        }
+        save_plan_incremental_jsonl(failed_record, output_jsonl)
+        return False
+
 def main():
     input_csv = 'bat_yam_taba_list.csv'
     
     # <--- שינוי 2: שם קובץ דינמי לפי התאריך של היום
     today_str = datetime.now().strftime('%Y_%m_%d')
     output_json = f'bat_yam_plans_data_{today_str}.json'
+    output_jsonl = f'bat_yam_plans_data_{today_str}.jsonl'
     
     print("=" * 60)
-    print("🚀 Starting Bat Yam TABA Scraper")
-    print(f"📅 Daily Output File: {output_json}")  # לוג המאשר את שם הקובץ החדש
+    print("🚀 Starting Bat Yam TABA Scraper (Parallel Version)")
+    print(f"📅 Daily Output File: {output_json}")
+    print(f"⚡ Workers: {MAX_WORKERS}")
     print("=" * 60)
     print(f"Proxy Configured: {USE_PROXY}")
     
@@ -477,39 +573,67 @@ def main():
         print(f"Error: CSV file '{input_csv}' not found.")
         return
 
+    # Load from JSON to know what to skip (if restart)
     scraped_plans, existing_data = load_existing_plans(output_json)
+    
+    # Also load from JSONL if exists (crash recovery)
+    if os.path.exists(output_jsonl):
+        try:
+            with open(output_jsonl, 'r', encoding='utf-8') as f:
+                for line in f:
+                    if line.strip():
+                        try:
+                            j = json.loads(line)
+                            if 'plan_number' in j:
+                                scraped_plans.add(str(j['plan_number']))
+                        except: pass
+            print(f"Found additional plans in JSONL. Total unique processed: {len(scraped_plans)}")
+        except: pass
+
     df_to_scrape = df[~df['Taba_Number'].astype(str).isin(scraped_plans)].copy()
     
     remaining = len(df_to_scrape)
     if remaining == 0:
         print("✅ All plans already scraped.")
+        # Ensure JSON is up to date with JSONL content if any
+        convert_jsonl_to_json(output_jsonl, output_json, existing_data)
         return
     
     print(f"Plans to scrape: {remaining}")
-    all_data = existing_data.copy()
-    temp_data = []
     
-    for index, row in df_to_scrape.iterrows():
-        print(f"[{index+1}/{len(df)}] Scraping {row['Taba_Number']} (ID: {row['Serial_ID']})...")
-        
-        data = scrape_plan(row['Serial_ID'], row['Taba_Number'])
-        
-        if data:
-            temp_data.append(data)
-            all_data.append(data)
+    # Convert DataFrame rows to list of dicts for safe iteration
+    rows_to_process = [row for _, row in df_to_scrape.iterrows()]
+    
+    start_time = time.time()
+    
+    try:
+        # Parallel Execution
+        with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+            futures = [
+                executor.submit(process_plan, row, output_jsonl)
+                for row in rows_to_process
+            ]
+            concurrent.futures.wait(futures)
             
-            if len(temp_data) >= 5:
-                with open(output_json, 'w', encoding='utf-8') as f:
-                    f.write(format_json_compact_history(all_data))
-                temp_data = []
-                print("     💾 Saved progress.")
+        duration = time.time() - start_time
+        print(f"\nProcessing completed in {duration:.2f} seconds.")
         
-        # Random delay to look natural
-        time.sleep(random.uniform(1.5, 2))
-    
-    with open(output_json, 'w', encoding='utf-8') as f:
-        f.write(format_json_compact_history(all_data))
-    print("\n✅ Done!")
+    except KeyboardInterrupt:
+        print("\n🛑 Interrupted by user. Saving progress...")
+        
+    finally:
+        # Final conversion
+        convert_jsonl_to_json(output_jsonl, output_json, existing_data)
+        
+        # Cleanup JSONL file
+        if os.path.exists(output_jsonl):
+            try:
+                os.remove(output_jsonl)
+                print(f"🗑️ Cleaned up temporary file: {output_jsonl}")
+            except Exception as e:
+                print(f"⚠️ Could not delete {output_jsonl}: {e}")
+        
+        print("\n✅ Done!")
 
 if __name__ == "__main__":
     main()

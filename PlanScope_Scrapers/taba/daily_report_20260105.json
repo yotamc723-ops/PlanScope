@@ -1,0 +1,54 @@
+{
+    "generated_at": "2026-01-05 23:29:31",
+    "summary": {
+        "total_plans_scanned": 176,
+        "new_plans_discovered": 0,
+        "status_changes": 1,
+        "new_history_events": 1,
+        "new_meetings": 1
+    },
+    "changes": [
+        {
+            "type": "UPDATE",
+            "plan_number": "502-0132522",
+            "plan_name": "בי/641- מתחם הבורסקי 4, בת ים",
+            "updates": [
+                {
+                    "field": "history",
+                    "date": "06/08/2023",
+                    "description": "ש800 בתוקף - מסגירת תיק תכנון",
+                    "new_description": "ש800 בתוקף - מסגירת תיק תכנון",
+                    "old_description": "התכנית/היישות נדונה בוועדה מקומית",
+                    "alert_level": "MEDIUM"
+                }
+            ]
+        },
+        {
+            "type": "UPDATE",
+            "plan_number": "502-0151852",
+            "plan_name": "בי/579- רחוב אוסקר שינדלר 13",
+            "updates": [
+                {
+                    "field": "status",
+                    "old_value": "בתכנון",
+                    "new_value": "בתוקף",
+                    "alert_level": "HIGH"
+                }
+            ]
+        },
+        {
+            "type": "UPDATE",
+            "plan_number": "502-0384776",
+            "plan_name": "בי/684/מק - מגרשי העירייה",
+            "updates": [
+                {
+                    "field": "meeting",
+                    "date": "10/05/2017",
+                    "type": "ועדה מקומית (מליאה)",
+                    "link": "https://batyam.complot.co.il/binyan/#meeting/3/20170001",
+                    "alert_level": "CRITICAL"
+                }
+            ]
+        }
+    ]
+}

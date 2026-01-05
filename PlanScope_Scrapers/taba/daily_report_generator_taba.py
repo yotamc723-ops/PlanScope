@@ -43,12 +43,12 @@ def compare_plans(old_plans: List[Dict], new_plans: List[Dict]) -> Dict[str, Any
     """
     השוואה בין שתי רשימות של תוכניות ויצירת דו"ח שינויים.
     """
-    old_map = {p['plan_number']: p for p in old_plans if 'plan_number' in p}
+    old_map = {p['plan_number']: p for p in old_plans if 'plan_number' in p and p.get('status') != 'failed'}
     
     report = {
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "summary": {
-            "total_plans_scanned": len(new_plans),
+            "total_plans_scanned": len([p for p in new_plans if p.get('status') != 'failed']),
             "new_plans_discovered": 0,
             "status_changes": 0,
             "new_history_events": 0,
@@ -58,6 +58,10 @@ def compare_plans(old_plans: List[Dict], new_plans: List[Dict]) -> Dict[str, Any
     }
 
     for new_plan in new_plans:
+        # Skip failed scrapes
+        if new_plan.get('status') == 'failed':
+            continue
+
         plan_num = new_plan.get('plan_number')
         
         if plan_num not in old_map:
@@ -91,15 +95,24 @@ def compare_plans(old_plans: List[Dict], new_plans: List[Dict]) -> Dict[str, Any
             report['summary']['status_changes'] += 1
 
         # השוואת היסטוריה
-        new_hist = set(tuple(x) for x in new_plan.get('history', []))
-        old_hist = set(tuple(x) for x in old_plan.get('history', []))
-        added_history = new_hist - old_hist
-        if added_history:
-            for item in added_history:
+        old_history_list = old_plan.get('history', [])
+        new_history_list = new_plan.get('history', [])
+        
+        # Safe access to old latest description
+        old_latest_desc = old_history_list[0][1] if old_history_list and len(old_history_list[0]) > 1 else None
+
+        old_hist_set = set(tuple(x) for x in old_history_list)
+        
+        # Iterate through NEW history to find added items (preserving order)
+        for item in new_history_list:
+            item_tuple = tuple(item)
+            if item_tuple not in old_hist_set:
                 plan_changes['updates'].append({
                     "field": "history",
                     "date": item[0],
                     "description": item[1],
+                    "new_description": item[1],
+                    "old_description": old_latest_desc,
                     "alert_level": "MEDIUM"
                 })
                 report['summary']['new_history_events'] += 1

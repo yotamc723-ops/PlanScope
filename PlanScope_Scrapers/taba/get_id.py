@@ -20,9 +20,11 @@ except Exception as e:
 def scrape_bat_yam_taba():
     # הגדרות Selenium Headless
     chrome_options = Options()
-    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--headless")  # Headless mode enabled
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--remote-debugging-port=9222") # Fix for some chromedriver crashes
     chrome_options.add_argument("--window-size=1920,1080")
 
     # אתחול הדרייבר
@@ -37,8 +39,8 @@ def scrape_bat_yam_taba():
         print("Make sure Chrome is installed and chromedriver is in your PATH")
         return
     
-    # כתובת האתר (ניתן לשנות אם הכתובת הספציפית שונה)
-    base_url = "#search/GetTabaByNumber&siteid=81&n=502&l=false&arguments=siteid,n,l"
+    # תיקון כתובת האתר - הוספת הדומיין המלא
+    base_url = "https://batyam.complot.co.il/binyan/#search/GetTabaByNumber&siteid=81&n=502&l=true&arguments=siteid,n,l"
     
     results_data = []
 
@@ -53,23 +55,43 @@ def scrape_bat_yam_taba():
 
         # שלב 2: שינוי ל-100 תוצאות בעמוד
         print("משנה תצוגה ל-100 תוצאות...")
-        select_element = wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="results-table_length"]/label/select')))
-        select = Select(select_element)
-        select.select_by_value("100")
-        
-        # המתנה קלה לטעינה מחדש של הטבלה
-        time.sleep(3)
+        try:
+            select_element = wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="results-table_length"]/label/select')))
+            select = Select(select_element)
+            select.select_by_value("100")
+            # המתנה קלה לטעינה מחדש של הטבלה
+            time.sleep(3)
+        except Exception as e:
+             print(f"לא נמצאה אפשרות לשינוי מספר השורות (אולי הטבלה כבר טעונה או ריקה?): {e}")
+
+        # שלב חדש: לחיצה על כפתור "ללחוץ כאן" לחיפוש ללא הגבלה
+        try:
+            print("לוחץ על כפתור לחיפוש ללא הגבלה...")
+            unlimited_link = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@href, 'getUnlimitedSearch')]")))
+            driver.execute_script("arguments[0].click();", unlimited_link)
+            print("   נלחץ בהצלחה. ממתין לטעינה...")
+            time.sleep(5) # המתנה לטעינה מחדש של הטבלה
+        except Exception as e:
+            print(f"⚠️ הערה: לא נמצא או לא ניתן ללחוץ על קישור החיפוש ללא הגבלה: {e}")
 
         page_num = 1
         while True:
             print(f"סורק עמוד מספר {page_num}...")
             
             # המתנה שהטבלה תהיה נוכחת
-            wait.until(EC.presence_of_element_located((By.ID, "results-table")))
+            try:
+                wait.until(EC.presence_of_element_located((By.ID, "results-table")))
+            except:
+                print("הטבלה לא נמצאה. ייתכן והאתר לא נטען כראוי או שאין תוצאות.")
+                break
             
             # שליפת כל השורות בגוף הטבלה
             rows = driver.find_elements(By.XPATH, '//*[@id="results-table"]/tbody/tr')
             
+            if not rows:
+                print("לא נמצאו שורות בטבלה.")
+                break
+
             for index, row in enumerate(rows, start=1):
                 try:
                     # חילוץ המספר הסידורי מה-href (עמודה 1)
@@ -88,50 +110,37 @@ def scrape_bat_yam_taba():
                         'Serial_ID': serial_number
                     })
                 except Exception as e:
-                    print(f"שגיאה בחילוץ שורה {index} בעמוד {page_num}: {e}")
+                    # התעלמות משגיאות נקודתיות כדי לא לעצור את הריצה
+                    pass
 
             # שלב 3: בדיקה אם יש כפתור "הבא" ולחיצה עליו
             try:
-                # המתנה לכפתור "הבא" להיות נוכח
-                next_button = wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="results-table_next"]')))
+                # מציאת הכפתור לפי ID (שהוא כנראה הכפתור עצמו או ה-a)
+                # לפי הבדיקה, ה-ID הוא results-table_next
+                next_button = wait.until(EC.presence_of_element_located((By.ID, 'results-table_next')))
                 
-                # בדיקה אם הכפתור מושבת (disabled)
-                button_class = next_button.get_attribute("class") or ""
-                is_disabled = "disabled" in button_class.lower()
-                
-                if is_disabled:
+                # בדיקה אם הכפתור מושבת (מחלקת disabled)
+                # לפעמים המחלקה disabled נמצאת על האלמנט עצמו או על ההורה
+                if 'disabled' in next_button.get_attribute('class'):
                     print(f"הגענו לעמוד האחרון (עמוד {page_num}).")
                     break
                 
-                # בדיקה שהכפתור ניתן ללחיצה
-                if not next_button.is_enabled():
-                    print(f"הכפתור 'הבא' לא פעיל בעמוד {page_num}. סיום הסריקה.")
-                    break
+                # בדיקה נוספת: אם זה תג li וה-a בתוכו מושבת (מבנה נפוץ ב-DataTables)
+                # אבל אם ה-ID הוא על הכפתור, הבדיקה הראשונה תספיק.
                 
-                # לחיצה על הכפתור "הבא" עם טיפול בשגיאות
-                print(f"עובר לעמוד הבא...")
+                # גלילה לכפתור (ללא smooth)
+                driver.execute_script("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", next_button)
+                time.sleep(1)
                 
-                # גלילה לכפתור כדי להבטיח שהוא גלוי
-                driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", next_button)
-                time.sleep(0.5)  # המתנה קצרה לאחר הגלילה
+                # לחיצה באמצעות JavaScript (הכי אמין ב-Headless)
+                driver.execute_script("arguments[0].click();", next_button)
                 
-                # ניסיון לחיצה רגילה
-                try:
-                    wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="results-table_next"]')))
-                    next_button.click()
-                except Exception:
-                    # אם לחיצה רגילה נכשלה, נשתמש ב-JavaScript click
-                    print("לחיצה רגילה נכשלה, משתמש בלחיצת JavaScript...")
-                    driver.execute_script("arguments[0].click();", next_button)
-                
-                # המתנה שהטבלה תיטען מחדש
-                time.sleep(2)
-                wait.until(EC.presence_of_element_located((By.ID, "results-table")))
-                
+                # המתנה שהטבלה תיטען מחדש (זיהוי שינוי או סתם המתנה)
+                time.sleep(4)
                 page_num += 1
+
             except Exception as e:
-                print(f"לא ניתן להמשיך לעמוד הבא: {e}")
-                print(f"סיום הסריקה לאחר {page_num} עמודים.")
+                print(f"סיום הסריקה (לא נמצא כפתור 'הבא' או שגיאה במעבר): {e}")
                 break
 
         # שמירה לקובץ CSV
