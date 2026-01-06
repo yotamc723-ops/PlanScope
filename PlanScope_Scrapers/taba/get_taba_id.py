@@ -1,12 +1,139 @@
 import csv
 import re
 import time
+import os
+import random
+import string
+import zipfile
+from pathlib import Path
+from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
+# ============================================================================
+# CONFIGURATION
+# ============================================================================
+
+# Load environment variables (logic copied from get_information_taba.py)
+# This logic navigates 2 folders up to find the project root
+base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+env_path = os.path.join(base_path, '.env')
+env_example_path = os.path.join(base_path, '.env.example')
+
+print(f"🔧 Configuration search path: {base_path}")
+
+if os.path.exists(env_path):
+    load_dotenv(dotenv_path=env_path)
+    print(f"✅ Loaded environment from: {env_path}")
+elif os.path.exists(env_example_path):
+    load_dotenv(dotenv_path=env_example_path)
+    print(f"⚠️  Loaded environment from EXAMPLE file: {env_example_path}")
+else:
+    print("⚠️  No .env file found. Relying on system environment variables.")
+
+# Proxy Config
+USE_PROXY = True
+PROXY_HOST = os.getenv("PROXY_HOST", "zproxy.lum-superproxy.io")
+PROXY_PORT = os.getenv("PROXY_PORT", "22225")
+PROXY_USER = os.getenv("PROXY_USER")
+PROXY_PASS = os.getenv("PROXY_PASS")
+
+def get_proxy_auth_extension(proxy_host, proxy_port, proxy_user, proxy_pass):
+    """
+    Creates a Chrome extension (zip file) to handle proxy authentication.
+    Returns the path to the created extension.
+    """
+    manifest_json = """
+    {
+        "version": "1.0.0",
+        "manifest_version": 2,
+        "name": "Chrome Proxy",
+        "permissions": [
+            "proxy",
+            "tabs",
+            "unlimitedStorage",
+            "storage",
+            "<all_urls>",
+            "webRequest",
+            "webRequestBlocking"
+        ],
+        "background": {
+            "scripts": ["background.js"]
+        },
+        "minimum_chrome_version":"22.0.0"
+    }
+    """
+
+    background_js = f"""
+    var config = {{
+            mode: "fixed_servers",
+            rules: {{
+            singleProxy: {{
+                scheme: "http",
+                host: "{proxy_host}",
+                port: parseInt({proxy_port})
+            }},
+            bypassList: ["localhost"]
+            }}
+        }};
+
+    chrome.proxy.settings.set({{value: config, scope: "regular"}}, function() {{}});
+
+    function callbackFn(details) {{
+        return {{
+            authCredentials: {{
+                username: "{proxy_user}",
+                password: "{proxy_pass}"
+            }}
+        }};
+    }}
+
+    chrome.webRequest.onAuthRequired.addListener(
+                callbackFn,
+                {{urls: ["<all_urls>"]}},
+                ['blocking']
+    );
+    """
+    
+    plugin_file = 'proxy_auth_plugin_taba.zip'
+    with zipfile.ZipFile(plugin_file, 'w') as zp:
+        zp.writestr("manifest.json", manifest_json)
+        zp.writestr("background.js", background_js)
+    
+    return os.path.abspath(plugin_file)
+
+def get_proxy_details(session_id=None):
+    """
+    Constructs the proxy user string with session rotation.
+    """
+    if not USE_PROXY:
+        print("⚠️ Proxy disabled in code.")
+        return None
+        
+    current_user = PROXY_USER
+    if not current_user or not PROXY_PASS:
+        print("⚠️ Proxy enabled but credentials missing.")
+        return None
+
+    # Bright Data Logic
+    if 'brd-customer' in current_user:
+        if '-country-' not in current_user:
+            current_user = f"{current_user}-country-il"
+        
+        if session_id:
+            current_user = f"{current_user}-session-{session_id}"
+            
+    return {
+        "host": PROXY_HOST,
+        "port": PROXY_PORT,
+        "user": current_user,
+        "pass": PROXY_PASS
+    }
+
 
 # Try to import ChromeDriverManager, fallback if it fails
 try:
@@ -27,6 +154,23 @@ def scrape_bat_yam_taba():
     chrome_options.add_argument("--remote-debugging-port=9222") # Fix for some chromedriver crashes
     chrome_options.add_argument("--window-size=1920,1080")
 
+    # Proxy Setup
+    if USE_PROXY:
+        session_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
+        proxy_details = get_proxy_details(session_id=session_id)
+        
+        if proxy_details:
+            print(f"🔒 Configuring Proxy: {proxy_details['host']}:{proxy_details['port']} (Session: {session_id})")
+            
+            # Create and add authentication extension
+            plugin_path = get_proxy_auth_extension(
+                proxy_details['host'], 
+                proxy_details['port'], 
+                proxy_details['user'], 
+                proxy_details['pass']
+            )
+            chrome_options.add_extension(plugin_path)
+
     # אתחול הדרייבר
     try:
         if USE_WEBDRIVER_MANAGER:
@@ -34,6 +178,12 @@ def scrape_bat_yam_taba():
         else:
             # Fallback to system Chrome driver
             driver = webdriver.Chrome(options=chrome_options)
+        
+        # Clean up the extension file
+        if os.path.exists('proxy_auth_plugin_taba.zip'):
+            try:
+                os.remove('proxy_auth_plugin_taba.zip')
+            except: pass
     except Exception as e:
         print(f"Error initializing Chrome driver: {e}")
         print("Make sure Chrome is installed and chromedriver is in your PATH")

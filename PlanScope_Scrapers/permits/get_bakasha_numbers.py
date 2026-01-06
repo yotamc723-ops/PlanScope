@@ -1,12 +1,136 @@
 import time
 import os
 import json
+import random
+import string
+import zipfile
+from pathlib import Path
+from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
+
+# ============================================================================
+# CONFIGURATION
+# ============================================================================
+
+# Load environment variables (logic copied from analyze_permits.py)
+base_dir = Path(__file__).parent.parent.parent
+env_path = base_dir / '.env'
+env_example_path = base_dir / '.env.example'
+
+if env_path.exists():
+    load_dotenv(env_path)
+    print(f"✅ Loaded environment from: {env_path}")
+elif env_example_path.exists():
+    load_dotenv(env_example_path)
+    print(f"⚠️  Loaded environment from EXAMPLE file: {env_example_path}")
+else:
+    print(f"⚠️  No .env file found at {base_dir}")
+    print("   Relying on system environment variables.")
+
+# Proxy Config
+USE_PROXY = True
+PROXY_HOST = os.getenv("PROXY_HOST", "brd.superproxy.io")
+PROXY_PORT = os.getenv("PROXY_PORT", "33335")
+PROXY_USER = os.getenv("PROXY_USER")
+PROXY_PASS = os.getenv("PROXY_PASS")
+
+def get_proxy_auth_extension(proxy_host, proxy_port, proxy_user, proxy_pass):
+    """
+    Creates a Chrome extension (zip file) to handle proxy authentication.
+    Returns the path to the created extension.
+    """
+    manifest_json = """
+    {
+        "version": "1.0.0",
+        "manifest_version": 2,
+        "name": "Chrome Proxy",
+        "permissions": [
+            "proxy",
+            "tabs",
+            "unlimitedStorage",
+            "storage",
+            "<all_urls>",
+            "webRequest",
+            "webRequestBlocking"
+        ],
+        "background": {
+            "scripts": ["background.js"]
+        },
+        "minimum_chrome_version":"22.0.0"
+    }
+    """
+
+    background_js = f"""
+    var config = {{
+            mode: "fixed_servers",
+            rules: {{
+            singleProxy: {{
+                scheme: "http",
+                host: "{proxy_host}",
+                port: parseInt({proxy_port})
+            }},
+            bypassList: ["localhost"]
+            }}
+        }};
+
+    chrome.proxy.settings.set({{value: config, scope: "regular"}}, function() {{}});
+
+    function callbackFn(details) {{
+        return {{
+            authCredentials: {{
+                username: "{proxy_user}",
+                password: "{proxy_pass}"
+            }}
+        }};
+    }}
+
+    chrome.webRequest.onAuthRequired.addListener(
+                callbackFn,
+                {{urls: ["<all_urls>"]}},
+                ['blocking']
+    );
+    """
+    
+    plugin_file = 'proxy_auth_plugin.zip'
+    with zipfile.ZipFile(plugin_file, 'w') as zp:
+        zp.writestr("manifest.json", manifest_json)
+        zp.writestr("background.js", background_js)
+    
+    return os.path.abspath(plugin_file)
+
+def get_proxy_details(session_id=None):
+    """
+    Constructs the proxy user string with session rotation (same logic as analyze_permits.py).
+    """
+    if not USE_PROXY:
+        print("⚠️ Proxy disabled in code.")
+        return None
+        
+    current_user = PROXY_USER
+    if not current_user or not PROXY_PASS:
+        print("⚠️ Proxy enabled but credentials missing.")
+        return None
+
+    # Bright Data Logic
+    if 'brd-customer' in current_user:
+        if '-country-' not in current_user:
+            current_user = f"{current_user}-country-il"
+        
+        if session_id:
+            current_user = f"{current_user}-session-{session_id}"
+            
+    return {
+        "host": PROXY_HOST,
+        "port": PROXY_PORT,
+        "user": current_user,
+        "pass": PROXY_PASS
+    }
+
 
 PERMIT_JSON = "permit_numbers.json"
 
@@ -50,7 +174,32 @@ def scrape_permit_numbers():
     # User-Agent to avoid blocking
     chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
 
+    # Proxy Setup
+    if USE_PROXY:
+        session_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
+        proxy_details = get_proxy_details(session_id=session_id)
+        
+        if proxy_details:
+            print(f"🔒 Configuring Proxy: {proxy_details['host']}:{proxy_details['port']} (Session: {session_id})")
+            
+            # Create and add authentication extension
+            plugin_path = get_proxy_auth_extension(
+                proxy_details['host'], 
+                proxy_details['port'], 
+                proxy_details['user'], 
+                proxy_details['pass']
+            )
+            chrome_options.add_extension(plugin_path)
+            
+            # Note: Do NOT use --proxy-server argument when using the extension for auth
+    
     driver = webdriver.Chrome(options=chrome_options)
+
+    # Clean up the extension file
+    if os.path.exists('proxy_auth_plugin.zip'):
+        try:
+            os.remove('proxy_auth_plugin.zip')
+        except: pass
     
     # List to keep track of new permits found in this session
     new_permits = []
