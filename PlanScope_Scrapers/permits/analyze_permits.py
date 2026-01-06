@@ -145,14 +145,14 @@ NOT RELEVANT (ignore):
 Treat as NOT relevant any permit that describes only small, non-value-adding work and does NOT include major construction/expansion or creation of new residential/commercial units.
 Examples: balcony closure, pergola, signs, small repairs/minor renovations, interior-only changes, storage room, fence, AC/ventilation installations, sealing changes, accessibility ramps (unless part of a larger project)
 
-OUTPUT FORMAT (JSON only, no markdown, no code blocks):
+OUTPUT FORMAT (JSON only, no markdown, no code blocks *In hebrew*):
 {
   "is_relevant": true,
   "permit_id": "...",
   "project_type": "Tama 38 / Pinui Binui / New Construction / Mixed-Use / etc.",
   "description": "copy the Hebrew description text",
   "num_units": "number of residential units if mentioned (יח\"ד), otherwise null",
-  "key_features": ["list", "key", "points"]
+  "key_features": ["list", "key", "points"] 
 }
 
 If NOT relevant:

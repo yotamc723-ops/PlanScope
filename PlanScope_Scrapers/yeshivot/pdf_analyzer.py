@@ -78,7 +78,7 @@ Return a JSON object with a single list "decisions". The list can contain mixed 
 
 #### SCHEMA FOR TYPE A (PLANNING SCHEME):
 {
-    "type": "PLANNING_SCHEME",
+    "type": "תב״ע",
     "plan_number": "string (The Plan ID, e.g. '502-1234567')",
     "project_category": "string (Always 'תכנית מתאר')",
     "decision_stage": "string (e.g. 'הפקדה', 'מתן תוקף', 'דיון בהתנגדויות')",
@@ -91,7 +91,7 @@ Return a JSON object with a single list "decisions". The list can contain mixed 
 
 #### SCHEMA FOR TYPE B (BUILDING PERMIT):
 {
-    "type": "BUILDING_PERMIT",
+    "type": "היתר בניה",
     "request_id": "string (Request Number)",
     "address": "string",
     "applicant": "string",
