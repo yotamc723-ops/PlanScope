@@ -1,178 +1,112 @@
-# Building Permit Data Structure Schema
+# City Plan (Taba) Data Structure Schema
 
-This document defines the complete data structure for a single building permit request as extracted by the Bat Yam permit analyzer.
+This document defines the data structure for **City Plans (Taba)** extracted by the Bat Yam Taba scraper.
+Note: This schema corresponds to files like `bat_yam_plans_data_YYYY_MM_DD.json`.
 
 ---
 
 ## 📊 Data Schema
 
-Each permit request is represented as a JSON object with the following fields:
+Each plan is represented as a JSON object with the following fields:
 
 ### Root Level Fields
 
 | Field Name | Type | Description | Source |
 |------------|------|-------------|--------|
-| `is_relevant` | boolean | Whether the permit is relevant for real estate investors | AI Analysis |
-| `permit_id` | string | Unique permit identification number (8 digits) | API |
-| `project_type` | string | Classification of the project (e.g., "הריסה ובנייה", "Tama 38") | AI Analysis |
-| `description` | string | Full Hebrew description of the permit request (מהות הבקשה) | API (div#mahut) |
-| `num_units` | number/null | Number of residential units in the project | AI Analysis |
-| `key_features` | array[string] | AI-extracted key features and investment insights | AI Analysis |
-| `request_type` | string | Type of permit request (e.g., "בקשה למידע", "בקשה להיתר") | API (info table) |
-| `main_use` | string | Primary use classification (e.g., "מגורים", "מסחר") | API (info table) |
-| `address` | string | Full street address of the property | API (navbar) |
-
-### Nested Objects
-
-#### `applicants` (object)
-Information about parties involved in the permit request:
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `requestor` | string/null | Name of the party submitting the request (מבקש) |
-| `owner` | string/null | Name of the property owner (בעל הנכס) |
-| `author` | string/null | Name of the architect/planner (עורך) |
-
-#### `parcels` (array of objects)
-Land parcel identification (גוש וחלקה):
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `gush` | string | Gush number (גוש) - land block identifier |
-| `helka` | string | Helka number (חלקה) - parcel identifier |
-
-#### `history` (array of objects)
-Chronological permit processing events (אירועים):
-
-| Field Name | Type | Description |
-|------------|------|-------------|
-| `event_type` | string | Event status (e.g., "נוכחי", "סגור") |
-| `event_description` | string | Description of the event |
-| `event_date` | string | Event start date (DD/MM/YYYY) |
-| `event_end_date` | string/null | Event end date (DD/MM/YYYY) or null if ongoing |
+| `plan_number` | string | Unique plan identifier (e.g., "502-0126813") | API/HTML |
+| `plan_type` | string | Type of plan (e.g., "תכנית מתאר מקומית") | API/HTML |
+| `plan_name` | string | Name/Title of the plan (e.g., "בי/534 מבנים בעירוב שימושים") | API/HTML |
 
 ---
 
-## 📋 Example: Complete Permit Record
+### Nested Objects
+
+#### `general_info` (object)
+Detailed administrative information about the plan:
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `status` | string | Current status (e.g., "בתוקף", "בתכנון") |
+| `status_date` | string | Date of the status change (DD/MM/YYYY) |
+| `authority` | string | Responsible authority (e.g., "ועדה מחוזית", "ועדה מקומית") |
+| `neighborhood` | string/null | Neighborhood name (often "nan" if unavailable) |
+| `area` | string | Area textual description (e.g., "16,797.00 מ\"ר 16.797 דונם") |
+| `developer` | string/null | Developer name (e.g., "ארז דהבני") |
+| `mavat_link` | string | Direct URL to the Mavat system for this plan |
+
+---
+
+#### `history` (array of arrays)
+Chronological list of plan events. Each item is a list (tuple) of exactly two strings:
+
+Format: `[ "Date", "Description" ]`
+
+| Index | Type | Description |
+|-------|------|-------------|
+| 0 | string | Event date (DD/MM/YYYY) |
+| 1 | string | Event description (e.g., "ש800 בתוקף - מסגירת תיק תכנון") |
+
+**Example:**
+```json
+[
+  ["09/01/2018", "ש800 בתוקף - מסגירת תיק תכנון"],
+  ["04/06/2025", "התכנית/היישות נדונה בוועדה מקומית"]
+]
+```
+
+---
+
+#### `meeting_history` (array of objects)
+List of committee meetings related to the plan:
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| `meeting_type` | string | Type of meeting (e.g., "ועדת משנה", "ועדת שימור אתרים") |
+| `meeting_number` | string | Unique meeting ID (e.g., "20140002") |
+| `meeting_date` | string | Date of the meeting (DD/MM/YYYY) |
+| `day_of_week` | string | Hebrew day abbreviation (e.g., "א", "ב") |
+| `meeting_time` | string | Time of meeting (HH:MM) |
+| `meeting_link` | string | Direct URL to the meeting protocols |
+
+---
+
+## 📋 Example: Complete Plan Record
 
 ```json
 {
-  "is_relevant": true,
-  "permit_id": "20250954",
-  "project_type": "הריסה ובנייה",
-  "description": "מידע עבור תכנית במסלול רישוי מהיר לפי תיקון 139 שמהותה הריסת 2 מבנים בעלי קיר משותף כל אחד בן 4 קומות, הכוללים סה\"כ 32 יח\"ד, והקמת מבנה מגורים בן 10 קומות, הכולל סה\"כ 80 יח\"ד",
-  "num_units": 80,
-  "key_features": [
-    "הריסה של 2 מבנים קיימים בעלי קיר משותף",
-    "מבנים קיימים: כל אחד 4 קומות, יחדיו 32 יח\"ד",
-    "הקמה של מבנה מגורים חדש בן 10 קומות",
-    "סך הכל 80 יחידות דיור במבנה החדש",
-    "תכנית במסלול רישוי מהיר לפי תיקון 139"
-  ],
-  "request_type": "בקשה למידע",
-  "main_use": "מגורים",
-  "address": "מנדלי מוכר ספרים 11 בת ים",
-  "applicants": {
-    "requestor": "קבוצת אהרוני",
-    "owner": "טל נבות",
-    "author": null
-  },
-  "parcels": [
-    {
-      "gush": "7136",
-      "helka": "360"
+    "plan_number": "502-0126813",
+    "plan_type": "תכנית מתאר מקומית",
+    "plan_name": "בי/534 מבנים בעירוב שימושים",
+    "general_info": {
+        "status": "בתוקף",
+        "status_date": "09/01/2018",
+        "authority": "ועדה מחוזית",
+        "neighborhood": "nan",
+        "area": "16,797.00 מ\"ר 16.797 דונם",
+        "developer": "ארז דהבני",
+        "mavat_link": "https://mavat.iplan.gov.il/SV3?text=502-0126813"
     },
-    {
-      "gush": "7136",
-      "helka": "361"
-    }
-  ],
-  "history": [
-    {
-      "event_type": "נוכחי",
-      "event_description": "דחיית בקשה למידע - אי עמידה בתנאי סף",
-      "event_date": "28/12/2025",
-      "event_end_date": null
-    },
-    {
-      "event_type": "סגור",
-      "event_description": "קבלת נתונים מרישוי זמין",
-      "event_date": "28/12/2025",
-      "event_end_date": "28/12/2025"
-    },
-    {
-      "event_type": "סגור",
-      "event_description": "פתיחת בקשה למידע",
-      "event_date": "28/12/2025",
-      "event_end_date": "28/12/2025"
-    }
-  ]
+    "history": [
+        ["09/01/2018", "ש800 בתוקף - מסגירת תיק תכנון"],
+        ["04/06/2025", "התכנית/היישות נדונה בוועדה מקומית"]
+    ],
+    "meeting_history": [
+        {
+            "meeting_type": "ועדת משנה",
+            "meeting_number": "20140002",
+            "meeting_date": "27/04/2014",
+            "day_of_week": "א",
+            "meeting_time": "00:00",
+            "meeting_link": "https://batyam.complot.co.il/binyan/#meeting/2/20140002"
+        }
+    ]
 }
 ```
 
 ---
 
-## 🔍 Field Value Examples
+## 📝 Notes
 
-### `is_relevant`
-- `true` - Relevant for investors (demolition/construction, new developments, Tama 38, etc.)
-- `false` - Not relevant (minor renovations, cosmetic changes, small add-ons)
-
-### `project_type` (when relevant)
-- `"הריסה ובנייה"` (Demolition and Construction)
-- `"Pinui Binui / הריסה ובנייה"` (Urban Renewal)
-- `"Tama 38"` (National Outline Plan 38)
-- `"הריסה ובנייה (Demolition and Construction)"`
-
-### `request_type`
-- `"בקשה למידע"` (Information Request)
-- `"בקשה להיתר - רישוי מלא"` (Full Permit Request)
-- `"בקשה להיתר - רישוי מהיר"` (Fast-Track Permit Request)
-
-### `main_use`
-- `"מגורים"` (Residential)
-- `"מסחר"` (Commercial)
-- `"תעשייה"` (Industrial)
-- `"מבני ציבור"` (Public Buildings)
-- `"בניה חדשה - מגורים, תעסוקה, מסחר, מבני ציבור"` (Mixed Use)
-
-### `event_type`
-- `"נוכחי"` (Current/Active)
-- `"סגור"` (Closed/Completed)
-
----
-
-## 📝 Notes for LLM Processing
-
-1. **Hebrew Text**: All fields containing Hebrew text use UTF-8 encoding without BOM. Right-to-left (RTL) control characters have been cleaned.
-
-2. **Null Values**: Fields may be `null` when data is not available from the source. Common null fields: `author`, `num_units`, `event_end_date`.
-
-3. **Arrays**: `key_features`, `parcels`, and `history` are always arrays, but may be empty `[]` if no data exists.
-
-4. **Date Format**: All dates use DD/MM/YYYY format (e.g., "28/12/2025").
-
-5. **Permit ID**: Always 8 digits, representing the year and sequence (e.g., 20250954 = year 2025, sequence 954).
-
-6. **Gush/Helka**: Israeli land registry identifiers. Multiple parcels indicate the project spans multiple plots.
-
----
-
-## 🎯 Data Source Summary
-
-| Data Category | Source Location | Extraction Method |
-|---------------|-----------------|-------------------|
-| Basic Info | API HTML Response | BeautifulSoup CSS selectors |
-| Description | `div#mahut` | BeautifulSoup |
-| Administrative | `#info-main table` | Table row parsing |
-| Address | `#navbar-titles-id` h5[3] | Navbar parsing |
-| Applicants | `#table-baaley-inyan` | Table parsing |
-| Parcels | `#table-gushim-helkot` | Table parsing |
-| History | `#table-events` | Table row parsing |
-| AI Analysis | OpenAI GPT-4o-mini | LLM analysis of description |
-
----
-
-*Generated for: Bat Yam Building Permit Analyzer*  
-*Last Updated: 2025-12-30*
-
+1.  **Date Format**: All dates are strictly `DD/MM/YYYY`.
+2.  **Null Values**: Some fields like `neighborhood` or `developer` may contain the string `"nan"` or be null if scraped from empty cells.
+3.  **History Structure**: Unlike permits, the history here is a simple list of lists, not a list of objects with named keys.

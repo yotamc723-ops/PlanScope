@@ -99,12 +99,14 @@ BATCH_COOLDOWN = 20      # Cooldown duration after batch (seconds)
 REQUEST_TIMEOUT = 30
 
 # Files
-PERMIT_FILE = "permit_numbers.txt"
+PERMIT_FILE = "permit_numbers.json"
 OUTPUT_FILE = "opportunities.json"
 OUTPUT_FILE_JSONL = "opportunities.jsonl"
 ERROR_LOG_FILE = "errors.log"
-DEBUG_REQUESTS_FILE = "model_requests.txt"
-SKIPPED_PERMITS_FILE = "skipped_permits.txt"
+
+SKIPPED_PERMITS_FILE = "skipped_permits.json"
+RELEVANT_PERMITS_FILE = "relevant_permits.json"
+PROCESSED_PERMITS_FILE = "processed_permits.json"
 
 # LLM System Prompt for investor opportunity analysis
 SYSTEM_PROMPT = """You are a real estate investment analyst specializing in Israeli construction permits.
@@ -614,33 +616,7 @@ def fetch_permit_data(permit_id: str, max_retries: int = 2) -> Tuple[Optional[st
     return None, {}  # Shouldn't reach here, but just in case
 
 
-def log_model_request(permit_id: str, user_content: str):
-    """
-    Log the request being sent to the model for debugging.
-    
-    Args:
-        permit_id: The permit ID
-        user_content: The user message content being sent
-    """
-    # Use absolute path to ensure file is written to the correct location
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    log_file_path = os.path.join(script_dir, DEBUG_REQUESTS_FILE)
-    
-    # Clean up invisible Unicode control characters (RLM, LRM, etc.)
-    cleaned_content = user_content.replace('\u200f', '').replace('\u200e', '')
-    
-    try:
-        with log_lock:
-            with open(log_file_path, 'a', encoding='utf-8-sig') as f:
-                f.write("=" * 80 + "\n")
-                f.write(f"ID: {permit_id}\n")
-                f.write(f"Request:\n{cleaned_content}\n")
-                f.write("=" * 80 + "\n\n")
-                f.flush()  # Force write to disk immediately
-                os.fsync(f.fileno())  # Force OS to write to disk
-    except Exception as e:
-        logger.error(f"Failed to write to debug file: {e}")
-        print(f"ERROR: Could not write to {log_file_path}: {e}")
+
 
 
 def analyze_with_ai(mahut_text: str, permit_id: str, client: OpenAI, max_retries: int = 3) -> Optional[dict]:
@@ -662,8 +638,7 @@ def analyze_with_ai(mahut_text: str, permit_id: str, client: OpenAI, max_retries
             user_content = f"Permit ID: {permit_id}\n\nמהות הבקשה:\n{mahut_text}"
             
             # Log the request being sent to the model (only on first attempt)
-            if attempt == 0:
-                log_model_request(permit_id, user_content)
+
             
             response = client.chat.completions.create(
                 model="gpt-5-mini",
@@ -723,50 +698,49 @@ def analyze_with_ai(mahut_text: str, permit_id: str, client: OpenAI, max_retries
     return None  # Shouldn't reach here, but just in case
 
 
-def load_processed_permits(processed_file: str = "processed_permits.txt") -> set:
+def load_processed_permits(processed_file: str = PROCESSED_PERMITS_FILE) -> set:
     """
-    Load already-processed permit IDs to enable resume (includes both relevant and non-relevant).
-    
-    Args:
-        processed_file: Path to file containing all processed permit IDs
-        
-    Returns:
-        Set of permit IDs that have already been processed
+    Load already-processed permit IDs from JSON file to enable resume.
     """
-    if not os.path.exists(processed_file):
-        return set()
-    
     processed = set()
-    try:
-        with open(processed_file, 'r', encoding='utf-8') as f:
-            for line in f:
-                permit_id = line.strip()
-                if permit_id:
-                    processed.add(permit_id)
-        logger.info(f"Loaded {len(processed)} already-processed permits from {processed_file}")
-    except Exception as e:
-        logger.warning(f"Could not load processed permits: {e}")
+    if os.path.exists(processed_file):
+        try:
+            with open(processed_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                if isinstance(data, list):
+                    for pid in data:
+                        processed.add(str(pid))
+            logger.info(f"Loaded {len(processed)} processed permits from {processed_file}")
+        except Exception as e:
+            logger.warning(f"Could not load processed permits from {processed_file}: {e}")
     
     return processed
 
 
-def mark_permit_processed(permit_id: str, processed_file: str = "processed_permits.txt"):
+def mark_permit_processed(permit_id: str, processed_file: str = PROCESSED_PERMITS_FILE):
     """
-    Mark a permit as processed (regardless of relevance) to enable resume.
-    
-    Args:
-        permit_id: The permit ID to mark as processed
-        processed_file: Path to file tracking all processed permits
+    Mark a permit as processed in the JSON list.
     """
     try:
         with processed_lock:
-            with open(processed_file, 'a', encoding='utf-8') as f:
-                f.write(f"{permit_id}\n")
+            data = []
+            if os.path.exists(processed_file):
+                try:
+                    with open(processed_file, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        if not isinstance(data, list): data = []
+                except:
+                    data = []
+            
+            if permit_id not in data:
+                data.append(permit_id)
+                with open(processed_file, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, ensure_ascii=False, indent=2)
     except Exception as e:
         logger.error(f"Failed to mark {permit_id} as processed: {e}")
 
 
-def save_opportunity_incremental(opportunity: Dict[str, Any], output_file: str = "opportunities.jsonl", relevant_file: str = "relevant_permits.txt"):
+def save_opportunity_incremental(opportunity: Dict[str, Any], output_file: str = "opportunities.jsonl", relevant_file: str = RELEVANT_PERMITS_FILE):
     """
     Save a single relevant opportunity to JSONL file immediately (incremental save).
     Data persistence optimized for high concurrency O(1) appends.
@@ -788,33 +762,57 @@ def save_opportunity_incremental(opportunity: Dict[str, Any], output_file: str =
     except Exception as e:
         logger.error(f"Failed to save opportunity {permit_id} to JSONL: {e}")
     
-    # Append to relevant_permits.txt for resume capability
+    # Update relevant_permits.json
     try:
         with relevant_lock:
-            with open(relevant_file, 'a', encoding='utf-8') as f:
-                f.write(f"{permit_id}\n")
+            data = []
+            if os.path.exists(relevant_file):
+                try:
+                    with open(relevant_file, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        if not isinstance(data, list): data = []
+                except:
+                    data = []
+            
+            if permit_id not in data:
+                data.append(permit_id)
+                with open(relevant_file, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, ensure_ascii=False, indent=2)
+                print(f"   [DEBUG] Added {permit_id} to {relevant_file}")
     except Exception as e:
-        logger.error(f"Failed to append {permit_id} to {relevant_file}: {e}")
+        logger.error(f"Failed to update {relevant_file}: {e}")
+        print(f"   [ERROR] Failed to update {relevant_file}: {e}")
 
 
 def log_skipped_permit(permit_id: str, mahut_text: str):
     """
-    Log skipped permit requests to a text file.
-    Format: permit_number: מהות הבקשה/
+    Log skipped permit to skipped_permits.json structured list.
+    Format: [{"permit_number": "...", "mahut": "..."}, ...]
     """
     try:
-        # Ensure text is clean and on one line (remove newlines from description)
-        if mahut_text:
-            clean_text = mahut_text.replace('\n', ' ').replace('\r', '').strip()
-        else:
-            clean_text = "No text available"
-
-        # Format with trailing slash as requested: "id: text/"
-        entry = f"{permit_id}: {clean_text}/\n"
+        if not mahut_text:
+            mahut_text = "No text available"
+            
+        entry = {
+            "permit_number": permit_id,
+            "mahut": mahut_text.strip()
+        }
         
         with skipped_lock:
-            with open(SKIPPED_PERMITS_FILE, 'a', encoding='utf-8') as f:
-                f.write(entry)
+            data = []
+            if os.path.exists(SKIPPED_PERMITS_FILE):
+                try:
+                    with open(SKIPPED_PERMITS_FILE, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        if not isinstance(data, list): data = []
+                except:
+                    data = []
+            
+            # Check if already exists? Maybe not necessary for skipped log, but clean
+            if not any(d.get('permit_number') == permit_id for d in data):
+                data.append(entry)
+                with open(SKIPPED_PERMITS_FILE, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, ensure_ascii=False, indent=2)
             
     except Exception as e:
         logger.error(f"Failed to log skipped permit {permit_id}: {e}")
@@ -1136,7 +1134,7 @@ def process_permit(permit_id: str, client: OpenAI, results: Dict[str, int]) -> N
             # enrich with metadata
             enriched = {**result, **metadata}
             
-            save_opportunity_incremental(enriched, OUTPUT_FILE, "relevant_permits.txt")
+            save_opportunity_incremental(enriched, OUTPUT_FILE, RELEVANT_PERMITS_FILE)
             mark_permit_processed(permit_id)
             
             with results['lock']:
@@ -1196,26 +1194,26 @@ def main():
         if not test_proxy_connection():
             print("\n❌ Proxy Connection FAILED. Check credentials.")
     
-    # Initialize debug requests file
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    log_file_path = os.path.join(script_dir, DEBUG_REQUESTS_FILE)
-    try:
-        with open(log_file_path, 'w', encoding='utf-8-sig') as f:
-            f.write("Model Requests Debug Log\n" + "=" * 80 + "\n\n")
-    except Exception:
-        pass
+
     
     # Read permit IDs
     try:
         with open(PERMIT_FILE, 'r', encoding='utf-8') as f:
-            permit_ids = [line.strip() for line in f if line.strip()]
+            data = json.load(f)
+            if isinstance(data, list):
+                permit_ids = [str(pid).strip() for pid in data]
+            else:
+                permit_ids = []
         print(f"OK: Loaded {len(permit_ids)} permit IDs from {PERMIT_FILE}")
     except FileNotFoundError:
         print(f"\nERROR: {PERMIT_FILE} not found!")
         return
+    except json.JSONDecodeError:
+        print(f"\nERROR: Failed to parse JSON from {PERMIT_FILE}")
+        return
     
     # Filter processed
-    already_processed = load_processed_permits("processed_permits.txt")
+    already_processed = load_processed_permits()
     if already_processed:
         permit_ids_to_process = [pid for pid in permit_ids if pid not in already_processed]
         print(f"Skipping {len(permit_ids) - len(permit_ids_to_process)} already processed.")

@@ -63,7 +63,7 @@ REQUEST_TIMEOUT = 30
 MAX_WORKERS = 5 
 
 # Files
-RELEVANT_PERMITS_FILE = "relevant_permits.txt"
+RELEVANT_PERMITS_FILE = "relevant_permits.json"
 OPPORTUNITIES_FILE = "opportunities.json"
 TEMP_JSONL = "daily_update_temp.jsonl"
 
@@ -162,9 +162,14 @@ def load_json(path: str):
 def load_relevant_ids() -> list:
     if not os.path.exists(RELEVANT_PERMITS_FILE):
         return []
-    with open(RELEVANT_PERMITS_FILE, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-    return [line.strip() for line in lines if line.strip()]
+    try:
+        with open(RELEVANT_PERMITS_FILE, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            if isinstance(data, list):
+                return [str(item).strip() for item in data]
+    except Exception as e:
+        logger.error(f"Failed to load relevant IDs from {RELEVANT_PERMITS_FILE}: {e}")
+    return []
 
 def save_incremental(data: dict):
     """Saves a single record to the JSONL file safely."""

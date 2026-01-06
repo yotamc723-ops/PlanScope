@@ -3904,7 +3904,7 @@
       }
     ],
     "request_date": "26/02/2025",
-    "requirements_level": "תנאים להיתר"
+    "requirements_level": " להיתר"
   },
   {
     "is_relevant": true,
@@ -6535,15 +6535,7 @@
         "event_end_date": "11/02/2025"
       }
     ],
-    "meeting_history": [
-      {
-        "meeting_id": "20250007",
-        "meeting_date": "04/06/2025",
-        "meeting_url": "https://handasi.complot.co.il/magicscripts/mgrqispi.dll?appname=cixpa&prgname=GetVaadaFile&siteid=81&t=2&v=20250007&arguments=siteid,t,v",
-        "essence": "בניית אולם חד קומתי לתעשייה מבניה קלה פריקה לתקופה זמנית כפי שנקבע ע\"י הוועדה עד למימוש תוכנית מטרו דרום השטח",
-        "decision_status": "רחוב הפלדה 3- הוא חלק מתכנית התחדשות עירונית רחבה החלה באיזור זה- מטרו"
-      }
-    ],
+    "meeting_history": [],
     "request_date": "11/02/2025",
     "requirements_level": "בקרה מרחבית"
   },

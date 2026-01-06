@@ -1,0 +1,76 @@
+{
+    "generated_at": "2026-01-06 21:00:14",
+    "summary": {
+        "total_plans_scanned": 176,
+        "new_plans_discovered": 0,
+        "status_changes": 1,
+        "new_history_events": 2,
+        "new_meetings": 2
+    },
+    "changes": [
+        {
+            "type": "UPDATE",
+            "plan_number": "502-0147678",
+            "plan_name": "בי/1/474 פינוי בינוי רוטשילד 2",
+            "updates": [
+                {
+                    "field": "status",
+                    "old_value": "בתכנון",
+                    "new_value": "בתוקף",
+                    "alert_level": "HIGH"
+                }
+            ]
+        },
+        {
+            "type": "UPDATE",
+            "plan_number": "502-0153635",
+            "plan_name": "בי/545 הרב צבי יהודה 9 - הגדלת שטחים ויחידות",
+            "updates": [
+                {
+                    "field": "history",
+                    "date": "06/01/2015",
+                    "description": "ש800 בתוקף - מסגירת תיק תכנון",
+                    "new_description": "ש800 בתוקף - מסגירת תיק תכנון",
+                    "old_description": "ש702 פורסם אישור ברשומות, ממתין לסגירת תיק התכנון",
+                    "alert_level": "MEDIUM"
+                }
+            ]
+        },
+        {
+            "type": "UPDATE",
+            "plan_number": "502-0155630",
+            "plan_name": "בי/481/מק - תוספת שטח לחנות ברח' ירושלים 40 א'",
+            "updates": [
+                {
+                    "field": "meeting",
+                    "date": "31/03/2009",
+                    "type": "ועדת משנה",
+                    "link": "https://batyam.complot.co.il/binyan/#meeting/2/20091702",
+                    "alert_level": "CRITICAL"
+                },
+                {
+                    "field": "meeting",
+                    "date": "03/06/2012",
+                    "type": "ועדת משנה",
+                    "link": "https://batyam.complot.co.il/binyan/#meeting/2/20120008",
+                    "alert_level": "CRITICAL"
+                }
+            ]
+        },
+        {
+            "type": "UPDATE",
+            "plan_number": "502-0149179",
+            "plan_name": "בי/532 - רח' החרושת - מגדל השנהב",
+            "updates": [
+                {
+                    "field": "history",
+                    "date": "22/06/2017",
+                    "description": "ש800 בתוקף - מסגירת תיק תכנון",
+                    "new_description": "ש800 בתוקף - מסגירת תיק תכנון",
+                    "old_description": "התכנית/היישות נדונה בוועדה מקומית",
+                    "alert_level": "MEDIUM"
+                }
+            ]
+        }
+    ]
+}
