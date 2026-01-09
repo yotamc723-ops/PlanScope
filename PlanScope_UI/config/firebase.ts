@@ -1,9 +1,9 @@
 // Firebase Configuration
 // Municipal Dashboard Platform
 
-import { initializeApp } from 'firebase/app';
-import { 
-  getAuth, 
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import {
+  getAuth,
   GoogleAuthProvider,
   connectAuthEmulator,
   sendSignInLinkToEmail,
@@ -11,24 +11,58 @@ import {
   signInWithEmailLink,
   ActionCodeSettings
 } from 'firebase/auth';
-import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
+import { getFirestore, connectFirestoreEmulator, initializeFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "YOUR_API_KEY",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "YOUR_PROJECT_ID",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "YOUR_MESSAGING_SENDER_ID",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "YOUR_APP_ID",
+// Your web app's Firebase configuration
+const firebaseConfig = import.meta.env.DEV ? {
+  apiKey: "demo-api-key",
+  authDomain: "demo-municipal-dashboard.firebaseapp.com",
+  projectId: "demo-municipal-dashboard",
+  storageBucket: "demo-municipal-dashboard.firebasestorage.app",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:demo123456",
+} : {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyB32G0F_yqN9heaJN0pjiVlTJkAusRlrTs",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "municipal-dashboard-prod.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "municipal-dashboard-prod",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "municipal-dashboard-prod.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "447281245428",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:447281245428:web:2242a4d7bda6f55cb942a1",
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
-// Initialize Firebase services
+// Initialize Auth
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+
+// Initialize Firestore with strict Long Polling for Emulators
+let firestoreDb;
+
+if (import.meta.env.DEV) {
+  // 1. Force Long Polling to avoid "net::ERR_EMPTY_RESPONSE"
+  firestoreDb = initializeFirestore(app, {
+    experimentalForceLongPolling: true,
+  });
+
+  // 2. Connect to Emulators immediately (Strict 127.0.0.1)
+  // Check if already connected to avoid hot-reload errors
+  // Note: SDK usually handles this, but safe to wrap
+  try {
+    connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
+    connectFirestoreEmulator(firestoreDb, '127.0.0.1', 8080);
+    console.log('🔥 [Firebase] Connected to Emulators (Auth: 9099, Firestore: 8080) with Long Polling');
+  } catch (error) {
+    console.log('⚠️ [Firebase] Emulators already connected', error);
+  }
+
+} else {
+  // Production initialization
+  firestoreDb = getFirestore(app);
+}
+
+export const db = firestoreDb;
 
 // Auth providers
 export const googleProvider = new GoogleAuthProvider();
@@ -41,30 +75,11 @@ googleProvider.setCustomParameters({
 // Email link (magic link) action code settings
 export const getActionCodeSettings = (): ActionCodeSettings => ({
   // URL to redirect to after email link is clicked
-  url: import.meta.env.DEV 
-    ? 'http://localhost:3000/login' 
+  url: import.meta.env.DEV
+    ? 'http://localhost:3000/login'
     : `${window.location.origin}/login`,
   handleCodeInApp: true,
 });
-
-// Connect to emulators in development mode
-if (import.meta.env.DEV) {
-  // Check if we haven't already connected (prevents hot reload issues)
-  const isEmulatorConnected = (auth as any)._canInitEmulator !== undefined 
-    ? !(auth as any)._canInitEmulator 
-    : false;
-
-  if (!isEmulatorConnected) {
-    try {
-      connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
-      connectFirestoreEmulator(db, 'localhost', 8080);
-      console.log('🔥 Connected to Firebase Emulators (Auth: 9099, Firestore: 8080)');
-    } catch (error) {
-      // Emulators might already be connected
-      console.log('Emulators already connected or not running');
-    }
-  }
-}
 
 // Email Link Auth Helper Functions
 export const sendMagicLinkEmail = async (email: string): Promise<void> => {
@@ -85,22 +100,22 @@ export const completeMagicLinkSignIn = async (): Promise<void> => {
 
   // Get the email from localStorage
   let email = window.localStorage.getItem('emailForSignIn');
-  
+
   if (!email) {
     // If email is not in localStorage, prompt user
     email = window.prompt('Please provide your email for confirmation');
   }
-  
+
   if (!email) {
     throw new Error('Email is required to complete sign-in');
   }
 
   // Complete sign-in
   await signInWithEmailLink(auth, email, window.location.href);
-  
+
   // Clear the email from storage
   window.localStorage.removeItem('emailForSignIn');
-  
+
   // Clean up the URL
   window.history.replaceState({}, document.title, window.location.pathname);
 };
