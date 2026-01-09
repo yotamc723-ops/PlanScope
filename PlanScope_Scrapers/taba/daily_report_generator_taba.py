@@ -13,11 +13,20 @@ def load_json(filepath: str) -> List[Dict]:
         print(f"Error loading {filepath}: {e}")
         return []
 
-def get_latest_two_files(directory: str = ".", pattern: str = r"bat_yam_plans_data_(\d{4}_\d{2}_\d{2})\.json") -> Tuple[str, str]:
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PLANS_DATA_DIR = os.path.join(BASE_DIR, "plans_data")
+DIFF_DIR = os.path.join(BASE_DIR, "diff")
+
+def get_latest_two_files(directory: str = PLANS_DATA_DIR, pattern: str = r"bat_yam_plans_data_(\d{4}_\d{2}_\d{2})\.json") -> Tuple[str, str]:
     """
     סורק את התיקייה ומוצא את שני הקבצים הכי עדכניים לפי התאריך בשם הקובץ.
     מחזיר (קובץ_חדש, קובץ_ישן)
     """
+    if not os.path.exists(directory):
+        print(f"Directory not found: {directory}")
+        return None, None
+        
     files = []
     for filename in os.listdir(directory):
         match = re.search(pattern, filename)
@@ -25,7 +34,7 @@ def get_latest_two_files(directory: str = ".", pattern: str = r"bat_yam_plans_da
             # הופך את התאריך לאובייקט datetime כדי שנוכל למיין בקלות
             date_str = match.group(1)
             date_obj = datetime.strptime(date_str, "%Y_%m_%d")
-            files.append((date_obj, filename))
+            files.append((date_obj, os.path.join(directory, filename)))
     
     # מיון לפי תאריך (מהישן לחדש)
     files.sort(key=lambda x: x[0])
@@ -158,8 +167,12 @@ def main():
 
     report = compare_plans(old_data, new_data)
     
+    
     # שמירת הדו"ח
-    report_filename = f"daily_report_{datetime.now().strftime('%Y%m%d')}.json"
+    if not os.path.exists(DIFF_DIR):
+        os.makedirs(DIFF_DIR)
+        
+    report_filename = os.path.join(DIFF_DIR, f"daily_report_{datetime.now().strftime('%Y%m%d')}.json")
     with open(report_filename, 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=4, ensure_ascii=False)
         

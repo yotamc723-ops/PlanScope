@@ -549,8 +549,13 @@ def main():
     
     # <--- שינוי 2: שם קובץ דינמי לפי התאריך של היום
     today_str = datetime.now().strftime('%Y_%m_%d')
-    output_json = f'bat_yam_plans_data_{today_str}.json'
-    output_jsonl = f'bat_yam_plans_data_{today_str}.jsonl'
+    
+    plans_data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'plans_data')
+    if not os.path.exists(plans_data_dir):
+        os.makedirs(plans_data_dir)
+        
+    output_json = os.path.join(plans_data_dir, f'bat_yam_plans_data_{today_str}.json')
+    output_jsonl = os.path.join(plans_data_dir, f'bat_yam_plans_data_{today_str}.jsonl')
     
     print("=" * 60)
     print("🚀 Starting Bat Yam TABA Scraper (Parallel Version)")

@@ -83,17 +83,19 @@ class BackupManager:
         today_date = now.strftime("%Y_%m_%d")
         compact_date = now.strftime("%Y%m%d")
         
+        plans_data_dir = os.path.join(TABA_DIR, "plans_data")
+        diff_dir = os.path.join(TABA_DIR, "diff")
+        
         patterns = [
-            f"bat_yam_plans_data_{today_date}.json",
-            f"bat_yam_plans_data_{today_date}.jsonl",
-            f"daily_report_{compact_date}.json"
+            os.path.join(plans_data_dir, f"bat_yam_plans_data_{today_date}.json"),
+            os.path.join(plans_data_dir, f"bat_yam_plans_data_{today_date}.jsonl"),
+            os.path.join(diff_dir, f"daily_report_{compact_date}.json")
         ]
         
-        for pattern in patterns:
-            file_path = os.path.join(TABA_DIR, pattern)
+        for file_path in patterns:
             if os.path.exists(file_path):
                 os.remove(file_path)
-                logger.info(f"🗑️ Deleted partial/failed output: {pattern}")
+                logger.info(f"🗑️ Deleted partial/failed output: {file_path}")
 
     def cleanup_backup(self):
         """Deletes the backup folder on success."""
