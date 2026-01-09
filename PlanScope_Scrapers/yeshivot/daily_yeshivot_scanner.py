@@ -12,6 +12,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Selenium & Webdriver Manager
+import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -150,25 +151,150 @@ def save_last_meeting_state(meeting_number, date):
             "updated_at": datetime.now().isoformat()
         }, f, indent=4)
 
-def wait_for_download(download_dir, timeout=60):
+def wait_for_download(download_dir, existing_files, timeout=60):
     """
-    Waits for a file to appear in the directory (that is not a .crdownload).
-    Returns the path to the newest file.
+    Waits for a NEW file to appear in the directory (not in existing_files).
+    Returns the path to the new file.
     """
     end_time = time.time() + timeout
     while time.time() < end_time:
-        files = glob.glob(os.path.join(download_dir, "*"))
-        files = [f for f in files if not f.endswith(".crdownload") and not f.endswith(".tmp")]
-        files.sort(key=os.path.getmtime, reverse=True)
+        current_files = set(os.listdir(download_dir))
+        new_files = current_files - existing_files
         
-        if files:
-            # Check if file relies on stable size (download finished)
-            latest_file = files[0]
-            # Simple check: wait 2 seconds and verify size didn't change (basic)
-            # Better check: .crdownload gone implies Chrome finished.
-            return latest_file
+        # Filter temp/downloading files
+        valid_new_files = [
+            f for f in new_files 
+            if not f.endswith(".crdownload") and not f.endswith(".tmp") and not f.startswith(".")
+        ]
+        
+        if valid_new_files:
+            # Found a specific new file
+            return os.path.join(download_dir, valid_new_files[0])
+            
         time.sleep(1)
     return None
+
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+
+# --- Helper: Download Logic (UI Interaction) ---
+def download_meeting_protocols_via_ui(driver, meeting_number, meeting_date, output_dir):
+    """
+    Downloads 'Protocol of Decisions' for a specific meeting by interacting with the UI:
+    1. Finds the row for the meeting number.
+    2. Clicks the 'Document Archive' button (col 8).
+    3. Selects the protocol link from the modal.
+    4. Downloads and closes modal.
+    5. Renames file to {meeting_number}_{date}.pdf
+    """
+    downloaded_files = []
+    print(f"   -> Interacting with UI for Meeting {meeting_number}...")
+    
+    try:
+        # 1. Find the specific row for this meeting (Table is already visible)
+        # Using XPath to find the row where the link text equals meeting_number
+        row_xpath = f"//a[normalize-space(text())='{meeting_number}']/ancestor::tr"
+        row = driver.find_element(By.XPATH, row_xpath)
+        
+        # 2. Click 'Document Archive' button (8th column -> button)
+        archive_btn = row.find_element(By.XPATH, "./td[8]/button")
+        
+        # Scroll to button to ensure visibility
+        driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", archive_btn)
+        time.sleep(1)
+        
+        # JS Click is often safer for buttons in tables
+        driver.execute_script("arguments[0].click();", archive_btn)
+        print("      Clicked archive button.")
+        
+        # 3. Wait for Modal and Find Link
+        wait = WebDriverWait(driver, 10)
+        
+        # VERIFICATION: Check Modal Header
+        # More robust: Get element by class and check text in Python
+        try:
+            # Wait for modal header to be visible
+            wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "modal-header")))
+            
+            # Get all visible headers (should be one)
+            headers = driver.find_elements(By.CLASS_NAME, "modal-header")
+            header_text = ""
+            verified = False
+            
+            for h in headers:
+                if h.is_displayed():
+                    header_text = h.text
+                    if str(meeting_number) in header_text:
+                        verified = True
+                        break
+            
+            if verified:
+                print(f"      Verified Modal Header for {meeting_number}.")
+            else:
+                 print(f"      CRITICAL: Modal header verification failed. Expected {meeting_number} in '{header_text}'.")
+                 ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+                 return []
+                 
+        except Exception as e:
+             print(f"      Error during modal verification: {e}")
+             ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+             return []
+
+        # Wait for modal content or the specific link
+        protocol_link_xpath = "//a[contains(text(), 'פרוטוקול החלטות')]"
+        try:
+            protocol_link = wait.until(EC.element_to_be_clickable((By.XPATH, protocol_link_xpath)))
+            print("      Found 'Protocol of Decisions' link.")
+            
+            # Capture real URL
+            pdf_url = protocol_link.get_attribute("href")
+            print(f"      PDF URL Found: {pdf_url}")
+            
+            # Direct Download via Requests (More robust than Selenium headless download)
+            # Sanitize date (replace / with -)
+            safe_date = meeting_date.replace('/', '-')
+            new_filename = f"{meeting_number}_{safe_date}.pdf"
+            new_filepath = os.path.join(output_dir, new_filename)
+            
+            # Check overwrite
+            if os.path.exists(new_filepath):
+                os.remove(new_filepath)
+                
+            try:
+                print(f"      Downloading via requests...")
+                response = requests.get(pdf_url, stream=True, timeout=30)
+                response.raise_for_status()
+                
+                with open(new_filepath, 'wb') as f:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        f.write(chunk)
+                        
+                print(f"      Downloaded & Saved: {new_filename}")
+                downloaded_files.append({
+                    "filename": new_filename,
+                    "pdf_url": pdf_url
+                })
+                
+            except Exception as e:
+                print(f"      Download Error (requests): {e}")
+
+        except Exception as e:
+            print(f"      'Protocol of Decisions' link not found or interaction error: {e}")
+            
+        # 4. Close Modal (Press Escape)
+        print("      Closing modal...")
+        ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+        time.sleep(1) # Wait for animation
+            
+    except Exception as e:
+        print(f"      Error interacting with UI for {meeting_number}: {e}")
+        # Try to close modal just in case we are stuck
+        try:
+            ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+        except:
+            pass
+        
+    return downloaded_files
 
 # --- Main Logic ---
 def run_daily_scan():
@@ -192,6 +318,9 @@ def run_daily_scan():
         "plugins.always_open_pdf_externally": True
     }
     chrome_options.add_experimental_option("prefs", prefs)
+    
+    # Must also set CDP for headless download to work reliably in some versions
+    # We do this after driver creation
 
     proxy_plugin = None
     if USE_PROXY and PROXY_USER and PROXY_PASS:
@@ -200,7 +329,6 @@ def run_daily_scan():
         chrome_options.add_extension(proxy_plugin)
     
     driver = None
-    new_items_processed = []
     
     try:
         if HAS_MANAGER:
@@ -209,7 +337,13 @@ def run_daily_scan():
         else:
             driver = webdriver.Chrome(options=chrome_options)
             
-        wait = WebDriverWait(driver, 30)
+        # CDP Command for Headless Download
+        driver.execute_cdp_cmd("Page.setDownloadBehavior", {
+            "behavior": "allow",
+            "downloadPath": str(PDF_DIR.absolute())
+        })
+            
+        wait = WebDriverWait(driver, 60)
 
         # 2. Construct Query URL
         # We look back 30 days and forward 30 days to cover recent past and near future meetings
@@ -219,7 +353,8 @@ def run_daily_scan():
         
         base_url = "https://batyam.complot.co.il/yeshivot/#search/GetMeetingByDate"
         # dynamic params
-        target_url = f"{base_url}&siteid=81&v=0&fd={start_date}&td={end_date}&l=true"
+        # IMPORTANT: matches format in yeshivot_scraper.py including &arguments param
+        target_url = f"{base_url}&siteid=81&v=0&fd={start_date}&td={end_date}&l=true&arguments=siteid,v,fd,td,l"
         
         print(f"Navigating to: {target_url}")
         driver.get(target_url)
@@ -228,10 +363,14 @@ def run_daily_scan():
         # 3. Sort by Date
         print("Waiting for table...")
         try:
+            # Increased timeout to 60s
+            wait = WebDriverWait(driver, 60)
             wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="results-table"]')))
             print("Table found!")
         except Exception as e:
             print(f"Table not found within timeout: {e}")
+            driver.save_screenshot(os.path.join(CURRENT_DIR, "error_screenshot.png"))
+            print(f"Saved error screenshot to {os.path.join(CURRENT_DIR, 'error_screenshot.png')}")
             raise
 
         print("Attempting to sort by Date (Descending)...")
@@ -241,17 +380,17 @@ def run_daily_scan():
             date_header = wait.until(EC.element_to_be_clickable((By.XPATH, date_header_xpath)))
             print("Date header found, clicking...")
             
-            # Click once (usually Ascending or Descending toggle)
-            date_header.click()
+            # JS Click to avoid interception
+            driver.execute_script("arguments[0].click();", date_header)
             time.sleep(2)
-            print("Clicked date header once.")
+            print("Clicked date header (JS).")
             
             sort_class = date_header.get_attribute("class")
             print(f"Sort class after click: {sort_class}")
             
             if "desc" not in sort_class:
-                print("Header not yet desc, clicking again...")
-                date_header.click()
+                print("Header not yet desc, clicking again (JS)...")
+                driver.execute_script("arguments[0].click();", date_header)
                 time.sleep(2)
                 
             print("Table sorted.")
@@ -271,123 +410,93 @@ def run_daily_scan():
         print(f"Found {len(rows)} rows.")
         
         # We iterate from top (newest after sort)
-        new_meetings_found = []
+        new_meetings_found_metadata = []
         
         for row_elem in rows:
             try:
-                # Extract details
-                # Columns: 
-                # 1: ? (Checkbox/Icon)
-                # 2: Mispar Yeshiva (Link)
-                # 3: Committee Name
-                # 4: Date
-                # 5: Day
-                # 6: Time
-                # 7: Location
-                # 8: Status/Protocol Link containing "פרוטוקול החלטות"
-                
+                # Extract details (User requested: Col 3=Type, Col 4=Date)
                 cols = row_elem.find_elements(By.TAG_NAME, "td")
                 if len(cols) < 5:
                     continue
                 
+                # Col indexes (0-based):
+                # 0: Icon/Link
+                # 1: Meeting Number
+                # 2: Committee/Type (User: 3rd column)
+                # 3: Date (User: 4th column)
+                
                 meeting_num_elem = cols[1].find_element(By.TAG_NAME, "a")
                 meeting_num = meeting_num_elem.text.strip()
+                meeting_type = cols[2].text.strip()
                 meeting_date = cols[3].text.strip()
                 
                 # Check Anchor
                 if meeting_num == last_anchor_num and meeting_date == last_anchor_date:
-                    print("Found anchor meeting. Stopping scan.")
+                    print(f"Found anchor meeting {meeting_num}. Stopping list scan.")
                     break
                 
-                # Check for "פרוטוקול החלטות" link
-                # Sometimes it's in a specific column or just a link with text
-                protocol_link_elem = None
-                try:
-                    protocol_link_elem = row_elem.find_element(By.XPATH, ".//a[contains(text(), 'פרוטוקול החלטות')]")
-                except:
-                    pass
+                print(f"New Meeting Identified: {meeting_num} ({meeting_type}) on {meeting_date}")
                 
-                if not protocol_link_elem:
-                    # No protocol available yet
-                    continue
-                    
-                print(f"New Meeting Found: {meeting_num} on {meeting_date}")
-                
-                # Download
-                # Store current file count/names to identify new file
-                existing_files = set(os.listdir(PDF_DIR))
-                protocol_link_elem.click()
-                
-                # Wait for download
-                downloaded_file = None
-                end_wait = time.time() + 30
-                while time.time() < end_wait:
-                    current_files = set(os.listdir(PDF_DIR))
-                    new_files = current_files - existing_files
-                    real_new = [f for f in new_files if not f.endswith('.crdownload') and not f.endswith('.tmp')]
-                    if real_new:
-                        downloaded_file = real_new[0]
-                        break
-                    time.sleep(1)
-                
-                if downloaded_file:
-                    print(f"Downloaded: {downloaded_file}")
-                    
-                    # Prepare Data for Analyzer
-                    # pdf_analyzer.process_row expects a dict with specific keys
-                    # "Original Link" is mostly for metadata, we can put the page URL or empty
-                    
-                    row_data = {
-                        'Meeting Number': meeting_num,
-                        'Date': meeting_date,
-                        'Local Filename': downloaded_file,
-                        'Original Link': target_url
-                    }
-                    
-                    new_meetings_found.append(row_data)
-                else:
-                    print("Timeout waiting for file download.")
+                new_meetings_found_metadata.append({
+                    "Meeting Number": meeting_num,
+                    "Meeting Type": meeting_type,
+                    "Date": meeting_date
+                })
                     
             except Exception as e:
                 print(f"Error processing row: {e}")
                 continue
         
         # 5. Process Found Meetings (Reverse order: Oldest -> Newest)
-        # This ensures if we crash, we saved the older ones first? 
-        # Actually existing Logic just appends. 
-        # But for 'last_meeting' update, we want the ABSOLUTE newest (top of the list found) to be saved at the end.
-        
-        if not new_meetings_found:
+        if not new_meetings_found_metadata:
             print("No new meetings found.")
             return
 
-        print(f"Processing {len(new_meetings_found)} new meetings...")
+        print(f"Processing {len(new_meetings_found_metadata)} new meetings...")
         
         # Load existing global data
         all_data = pdf_analyzer.load_existing_data()
         existing_keys = {(m['metadata']['meeting_id'], m['metadata']['meeting_date']) for m in all_data}
         daily_report_items = []
 
-        # Process from Newest found to Oldest found? 
-        # User list `new_meetings_found` is [MostRecent, ..., LeastRecent] (from table top-down)
-        # Verify: If table is DESC, first row is Newest.
-        # We collected them in that order. 
-        # So `new_meetings_found[0]` is the Newest.
-        
-        # We should append meaningful items.
-        
-        for meeting_row in reversed(new_meetings_found): # Process Oldest -> Newest
-            # Check for duplicates in existing data to avoid re-processing
-            if (meeting_row['Meeting Number'], meeting_row['Date']) in existing_keys:
-                print(f"Skipping {meeting_row['Meeting Number']} ({meeting_row['Date']}) - Already processed.")
+        for meeting_meta in reversed(new_meetings_found_metadata): 
+            m_num = meeting_meta['Meeting Number']
+            m_type = meeting_meta['Meeting Type']
+            m_date = meeting_meta['Date']
+            
+            # Double check already processed
+            if (m_num, m_date) in existing_keys:
+                print(f"Skipping {m_num} ({m_date}) - Already processed (in existing DB).")
                 continue
-
-            res = pdf_analyzer.process_row(meeting_row)
-            if res:
-                all_data.append(res)
-                daily_report_items.append(res)
-                # Update existing keys to prevent duplicates within this run if any
-                existing_keys.add((meeting_row['Meeting Number'], meeting_row['Date']))
+            
+            # Download Protocols
+            downloaded_files = download_meeting_protocols_via_ui(driver, m_num, m_date, PDF_DIR) # Updated sig
+            
+            if not downloaded_files:
+                print(f"Warning: No protocols downloaded for {m_num}. Moving to next.")
+                continue
+            
+            # Process each downloaded file
+            for f_info in downloaded_files:
+                local_f = f_info['filename']
+                pdf_url = f_info['pdf_url']
+                
+                row_data_for_analyzer = {
+                    'Meeting Number': m_num,
+                    'Meeting Type': m_type,
+                    'Date': m_date,
+                    'Local Filename': local_f,
+                    'PDF Download URL': pdf_url,
+                    'Original Link': driver.current_url
+                }
+                
+                res = pdf_analyzer.process_row(row_data_for_analyzer)
+                if res:
+                    all_data.append(res)
+                    daily_report_items.append(res)
+            
+            # Update existing keys so we don't re-process duplicates within run
+            existing_keys.add((m_num, m_date))
         
         if not daily_report_items:
             print("No new items to report.")
@@ -403,10 +512,8 @@ def run_daily_scan():
             print(f"Daily report saved to {daily_report_path}")
         
         # Update Anchor (Newest Meeting)
-        # Even if we skipped it (because we might have processed it in a previous partial run or it was in history),
-        # we still want to update our anchor to the newest one found on the page so next time we stop there.
-        if new_meetings_found:
-            newest_meeting = new_meetings_found[0]
+        if new_meetings_found_metadata:
+            newest_meeting = new_meetings_found_metadata[0]
             save_last_meeting_state(newest_meeting['Meeting Number'], newest_meeting['Date'])
             print(f"Updated anchor to: {newest_meeting['Meeting Number']} ({newest_meeting['Date']})")
 

@@ -28,77 +28,106 @@ SYSTEM_INSTRUCTION = """
 You are an expert real estate analyst specializing in Israeli municipal protocols (Bat Yam).
 Your task is to analyze construction permit applications and decisions, extracting ONLY those that represent significant real estate investment or development opportunities.
 
-### PART 1: IDENTIFICATION & CLASSIFICATION
+PART 1: IDENTIFICATION & CLASSIFICATION
+
 You will encounter two distinct types of items. You must output a specific JSON structure for each.
 
-#### TYPE A: PLANNING SCHEMES (נושאים תכנוניים / תב"ע / תמ"ל)
-- **Identification:** IDs with hyphens/slashes (e.g., "502-0654321", "תמ/2035", "בי/xxxx"). Often at the start of the document.
-- **Goal:** Strategic analysis of zoning changes.
+TYPE A: PLANNING SCHEMES (נושאים תכנוניים / תב"ע / תמ"ל)
 
-#### TYPE B: BUILDING PERMITS (בקשות להיתר)
-- **Identification:** Standard 8-digit IDs (e.g., 20250123).
-- **Goal:** Specific building project analysis.
+Identification: IDs with hyphens/slashes (e.g., "502-0654321", "תמ/2035", "בי/xxxx"). Often at the start of the document.
 
-### PART 2: FILTERING RULES (CRITICAL)
-**KEEP** the item ONLY if it matches one of the following precise definitions strictly.
-If an item does not fit these definitions (e.g., minor renovations, balcony closures, fences), **DISCARD** it.
+Goal: Strategic analysis of zoning changes.
 
-1.  **תמ"א 38 (TAMA 38)**
-    **Definition:** A National Outline Plan for the reinforcement of existing buildings against earthquakes. It operates in two main tracks:
-    * **38/1 (Reinforcement & Thickening):** Strengthening the existing structure and adding new residential units (typically on the roof/ground floor) and expanding existing apartments (Mamad/Balcony).
-    * **38/2 (Demolition & Reconstruction):** Complete demolition of the old building and construction of a new, larger building in its place, without requiring a new City Plan (Taba).
+TYPE B: BUILDING PERMITS (בקשות להיתר)
 
-2.  **פינוי בינוי (Pinui Binui)**
-    **Definition:** An urban renewal process where an existing complex (usually containing at least 24 units) is demolished to build a new, significantly denser residential complex (high-rises). This process requires a new City Plan (Taba) and usually involves a government declaration of the site as a "Pinui Binui Complex".
+Identification: Standard 8-digit IDs (e.g., 20250123).
 
-3.  **תכנית בניה עירונית - תב"ע (City Plan / Taba)**
-    **Definition:** A statutory document with legal validity that regulates land use and building rights for a specific area/plot. It defines zoning designations (e.g., residential, commercial), building percentages, height limits, and permitted uses.
-    * *Note:* Include only plans that change rights or designation (e.g., changing from public to residential, or increasing rights).
+Goal: Specific building project analysis.
 
-4.  **תוכנית מתאר עירונית (Local Master Plan)**
-    **Definition:** A comprehensive plan applying to the entire local authority or a significant district within it. It establishes general land use policies, zoning designations, and building guidelines (height, density) for the long term, serving as a basis for detailed plans but often not allowing immediate permit issuance by itself.
+PART 2: FILTERING RULES (CRITICAL)
 
-5.  **תוספת קומות (Addition of Floors)**
-    **Definition:** A construction permit request for adding vertical levels (floors) to an existing building structure. This is based on unutilized building rights from an existing Taba, a new specific Taba, or relief (Hakalot) regulations approved by the local committee.
+KEEP the item ONLY if it matches one of the following precise definitions strictly.
 
-6.  **שדרוג תשתיות (Infrastructure Upgrade)**
-    **Definition:** Major public engineering projects that develop or improve municipal systems. This includes mass transit systems (Metro, Light Rail), construction of new major roads/interchanges, bridges, and large-scale public parks or drainage systems that impact the surrounding real estate value. This also includes the construction of public buildings, clinics, commercial and employment areas, and the like.
+תמ"א 38 (TAMA 38)
+Definition: A National Outline Plan for the reinforcement of existing buildings against earthquakes (38/1 or 38/2).
 
-**DISCARD (IGNORE)** any request that represents minor, non-value-adding work or low impact, such as:
-- Balcony closures (סגירת מרפסת), Pergolas, Winter closures.
-- Signage (שילוט), Fences (גדרות), Gates.
-- Minor repairs, Internal changes (שינויים פנימיים), Storage rooms (מחסן).
-- Elevators in existing buildings (unless part of a larger expansion).
-- Private house minor additions (unless adding a full separate unit).
-- Parking lots (minor changes), AC/ventilation installations.
-- **Single apartment additions or minor expansions that do not interest an investor.**
+הריסה / פינוי בינוי (Demolition / Pinui Binui)
+Definition: Demolition of existing permanent buildings (residential or commercial, typically >2 floors) OR a full "Pinui Binui" process.
 
-### PART 3: OUTPUT FORMAT (JSON)
+CRITICAL: Keep this item even if the request is ONLY for the demolition phase (without explicit mention of the new construction yet), as this signals the start of a significant project.
+
+תכנית בניה עירונית - תב"ע (City Plan / Taba)
+Definition: Statutory document regulating land use/building rights. Include only plans that change rights or designation.
+
+תוכנית מתאר עירונית (Local Master Plan)
+Definition: Comprehensive plan applying to the entire local authority or a significant district.
+
+תוספת קומות (Addition of Floors)
+Definition: Permit request for adding vertical levels to an existing building.
+
+שדרוג תשתיות (Infrastructure Upgrade)
+Definition: Major public engineering projects (Metro, Light Rail, roads, public buildings).
+
+בקשות משמעותיות בפרויקטים גדולים (Major Project Updates)
+Definition: Technical requests (such as "Splitting a Permit", Adding/Subtracting  stuff to the majority/all of the apartments in the project (balconies, area, etc.), "Renewing a Permit", "Change of Layout", "Excavation & Shoring" (חפירה ודיפון), "Demolition" (הריסה)) ONLY IF they refer to a "Mega-Project" (High-rise buildings, projects with >20 units, or commercial centers > 1000 sqm). Even if the request is technical, the scale makes it significant.
+
+DISCARD (IGNORE) any request that represents minor, non-value-adding work, such as:
+
+Balcony closures, Pergolas, Winter closures - only if its small and talks about less than 2 apartments.
+
+Signage, Fences, Gates.
+
+Minor repairs, Internal changes (unless for a Mega-Project as defined above).
+
+Elevators in existing buildings.
+
+Private house minor additions.
+
+Single apartment additions.
+
+NOTE: Do NOT discard requests for Total Demolition of an independent building, even if it looks like a "small" request.
+
+PART 3: OUTPUT FORMAT (JSON)
+
+CRITICAL LANGUAGE INSTRUCTION:
+All output values (summaries, descriptions, categories) MUST BE IN HEBREW.
+Only the JSON keys (e.g., "plan_number", "decision_status") remain in English.
+
 Return a JSON object with a single list "decisions". The list can contain mixed objects (Type A and Type B).
 
-#### SCHEMA FOR TYPE A (PLANNING SCHEME):
+SCHEMA FOR TYPE A (PLANNING SCHEME):
+
 {
-    "type": "תב״ע",
-    "plan_number": "string (The Plan ID, e.g. '502-1234567')",
-    "project_category": "string (Always 'תכנית מתאר')",
-    "decision_stage": "string (e.g. 'הפקדה', 'מתן תוקף', 'דיון בהתנגדויות')",
-    "project_summary": "string (Short explanation of the plan's goal. If unclear, null)",
-    "decision_summary": "string (Concise summary of the decision for an investor)",
-    "changes_description": "string (What is changing? e.g. 'Changing zoning from Industry to Residential, adding 500 units')",
-    "relevant_addresses": ["string", "string"],
-    "blocks_and_parcels": ["string (STRICT FORMAT: 'gush,helka'. Ranges: 'gush,helka-helka'. Multiple helkas: 'gush,helka,helka'. Separate different Gushim with ';')"]
+"type": "תב״ע",
+"plan_number": "string (The Plan ID, e.g. '502-1234567')",
+"project_category": "string (Always 'תכנית מתאר')",
+"decision_stage": "string (e.g. 'הפקדה', 'מתן תוקף', 'דיון בהתנגדויות')",
+"project_summary": "string (HEBREW: Short explanation of the plan's goal. If unclear, null)",
+"decision_summary": "string (HEBREW: Concise summary of the decision for an investor)",
+"changes_description": "string (HEBREW: What is changing? e.g. 'שינוי ייעוד מתעשייה למגורים, תוספת 500 יח"ד')",
+"relevant_addresses": 
+
+$$"string", "string"$$
+
+,
+"blocks_and_parcels": 
+
+$$"string (STRICT FORMAT: 'gush,helka'. Ranges: 'gush,helka-helka'. Multiple helkas: 'gush,helka,helka'. Separate different Gushim with ';')"$$
+
+
 }
 
-#### SCHEMA FOR TYPE B (BUILDING PERMIT):
+SCHEMA FOR TYPE B (BUILDING PERMIT):
+
 {
-    "type": "היתר בניה",
-    "request_id": "string (Request Number)",
-    "address": "string",
-    "applicant": "string",
-    "project_category": "string (One of the 6 Hebrew domains listed above)",
-    "essence": "string (The original Hebrew description)",
-    "decision_status": "string (Enum: 'אושר', 'אושר בתנאים', 'נדחה', 'נדחה במתכונת נוכחית בלבד')",
-    "units_added": int
+"type": "היתר בניה",
+"request_id": "string (Request Number)",
+"address": "string",
+"applicant": "string",
+"project_category": "string (One of the 7 Hebrew domains listed above in definitions)",
+"essence": "string (The original Hebrew description)",
+"decision_status": "string (Enum: 'אושר', 'אושר בתנאים', 'נדחה', 'נדחה במתכונת נוכחית בלבד')",
+"units_added": int
 }
 
 Return ONLY valid JSON.
@@ -235,8 +264,10 @@ def process_row(row):
     return {
         "metadata": {
             "meeting_id": meeting_num,
+            "meeting_type": row.get('Meeting Type', ''),
             "meeting_date": date,
-            "document_url": original_link,
+            "document_url": row.get('PDF Download URL', ''),
+            "original_system_url": original_link,
             "local_file": local_filename
         },
         "decisions": decisions_list
