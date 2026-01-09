@@ -1,0 +1,162 @@
+{
+    "date": "2026-01-09",
+    "generated_at": "2026-01-09T19:00:00.000000",
+    "status": {
+        "taba": "success",
+        "permits": "success",
+        "yeshivot": "success"
+    },
+    "data": {
+        "taba": {
+            "generated_at": "2026-01-09 14:52:49",
+            "summary": {
+                "total_plans_scanned": 176,
+                "new_plans_discovered": 1,
+                "status_changes": 1,
+                "new_history_events": 1,
+                "new_meetings": 1
+            },
+            "changes": [
+                {
+                    "type": "NEW_PLAN",
+                    "plan_number": "502-0999999",
+                    "plan_name": "בי/1/999 מתחם העתיד",
+                    "details": "תוכנית חדשה נכנסה למאגר"
+                },
+                {
+                    "type": "UPDATE",
+                    "plan_number": "502-0147678",
+                    "plan_name": "בי/1/474 פינוי בינוי רוטשילד 2",
+                    "updates": [
+                        {
+                            "field": "status",
+                            "old_value": "בתכנון",
+                            "new_value": "בתוקף",
+                            "alert_level": "HIGH"
+                        }
+                    ]
+                },
+                {
+                    "type": "UPDATE",
+                    "plan_number": "502-0153635",
+                    "plan_name": "בי/545 הרב צבי יהודה 9",
+                    "updates": [
+                        {
+                            "field": "history",
+                            "date": "09/01/2026",
+                            "description": "התקיים דיון להפקדה",
+                            "new_description": "התקיים דיון להפקדה",
+                            "old_description": "ממתין לדיון",
+                            "alert_level": "MEDIUM"
+                        }
+                    ]
+                },
+                {
+                    "type": "UPDATE",
+                    "plan_number": "502-0155630",
+                    "plan_name": "בי/481/מק - תוספת שטח לחנות",
+                    "updates": [
+                        {
+                            "field": "meeting",
+                            "date": "09/01/2026",
+                            "type": "ועדת משנה",
+                            "link": "https://batyam.complot.co.il/binyan/#meeting/2/20260001",
+                            "alert_level": "CRITICAL"
+                        }
+                    ]
+                }
+            ]
+        },
+        "permits": {
+            "20260005": {
+                "requirements_level": {
+                    "old": {
+                        "Phaze": "תנאים לקליטת בקשה להיתר",
+                        "Requirement": "תיק מידע בתוקף",
+                        "Date": "01/01/2026",
+                        "Status": "הושלם"
+                    },
+                    "new": [
+                        {
+                            "Phaze": "בדיקה מרחבית",
+                            "Requirement": "אישור מהנדס העיר",
+                            "Date": "09/01/2026",
+                            "Status": "ממתין"
+                        }
+                    ],
+                    "status_changed": "yes"
+                }
+            },
+            "20260006": {
+                "history": {
+                    "new_events": [
+                        {
+                            "event_type": "נוכחי",
+                            "event_description": "התקבלה החלטת ועדה - מאושר",
+                            "event_date": "09/01/2026",
+                            "event_end_date": null
+                        }
+                    ],
+                    "previous_latest": {
+                        "event_type": "היסטורי",
+                        "event_description": "הבקשה בבדיקה טכנית",
+                        "event_date": "01/01/2026",
+                        "event_end_date": "08/01/2026"
+                    }
+                }
+            },
+            "20260007": {
+                "meeting_history": [
+                    {
+                        "meeting_id": "20260050",
+                        "meeting_date": "09/01/2026",
+                        "meeting_description": "דיון בבקשה להיתר מס' 20260007"
+                    }
+                ]
+            }
+        },
+        "yeshivot": {
+            "date": "2026-01-09",
+            "new_items": [
+                {
+                    "metadata": {
+                        "meeting_id": "20260020",
+                        "meeting_type": "ועדת משנה",
+                        "meeting_date": "09/01/2026",
+                        "document_url": "https://example.com/protocol.pdf",
+                        "original_system_url": "https://example.com/system",
+                        "local_file": "20260020_09-01-2026.pdf"
+                    },
+                    "decisions": [
+                        {
+                            "type": "תב״ע",
+                            "plan_number": "502-1234567",
+                            "project_category": "תכנית מתאר",
+                            "decision_stage": "הפקדה",
+                            "project_summary": "תכנית פינוי בינוי אדירה",
+                            "decision_summary": "הוועדה החליטה להפקיד את התוכנית בתנאים.",
+                            "changes_description": "שינוי ייעוד ממגורים ב' למגורים ד', תוספת 300 יח\"ד.",
+                            "relevant_addresses": [
+                                "הרצל 50, בת ים",
+                                "הרצל 52, בת ים"
+                            ],
+                            "blocks_and_parcels": [
+                                "7130,10-15"
+                            ]
+                        },
+                        {
+                            "type": "היתר בניה",
+                            "request_id": "20260100",
+                            "address": "בלפור 100, בת ים",
+                            "applicant": "יזם מוביל בע\"מ",
+                            "project_category": "הריסה / פינוי בינוי",
+                            "essence": "הריסת מבנה קיים והקמת מגדל מגורים בן 30 קומות.",
+                            "decision_status": "אושר בתנאים",
+                            "units_added": 120
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

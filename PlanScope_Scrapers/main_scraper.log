@@ -1,0 +1,5 @@
+2026-01-09 18:53:12,826 - INFO - 🚀 Starting Global PlanScope Scraper at 2026-01-09 18:53:12.826924
+2026-01-09 18:53:12,827 - INFO - ⚠️ Running in MERGE-ONLY mode. Skipping scraper execution.
+2026-01-09 18:53:12,827 - INFO - 🔄 collecting and merging daily reports...
+2026-01-09 18:53:12,828 - INFO - ✅ Unified report saved successfully: /Users/yotamcohen/Desktop/PlanScope/PlanScope_Scrapers/daily_reports/unified_daily_report_2026_01_09.json
+2026-01-09 18:53:12,828 - INFO - 🏁 Global Scraper finished in 0:00:00.001646
