@@ -98,15 +98,19 @@ BATCH_COOLDOWN = 20      # Cooldown duration after batch (seconds)
 # Request timeout (seconds)
 REQUEST_TIMEOUT = 30
 
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PERMIT_NUMBERS_DIR = os.path.join(BASE_DIR, "permit_numbers")
+
 # Files
-PERMIT_FILE = "permit_numbers.json"
+PERMIT_FILE = os.path.join(PERMIT_NUMBERS_DIR, "permit_numbers.json")
 OUTPUT_FILE = "opportunities.json"
 OUTPUT_FILE_JSONL = "opportunities.jsonl"
 ERROR_LOG_FILE = "errors.log"
 
-SKIPPED_PERMITS_FILE = "skipped_permits.json"
-RELEVANT_PERMITS_FILE = "relevant_permits.json"
-PROCESSED_PERMITS_FILE = "processed_permits.json"
+SKIPPED_PERMITS_FILE = os.path.join(PERMIT_NUMBERS_DIR, "skipped_permits.json")
+RELEVANT_PERMITS_FILE = os.path.join(PERMIT_NUMBERS_DIR, "relevant_permits.json")
+PROCESSED_PERMITS_FILE = os.path.join(PERMIT_NUMBERS_DIR, "processed_permits.json")
 
 # LLM System Prompt for investor opportunity analysis
 SYSTEM_PROMPT = """You are a real estate investment analyst specializing in Israeli construction permits.

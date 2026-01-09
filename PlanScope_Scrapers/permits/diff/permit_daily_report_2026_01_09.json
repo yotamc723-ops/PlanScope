@@ -1,0 +1,88 @@
+{
+  "20260002": {
+    "requirements_level": {
+      "old": {
+        "Phaze": "תנאים לקליטת בקשה להיתר",
+        "Requirement": "נסח טאבו עדכני ל-3 חודשים",
+        "Date": "04/01/2026",
+        "Status": "הושלם"
+      },
+      "new": [
+        {
+          "Phaze": "תיאומים ואישורים נוספים",
+          "Requirement": "ת.ז מבקש/ מורשה חתימת החברה",
+          "Date": "06/01/2026",
+          "Status": "הושלם"
+        }
+      ],
+      "status_changed": "yes"
+    }
+  },
+  "20250841": {
+    "history": {
+      "new_events": [
+        {
+          "event_type": "נוכחי",
+          "event_description": "דחיית בקשה בתנאי סף - מח' מידע(2)",
+          "event_date": "04/12/2025",
+          "event_end_date": null
+        }
+      ],
+      "previous_latest": {
+        "event_type": "סגור",
+        "event_description": "הבקשה מתאימה למציאות",
+        "event_date": "02/12/2025",
+        "event_end_date": "04/12/2025"
+      }
+    }
+  },
+  "20250840": {
+    "requirements_level": {
+      "old": null,
+      "new": [
+        {
+          "Phaze": "תנאים לקליטת בקשה להיתר",
+          "Requirement": "תיק מידע בתוקף",
+          "Date": "27/11/2025",
+          "Status": "הושלם"
+        }
+      ],
+      "status_changed": "yes"
+    },
+    "history": {
+      "new_events": [
+        {
+          "event_type": "נוכחי",
+          "event_description": "עודכנו פרטי לקוח ונכס / נמסר פיקדון לתשלום",
+          "event_date": "14/12/2025",
+          "event_end_date": null
+        }
+      ],
+      "previous_latest": {
+        "event_type": "סגור",
+        "event_description": "הבקשה לא מתאימה למציאות",
+        "event_date": "02/12/2025",
+        "event_end_date": "14/12/2025"
+      }
+    }
+  },
+  "20250734": {
+    "requirements_level": {
+      "old": {
+        "Phaze": "תנאים לקליטת בקשה להיתר",
+        "Requirement": "התייחסות מחלקת גנים ונוף ופקיד היערות בנוגע לעצים הקיימים",
+        "Date": "15/10/2025",
+        "Status": "הושלם"
+      },
+      "new": [
+        {
+          "Phaze": "תנאים לקליטת בקשה להיתר",
+          "Requirement": "אישור תשלום פיקדון",
+          "Date": "29/12/2025",
+          "Status": "הושלם"
+        }
+      ],
+      "status_changed": "no"
+    }
+  }
+}

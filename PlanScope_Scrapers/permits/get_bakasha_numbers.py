@@ -132,7 +132,10 @@ def get_proxy_details(session_id=None):
     }
 
 
-PERMIT_JSON = "permit_numbers.json"
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PERMIT_NUMBERS_DIR = os.path.join(BASE_DIR, "permit_numbers")
+PERMIT_JSON = os.path.join(PERMIT_NUMBERS_DIR, "permit_numbers.json")
 
 def load_existing_permits():
     """Load existing permit numbers from JSON file."""

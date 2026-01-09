@@ -63,9 +63,13 @@ REQUEST_TIMEOUT = 30
 MAX_WORKERS = 5 
 
 # Files
-RELEVANT_PERMITS_FILE = "relevant_permits.json"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PERMITS_DATA_DIR = os.path.join(BASE_DIR, "permits_data")
+PERMIT_NUMBERS_DIR = os.path.join(BASE_DIR, "permit_numbers")
+
+RELEVANT_PERMITS_FILE = os.path.join(PERMIT_NUMBERS_DIR, "relevant_permits.json")
 OPPORTUNITIES_FILE = "opportunities.json"
-TEMP_JSONL = "daily_update_temp.jsonl"
+TEMP_JSONL = os.path.join(PERMITS_DATA_DIR, "daily_update_temp.jsonl")
 
 # Locks
 jsonl_lock = Lock()
@@ -127,6 +131,7 @@ def get_soup(permit_id: str, max_retries: int = 2):
             
     return None
 
+
 # Import parsing logic purely for extraction, NOT fetching
 # To avoid double-fetching, we'll import functions or implement simple extractors.
 # Importing is better for maintenance but we must ensure we don't accidentally run fetching code.
@@ -136,18 +141,119 @@ def get_soup(permit_id: str, max_retries: int = 2):
 # But wait, analyze_permits helpers (like _parse_history) take soup. perfect.
 try:
     from analyze_permits import _parse_history, _parse_meetings
-    from enrich_permits import parse_requirements_level
 except ImportError as e:
     logger.error(f"Import Error: {e}")
     sys.exit(1)
+
+def _get_text(el) -> str:
+    """Return stripped text from a BeautifulSoup element."""
+    if not el:
+        return None
+    txt = el.get_text(separator=" ", strip=True)
+    txt = txt.replace('\u200f', '').replace('\u200e', '').strip()
+    return txt if txt else None
+
+def parse_requirements_level(soup: BeautifulSoup):  # Returns list[dict] or None
+    """
+    Parses the 'Requirements Level' from the specific requirements table.
+    We target '#table-requirments' (note the typo in source ID).
+    Filters only for status 'הושלם' (Completed).
+    Returns a list of dictionaries with keys: Phaze, Requirement, Date, Status.
+    """
+    try:
+        # The ID in the HTML is misspelled as 'table-requirments'
+        # Crucial fix: The ID might be on the DIV wrapper, not the table itself
+        container = soup.find(id='table-requirments')
+        if not container:
+            container = soup.find(id='table-requirements')
+            
+        table = None
+        if container:
+            if container.name == 'table':
+                table = container
+            else:
+                table = container.find('table')
+        
+        if not table:
+            return None
+
+        completed_items = []
+        current_phaze = "General"
+        
+        # Iterate over all rows in the table body (or just table if no tbody)
+        tbody = table.find('tbody')
+        rows = tbody.find_all('tr') if tbody else table.find_all('tr')
+        
+        for row in rows:
+            cells = row.find_all(['td', 'th'])
+            if not cells:
+                continue
+                
+            # --- IDENTIFY HEADER (Category/Phaze) ---
+            is_header = False
+            
+            # Check 1: Accordion class
+            if row.get('class') and any('accordion' in c for c in row.get('class')):
+                is_header = True
+            
+            # Check 2: Single cell spanning (colspan=4) with strong
+            elif len(cells) == 1 and cells[0].has_attr('colspan'):
+                is_header = True
+                
+            # Check 3: Just strong text in a single cell row (fallback)
+            elif len(cells) == 1 and cells[0].find('strong'):
+                is_header = True
+
+            if is_header:
+                current_phaze = _get_text(cells[0])
+                # Clean up the "( 12)" count if present at the end
+                if current_phaze and '(' in current_phaze and current_phaze.endswith(')'):
+                    try:
+                        current_phaze = current_phaze.rsplit('(', 1)[0].strip()
+                    except:
+                        pass
+                continue
+
+            # --- IDENTIFY DATA (Requirement) ---
+            # Data rows usually have 3+ cells: Req | Status | Date | Comments
+            if len(cells) >= 3:
+                req_desc = _get_text(cells[0])
+                req_status = _get_text(cells[1])
+                req_date = _get_text(cells[2])
+                
+                # Cleanup description
+                if req_desc and req_desc.startswith("-"):
+                    req_desc = req_desc.lstrip("-").strip()
+                
+                # FILTER: Only save if status is 'הושלם'
+                if req_status == "הושלם":
+                    completed_items.append({
+                        "Phaze": current_phaze,
+                        "Requirement": req_desc,
+                        "Date": req_date,
+                        "Status": req_status
+                    })
+
+        if not completed_items:
+            return None
+            
+        return completed_items
+
+    except Exception as e:
+        logger.warning(f"Error parsing requirements level: {e}")
+    
+    return None
 
 # ============================================================================
 # MAIN LOGIC
 # ============================================================================
 
 def find_latest_json() -> str:
-    """Finds the most recent bat_yam_permits_data JSON file."""
-    files = glob.glob("bat_yam_permits_data_*.json")
+    """Finds the most recent bat_yam_permits_data JSON file in permits_data directory."""
+    if not os.path.exists(PERMITS_DATA_DIR):
+        return None
+        
+    files = glob.glob(os.path.join(PERMITS_DATA_DIR, "bat_yam_permits_data_*.json"))
     if not files:
         return None
     files.sort()
@@ -254,8 +360,25 @@ def convert_jsonl_to_json(jsonl_file: str, output_file: str):
         "request_date", "requirements_level"
     ]
     
+    # Helper for sorting keys
+    def _parse_date(d_str):
+        if not d_str: return datetime.min
+        try:
+            return datetime.strptime(d_str, "%d/%m/%Y")
+        except:
+            return datetime.min
+
     final_list = []
     for item in data_map.values():
+        # --- SORTING LOGIC ---
+        # 1. Sort History (Newest first)
+        if item.get('history') and isinstance(item['history'], list):
+            item['history'].sort(key=lambda x: _parse_date(x.get('event_date')), reverse=True)
+            
+        # 2. Sort Requirements Level (Newest first)
+        if item.get('requirements_level') and isinstance(item['requirements_level'], list):
+            item['requirements_level'].sort(key=lambda x: _parse_date(x.get('Date')), reverse=True)
+
         # Create ordered dict
         ordered_item = {k: item.get(k) for k in key_order if k in item}
         # Add any other keys that might exist but aren't in the standard list (at the end)
@@ -263,6 +386,9 @@ def convert_jsonl_to_json(jsonl_file: str, output_file: str):
             if k not in ordered_item:
                 ordered_item[k] = v
         final_list.append(ordered_item)
+    
+    # 3. Sort Main List by Request Date (Newest first)
+    final_list.sort(key=lambda x: _parse_date(x.get('request_date')), reverse=True)
     
     # Optional: Sort by permit_id or some other metric if needed, but dict order is undefined usually.
     # We'll just dump it.
@@ -294,9 +420,12 @@ def main():
          # If existing, user might want to resume or clear.
          # For safety, we keep it but warn.
          logger.warning(f"Found existing {TEMP_JSONL} - appending new results to it.")
+    
+    if not os.path.exists(PERMITS_DATA_DIR):
+        os.makedirs(PERMITS_DATA_DIR)
 
     today_str = datetime.now().strftime("%Y_%m_%d")
-    output_filename = f"bat_yam_permits_data_{today_str}.json"
+    output_filename = os.path.join(PERMITS_DATA_DIR, f"bat_yam_permits_data_{today_str}.json")
     
     processed_ids = set()
 

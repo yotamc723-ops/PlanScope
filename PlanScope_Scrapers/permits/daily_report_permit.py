@@ -5,7 +5,10 @@ import sys
 from datetime import datetime
 from typing import Dict, List, Any, Optional
 
-PERMITS_DIR = os.path.dirname(os.path.abspath(__file__))
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PERMITS_DATA_DIR = os.path.join(BASE_DIR, "permits_data")
+DIFF_DIR = os.path.join(BASE_DIR, "diff")
 REPORT_PREFIX = "permit_daily_report_"
 DATA_PREFIX = "bat_yam_permits_data_"
 
@@ -41,11 +44,37 @@ def compare_permits(new_permits: Dict[str, Any], old_permits: Dict[str, Any]) ->
         # 1. Compare Requirements Level
         new_req = new_data.get('requirements_level')
         old_req = old_data.get('requirements_level')
+
+        # Normalize to lists (handle None or unexpected types gracefully)
+        if new_req is None: new_req = []
+        if old_req is None: old_req = []
+
         if new_req != old_req:
-            changes['requirements_level'] = {
-                'old': old_req,
-                'new': new_req
-            }
+            # Requirements are lists of dicts: {"Phaze":..., "Requirement":..., "Date":..., "Status":...}
+            
+            # 1. Identify added items (present in new but not in old)
+            # using explicit comparison since dicts are not hashable by default unless we convert
+            added_items = [item for item in new_req if item not in old_req]
+            
+            if added_items:
+                # 2. Determine if Phaze changed (Global flag)
+                # Collect all phases from the old list
+                old_phases = set(item.get('Phaze') for item in old_req if item.get('Phaze'))
+                
+                status_changed = "no"
+                for item in added_items:
+                    if item.get('Phaze') and item.get('Phaze') not in old_phases:
+                        status_changed = "yes"
+                        break
+                
+                # 3. Get the last item from the old list ("newest old")
+                old_last = old_req[-1] if old_req else None
+                
+                changes['requirements_level'] = {
+                    'old': old_last,
+                    'new': added_items,
+                    'status_changed': status_changed
+                }
 
         # 2. Compare History (New logic: Newest old value + New additions)
         new_history = new_data.get('history', [])
@@ -140,7 +169,7 @@ def compare_permits(new_permits: Dict[str, Any], old_permits: Dict[str, Any]) ->
     return report
 
 def main():
-    files = get_latest_two_files(PERMITS_DIR, DATA_PREFIX)
+    files = get_latest_two_files(PERMITS_DATA_DIR, DATA_PREFIX)
     
     if len(files) < 2:
         print("Not enough data files to compare. Need at least 2.")
@@ -160,7 +189,11 @@ def main():
     if report_data:
         date_str = extract_date_from_filename(new_file)
         report_filename = f"{REPORT_PREFIX}{date_str}.json"
-        report_path = os.path.join(PERMITS_DIR, report_filename)
+        
+        if not os.path.exists(DIFF_DIR):
+            os.makedirs(DIFF_DIR)
+            
+        report_path = os.path.join(DIFF_DIR, report_filename)
         
         with open(report_path, 'w', encoding='utf-8') as f:
             json.dump(report_data, f, indent=2, ensure_ascii=False)

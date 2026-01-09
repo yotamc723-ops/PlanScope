@@ -23,10 +23,10 @@ BACKUP_DIR = os.path.join(PERMITS_DIR, ".backup")
 
 # Critical Status Files to Backup/Restore
 CRITICAL_FILES = [
-    "permit_numbers.json",
-    "processed_permits.json",
-    "relevant_permits.json",
-    "skipped_permits.json",
+    "permit_numbers/permit_numbers.json",
+    "permit_numbers/processed_permits.json",
+    "permit_numbers/relevant_permits.json",
+    "permit_numbers/skipped_permits.json",
     "opportunities.json"
 ]
 
@@ -65,6 +65,7 @@ class BackupManager:
             src = os.path.join(PERMITS_DIR, filename)
             if os.path.exists(src):
                 dst = os.path.join(BACKUP_DIR, filename)
+                os.makedirs(os.path.dirname(dst), exist_ok=True)
                 shutil.copy2(src, dst)
                 self.backed_up_files.append(filename)
                 logger.debug(f"Backed up: {filename}")
@@ -86,17 +87,19 @@ class BackupManager:
         """Deletes files created during the failed run to keep directory clean."""
         today_date = datetime.now().strftime("%Y_%m_%d")
         
+        permits_data_dir = os.path.join(PERMITS_DIR, "permits_data")
+        diff_dir = os.path.join(PERMITS_DIR, "diff")
+        
         patterns = [
-            f"bat_yam_permits_data_{today_date}.json",
-            f"permit_daily_report_{today_date}.json",
+            os.path.join(permits_data_dir, f"bat_yam_permits_data_{today_date}.json"),
+            os.path.join(diff_dir, f"permit_daily_report_{today_date}.json"),
             "daily_update_temp.jsonl"
         ]
         
-        for pattern in patterns:
-            file_path = os.path.join(PERMITS_DIR, pattern)
+        for file_path in patterns:
             if os.path.exists(file_path):
                 os.remove(file_path)
-                logger.info(f"🗑️ Deleted partial/failed output: {pattern}")
+                logger.info(f"🗑️ Deleted partial/failed output: {file_path}")
 
     def cleanup_backup(self):
         """Deletes the backup folder on success."""

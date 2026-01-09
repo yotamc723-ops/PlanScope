@@ -1,0 +1,777 @@
+<table class="table table-condensed">
+      <thead>
+        <tr>
+          <th class="th-results-header" translatable-text="">דרישה</th>
+          <th class="th-results-header" translatable-text="">סטטוס</th>
+          <th class="th-results-header" translatable-text="">תאריך</th>
+          <th class="th-results-header hidden-on-mobile" translatable-text="">
+            הערות
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+                                <tr>
+          <td colspan="4">
+            <strong>איכות הסביבה - בקשה למידע</strong>
+          </td>
+        </tr>
+                        <tr class="">
+          <td>התייחסות לבקשה למידע - איכות הסביבה</td>
+          <td class="no-wrap">הושלם</td>
+          <td>10/03/2025</td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs1')">
+          <td colspan="4">
+            <strong class="spn">תנאים לקליטת בקשה להיתר</strong>
+            <strong class="spn">( 12)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs1 tr-hidden">
+          <td>תוספות:</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>דרישות מרכז רישוי - מחלקת מידע</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- תיק מידע בתוקף</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- אישור תשלום פיקדון (במידה ומדובר בגורם פרטי)</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- מפת מדידה ערוכה בהתאם לתקנות מפ"י, חתומה דיגיטלית ובתוקף לשנתיים מיום קבלת תיק המידע</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- תכנית הגשה מלאה  בקובץ DWF+PDF חתומה ע"י אדריכל, מבקש, בעל זכות בנכס ומהנדס</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- צילום ת.ז של עורך הבקשה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- צילום רישיון בתוקף של עורך הבקשה+ מתכנן השלד</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- הצהרת המבקש, עורך ומתכנן השלד (טופס  ממערכת רישוי זמין)</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- נסח טאבו עדכני ל-3 חודשים</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- אישור התאמה התכנית למציאות - עפ"י דוח פיקוח</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- אישור ידוע בעלים ע"י חברת פרסום 36 ב' לרבות תצהיר אי איתור בעלים לפי תקנה 36ד' בהתאם</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs2')">
+          <td colspan="4">
+            <strong class="spn">בקרה מרחבית</strong>
+            <strong class="spn">(  4)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs2 tr-hidden">
+          <td>--------דרישות מחלקת רישוי טרם ועדה --------</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs2 tr-hidden">
+          <td>- הגשת תיק פרסום-גמר פרסום</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs2 tr-hidden">
+          <td>- תכנית מתוקנת בהתאם להערות הבודק</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs2 tr-hidden">
+          <td>- התייחסות יועץ תנועה מטעם העירייה - במידה ויש נגיעה בחניות קיימות בהיתר וכן בתמרון.</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs3')">
+          <td colspan="4">
+            <strong class="spn">שלב בקרת התכן</strong>
+            <strong class="spn">(  8)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs3 tr-hidden">
+          <td>- אישור פיקוד העורף / פטור מיגון בהתאם לתקנות פיקוד העורף</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- אישור ולחוף / פטור ( בקשה בתחום 100-300 מטר מרחק מקו החוף לבקשות הכוללות הקלות)</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- דוח חישובים סטטיים כולל תצהיר מתכנן שלד והצהרת מהנדס - מצ"ב טפסים				</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- אישור רמ"י</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- אישור נת"ע סופי (סמיכות לרק"ל / מטרו)</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- אישור סופי להיתר היחידה הסביבתית</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- חתימת ואישור יועץ בטיחות ע"ג התכנית</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- השלמת תנאי בקרת התכן - מרכז רישוי</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs4')">
+          <td colspan="4">
+            <strong class="spn">דרישות איכות הסביבה - בקרת תכן</strong>
+            <strong class="spn">(  4)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs4 tr-hidden">
+          <td>- חוות דעת אקוסטית</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs4 tr-hidden">
+          <td>- דו"ח יועץ תרמי על עמידה בתקן 1045</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs4 tr-hidden">
+          <td>- סקר להמצאות אסבסט בתחום המגרש על ידי סוקר מורשה.</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs4 tr-hidden">
+          <td>- דוח רוחות לאזור הגג הפתוח והבריכה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs5')">
+          <td colspan="4">
+            <strong class="spn">אישור לתחילת עבודות</strong>
+            <strong class="spn">( 17)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs5 tr-hidden">
+          <td>- מבדק בקשה חתום ע"י אחראי לביקורת</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- בקשת אישור תחילת עבודות חתום ע"י אחראי לביקורת, קבלן , אחראי לביצוע שלד הבנין ובעל ההיתר</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- טבלת פרטי אנשי קשר בעלי תפקידים וממונים באתר -טופס א3</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- הודעת מינוי ותצהיר אחראי לביקורת על הביצוע</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- הודעת מינוי ותצהיר קבלן רשום לביצוע שלד הבניין</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- הודעת מינוי ותצהיר אחראי לביצוע שלד הבניין</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- הודעת מינוי ותצהיר מודד מוסמך</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- הסכם התקשרות עם מעבדה לביצוע בדיקות ע"פ חוק התכנון והבניה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- אישור אגף איכות הסביבה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- אישור מחלקת תשתיות -אישור תכנית הסדרי תנועה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- אישורי מחלקת מבני ציבור</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- אישור תאגיד מי בת ים</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- אישור מחלקת חינוך / קהילה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- אישור מחלקת תברואה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- אישור מחלקת פיקוח עירוני (חובות והצבת מכולה)</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- אישור מחלקת חשמל ותאורה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- אישור תחילת עבודות ע"י האחראי לביקורת על הביצוע</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr>
+          <td colspan="4">
+            <strong>דרישות איכות הסביבה - אישור תחילת עבודות</strong>
+          </td>
+        </tr>
+                
+        <tr class="">
+          <td>- התקשרות עם קבלן מורשה לפינוי אסבסט והיתר לעבודות באסבסט מהמשרד להגנ"ס</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="">
+          <td>- טופס הערכת כמויות פסולת בנין.</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="">
+          <td>- התקשרות עם אתר פסולת בניין מורשה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr>
+          <td colspan="4">
+            <strong>דרישות מחלקת חשמל - אישור תחילת עבודות</strong>
+          </td>
+        </tr>
+                
+        <tr class="">
+          <td>- אישור לפירוק קווי מתח גבוה ונמוך בחזיתות הבניין, כולל תיאום מול חברת חשמל</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs6')">
+          <td colspan="4">
+            <strong class="spn">דרישות למהלך ביצוע</strong>
+            <strong class="spn">(  4)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs6 tr-hidden">
+          <td>-דיווח על עריכת ביקורת באתר הבניה במועד סימון קווי בניין, בצרוף מפת מדידה עדכנית עם הסימון</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs6 tr-hidden">
+          <td>- דווח ביקורת באתר לשלב גמר יסודות רצפה ראשונה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs6 tr-hidden">
+          <td>- דיווח על עריכת ביקורת באתר הבניה במועד גמר הקמת השלד.</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs6 tr-hidden">
+          <td>- דיווח על עריכת ביקורת באתר הבניה במועד גמר הבניה.</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs7')">
+          <td colspan="4">
+            <strong class="spn">תעודת גמר</strong>
+            <strong class="spn">( 35)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs7 tr-hidden">
+          <td>- אישור תעודת גמר  ע"י האחראי לביקורת על הביצוע</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- תצהיר המבקש, תצהיר עורך הבקשה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- תצהיר אחראי לביקורת, תצהיר מתכנן שלד הבניין, תצהיר אחראי לביצוע שלד הבניין</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- תצהיר מודד מוסמך</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- תצהיר יועץ תנועה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- תצהיר יועץ נגישות</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- תצהיר יועץ בטיחות</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מחלקת מבני ציבור</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מחלקת תשתיות - הסדרי תנועה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור היחידה הסביבתית</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור ערבויות</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מחלקת תברואה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מחלקת פיקוח עירוני</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מחלקת גנים ונוף</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מחלקת מבנה חינוך</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור תאגיד מי בת ים</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור כיבוי אש</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור הג"א</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור הבקשה ע"י אחראי לביקורת,מפקח בניה,מנהל מחלקת פיקוח</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור דיווח אחראי לביקורת</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- בדיקות מעבדה ואישורים נילווים</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מעבדה מוסמכת לריכוז בדיקות בטונים : יסודות,תקרות,עמודים,קירות מעלית ומדרגות</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מעבדה מוסמכת להדבקות טיח במרחב מוגן</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מעבדה מוסמכת לאטימות במרחב המוגן</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מעבדה מוסמכת לאטימות מעטפת בניין, גגות, חלונות, קירות ומרפסות</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מעבדה מוסמכת לחוזק הדבקת ציפוי חוץ ועמידותו באזור ימי</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מעבדה מוסמכת לבדיקת אבן ת"י 2378 חלק 1+2</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מעבדה מוסמכת למערכות סניטריות :אינסטלציה של מים, ביוב וניקוז</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מעבדה מוסמכת לתקינות מערכת הגז</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מעבדה מוסמכת לתשתית למתקן לקליטת שידור כבלים/לויין</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מעבדה מוסמכת לתקינות מעקות</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור לבדיקת תקינות מעלית ע"י משרד העבודה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור מהנדס הג"א על בדיקת מרחב מוגן</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- אישור תשלום אגרה תעודת גמר (מצורף קישור באוגדן)</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- דוח מסכם מאחראי לביקורת על הביצוע</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs8')">
+          <td colspan="4">
+            <strong class="spn">דרישות איכות הסביבה - תעודת גמר</strong>
+            <strong class="spn">(  6)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs8 tr-hidden">
+          <td>- תעודות שקילה ואישור פינוי פסולת בניין לאתר המורשה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs8 tr-hidden">
+          <td>- תעודות שקילה ואישור פינוי אסבסט לאתר מורשה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs8 tr-hidden">
+          <td>- אישור יועץ אקוסטי על ביצוע בהתאם לחוו"ד שאושרה בשלב קבלת ההיתר.</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs8 tr-hidden">
+          <td>- חוו"ד אדריכל על בנייה תרמית לפי תקן 1045</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs8 tr-hidden">
+          <td>- אישור יועץ אינסטלציה</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs8 tr-hidden">
+          <td>- היתר רעלים או פטור מהמשרד להגנ"ס.</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr>
+          <td colspan="4">
+            <strong>דרישות מחלקת חשמל - תעודת גמר</strong>
+          </td>
+        </tr>
+                
+        <tr class="">
+          <td>- בדיקת מתקן בודק חשמל</td>
+          <td class="no-wrap">לא הושלם</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                
+              </tbody>
+    </table>

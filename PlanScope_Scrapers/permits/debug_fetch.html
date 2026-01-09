@@ -1,0 +1,1381 @@
+ï»¿<style>
+  .btn-header:after {
+    font-family: 'Glyphicons Halflings';
+    content: '\e114';
+    float: left;
+    margin-right: 15px;
+  }
+
+  .btn-header.collapsed:after {
+    content: '\e079';
+  }
+
+  .btn-header,
+  .btn-header:hover,
+  .btn-header:focus {
+    border-radius: 0;
+    border-top: 1px solid black;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: right;
+    width: 100%;
+  }
+
+  .spn {
+    padding-right: 3px;
+  }
+  .tr-hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  $.getScript(siteBaseURL + 'handasi2016/Scripts/Complot/Request/min/request-result.min.js');
+</script>
+
+<div class="top-nav-bar" id="top-navbar-id">
+  <h2 translatable-text>×¤×¨×× ××§×©× ×××××¢</h2>
+  <hr />
+  <section>
+    <div class="row" id="result-title-div-id">
+      <div class="col-sm-4">
+        <div class="result-title top-navbar-info-desc" translatable-text>××¡×¤×¨ ×××§×©×:</div>
+        <div class="top-navbar-info-desc">20250079</div>
+      </div>
+      <div class="col-sm-4">
+        <div class="result-title top-navbar-info-desc" translatable-text>××ª×××ª:</div>
+        <div class="top-navbar-info-desc">×××¡×§×¨ ×©×× ×××¨ 20 × ××ª ××</div>
+      </div>
+      <div class="col-sm-4">
+        <div class="result-title top-navbar-info-desc" translatable-text>×ª××¨×× ×××©×:</div>
+        <div class="top-navbar-info-desc">06/02/2025</div>
+      </div>
+    </div>
+  </section>
+  <hr />
+
+  <div class="row hidden-xs" id="btn-group-row-id">
+    <div class="btn-group" style="width: 100%" id="btn-group-id" role="navigation" aria-label="×§××©××¨ ××××××¨ ×××£">
+      <input
+        translatable-value
+        role="link"
+        type="button"
+        class="btn btn-primary btn-responsive"
+        onclick="scrollToElement('#info-main')"
+        value="××××¢ ××××"
+      />
+      <input
+        translatable-value
+        role="link"
+        type="button"
+        class="btn btn-primary btn-responsive"
+        onclick="scrollToElement('#mahut')"
+        value="××××ª"
+      />
+      <input
+        translatable-value
+        role="link"
+        type="button"
+        class="btn btn-primary btn-responsive"
+        onclick="scrollToElement('#baaley-inyan')"
+        value="××¢×× ×¢× ×××"
+      />
+            <input
+        translatable-value
+        role="link"
+        type="button"
+        class="btn btn-primary btn-responsive"
+        onclick="scrollToElement('#gushim-helkot')"
+        value="×××© ××××§×"
+      />
+            <input
+        translatable-value
+        role="link"
+        type="button"
+        class="btn btn-primary btn-responsive"
+        onclick="scrollToElement('#events')"
+        value="×××¨××¢××"
+      />
+            <input
+        translatable-value
+        role="link"
+        type="button"
+        class="btn btn-primary btn-responsive"
+        onclick="scrollToElement('#requirments')"
+        value="××¨××©××ª"
+      />
+      <input
+        translatable-value
+        role="link"
+        type="button"
+        class="btn btn-primary btn-responsive"
+        onclick="scrollToElement('#archive')"
+        value="××¨××× ××¡××××"
+      />
+    </div>
+  </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-top" id="sticky-nav-bar">
+  <div class="container-fluid row">
+    <div class="dropdown dropdown-pos">
+      <button
+        class="btn dropdown-toggle col-md-1 col-sm-1 col-xs-1 hidden-print"
+        id="dropdownMenu1"
+        data-toggle="dropdown"
+      >
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+        <span translatable-text>× ××××</span>
+      </button>
+
+      <div id="navbar-titles-id" class="hidden-xs">
+        <div class="col-md-2 col-sm-2 margin-top-navbar-info">
+          <h5 class="result-title" translatable-text>××¡×¤×¨ ×××§×©×:</h5>
+        </div>
+        <div class="col-md-3 col-sm-3 margin-top-navbar-info">
+          <h5>20250079</h5>
+        </div>
+        <div class="col-md-2 col-sm-2 margin-top-navbar-info">
+          <h5 class="result-title" translatable-text>××ª×××ª:</h5>
+        </div>
+        <div class="col-md-4 col-sm-3 margin-top-navbar-info">
+          <h5>×××¡×§×¨ ×©×× ×××¨ 20 × ××ª ××</h5>
+        </div>
+      </div>
+
+      <div class="visible-xs" id="navbar-xs-id">
+        <div class="result-title">
+          <h2>
+            <span translatable-text>×¤×¨×× ××§×©×</span>
+            20250079
+          </h2>
+        </div>
+      </div>
+
+      <ul class="dropdown-menu" id="dropdown-menu-nav-id" aria-labelledby="dropdownMenu1">
+        <li>
+          <input
+            translatable-value
+            role="link"
+            type="button"
+            class="btn li-max-width"
+            onclick="scrollToElement('#info-main')"
+            value="××××¢ ××××"
+          />
+        </li>
+        <li>
+          <input
+            translatable-value
+            role="link"
+            type="button"
+            class="btn li-max-width"
+            onclick="scrollToElement('#mahut')"
+            value="××××ª"
+          />
+        </li>
+        <li>
+          <input
+            translatable-value
+            role="link"
+            type="button"
+            class="btn li-max-width"
+            onclick="scrollToElement('#baaley-inyan')"
+            value="××¢×× ×¢× ×××"
+          />
+        </li>
+                <li>
+          <input
+            translatable-value
+            role="link"
+            type="button"
+            class="btn li-max-width"
+            onclick="scrollToElement('#gushim-helkot')"
+            value="×××© ××××§×"
+          />
+        </li>
+                <li>
+          <input
+            translatable-value
+            role="link"
+            type="button"
+            class="btn li-max-width"
+            onclick="scrollToElement('#events')"
+            value="×××¨××¢××"
+          />
+        </li>
+                <li>
+          <input
+            translatable-value
+            role="link"
+            type="button"
+            class="btn li-max-width"
+            onclick="scrollToElement('#requirments')"
+            value="××¨××©××ª"
+          />
+        </li>
+        <li>
+          <input
+            translatable-value
+            role="link"
+            type="button"
+            class="btn li-max-width"
+            onclick="scrollToElement('#archive')"
+            value="××¨××× ××¡××××"
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="row" id="info-main" tabindex="-1">
+  <div>
+    <h3 class="result-title result-title-bottom" translatable-text>××××¢ ××××</h3>
+  </div>
+
+  <table class="table table-condensed" role="presentation">
+    <tbody>
+      <tr>
+        <td class="title" translatable-text>××¡×¤×¨ ×ª××§ ×× ×××</td>
+        <td>
+          <a href="javascript:getBuilding(4462)">4462</a>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="title" translatable-text>××¡×¤×¨ ×××§×©× ××¨××©×× ××××</td>
+        <td>10000462161</td>
+      </tr>
+
+      <tr>
+        <td class="title" translatable-text>×¡×× ×××§×©×</td>
+        <td>××§×©× ×××××¢</td>
+      </tr>
+
+      <tr>
+        <td class="title" translatable-text>×©××××© ×¢××§×¨×</td>
+        <td>××××¨××</td>
+      </tr>
+
+      <tr>
+        <td class="title" translatable-text>×ª××××¨ ×××§×©×</td>
+        <td>×ª××¡×¤×ª ×× ×× ×××××¨××</td>
+      </tr>
+
+      
+      
+      <tr>
+        <td class="title" translatable-text>×©×× ×¢××§×¨×</td>
+        <td>188.30</td>
+      </tr>
+
+      <tr>
+        <td class="title" translatable-text>×©×× ×©××¨××ª</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td class="title" translatable-text>×¡× ××¡×¤×¨ ××××××ª ××××¨ ×××××§×©××ª</td>
+        <td>1</td>
+      </tr>
+
+            <tr>
+        <td class="title" translatable-text>×§××©××¨ ×××ª×¨ ×××××××¨×¤×</td>
+        <td>
+          <a href="https://v5.gis-net.co.il/v5api/Home/Focus?Customer=6201&FocusType=1&Where=7146,280&AnswerType=1" target="_blank">
+            <span class="glyphicon glyphicon-map-marker"></span> <span translatable-text>××ª××§×××ª</span>
+          </a>
+        </td>
+      </tr>
+      
+      
+      
+          </tbody>
+  </table>
+</div>
+
+<div class="row" id="mahut" tabindex="-1">
+  <div>
+    <h3 class="result-title result-title-bottom" translatable-text>××××ª ×××§×©×</h3>
+  </div>
+
+  <table class="table table-condensed" role="presentation">
+    <tbody>
+                  <tr>
+        <td>â×ª××¡×¤×ª ×§×××ª ××××©××ª + ×××¨ ×¢× ××× ××§××× ×©××©××ª</td>
+      </tr>
+                </tbody>
+  </table>
+</div>
+
+<div class="row" id="baaley-inyan" tabindex="-1">
+  <div>
+    <div
+      id="btn-baaley-inyan"
+      type="button"
+      class="btn btn-defailt btn-header collapsed"
+      data-toggle="collapse"
+      data-target="#table-baaley-inyan"
+      role="button"
+    >
+      <span translatable-text>××¢×× ×¢× ×××</span>
+      <span class="spn">(3)</span>
+    </div>
+  </div>
+  <div id="table-baaley-inyan" class="collapse" style="height: 0px">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th class="th-results-header" translatable-text>×¡×× ××¢× ×¢× ×××</th>
+          <th class="th-results-header" translatable-text>×©× ××¢× ×¢× ×××</th>
+        </tr>
+      </thead>
+      <tbody>
+                        <tr>
+          <td class="title">×××§×©</td>
+          <td>×××××× ×¤×××¡</td>
+        </tr>
+                <tr>
+          <td class="title">××¢× ×× ××¡</td>
+          <td>×××××× ×¤×××¡</td>
+        </tr>
+                <tr>
+          <td class="title">×¢××¨×</td>
+          <td>××× × ×¤××××¤× ×§×</td>
+        </tr>
+                      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row" id="gushim-helkot" tabindex="-1">
+  <div>
+    <div
+      id="btn-gushim-helkot"
+      type="button"
+      class="btn btn-defailt btn-header collapsed"
+      data-toggle="collapse"
+      data-target="#table-gushim-helkot"
+      role="button"
+    >
+      <span translatable-text>×××©×× ××××§××ª</span>
+      <span class="spn">(1)</span>
+    </div>
+  </div>
+  <div id="table-gushim-helkot" class="collapse" style="height: 0px">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th class="th-results-header"></th>
+          <th class="th-results-header" translatable-text>××¡×¤×¨ ×××©</th>
+          <th class="th-results-header" translatable-text>××¡×¤×¨ ×××§×</th>
+          <th class="th-results-header" translatable-text>××¡×¤×¨ ×××¨×©</th>
+          <th class="th-results-header" translatable-text>××¢××</th>
+        </tr>
+      </thead>
+      <tbody>
+                        <tr>
+          <td>
+            <a href="javascript:getGush(7146,280)"
+              ><span class="glyphicon glyphicon-new-window black-font-color"></span
+            ></a>
+          </td>
+          <td>7146</td>
+          <td>280</td>
+          <td></td>
+          <td>××××¨×× ×××××</td>
+        </tr>
+                      </tbody>
+    </table>
+  </div>
+</div>
+<!-- ShowGushHelka -->
+
+<div class="row" id="events" tabindex="-1">
+  <div>
+    <div
+      id="btn-events"
+      type="button"
+      class="btn btn-defailt btn-header collapsed"
+      data-toggle="collapse"
+      data-target="#table-events"
+      role="button"
+    >
+      <span translatable-text>×××¨××¢××</span>
+      <span class="spn">(7)</span>
+    </div>
+  </div>
+  <div id="table-events" class="collapse" style="height: 0px">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th class="th-results-header" translatable-text>×¡×× ×××¨××¢</th>
+          <th class="th-results-header" translatable-text>×ª××××¨ ×××¨××¢</th>
+          <th class="th-results-header" translatable-text>×ª××¨×× ×××¨××¢</th>
+          <th class="th-results-header hidden-on-mobile" translatable-text>×ª××¨×× ×¡××× ×××¨××¢</th>
+                            </tr>
+      </thead>
+      <tbody>
+                        <tr>
+          <td>× ××××</td>
+          <td>××¢××¨×ª ×ª××§ ×××××¢ ×××¢×¨××ª ×¨××©×× ××××</td>
+          <td>24/03/2025</td>
+          <td class="hidden-on-mobile"></td>
+                            </tr>
+                <tr>
+          <td>×¡×××¨</td>
+          <td>××× ×ª ××××× ×ª××§ ××××¢</td>
+          <td>10/03/2025</td>
+          <td class="hidden-on-mobile">24/03/2025</td>
+                            </tr>
+                <tr>
+          <td>×¡×××¨</td>
+          <td>×§×××ª ××ª××××¡××ª ×××××¢ ×××××× ××§×××××ª ××××××ª ××¡×××× ××× ××× ××¨××§×</td>
+          <td>09/03/2025</td>
+          <td class="hidden-on-mobile">24/03/2025</td>
+                            </tr>
+                <tr>
+          <td>×¡×××¨</td>
+          <td>××¢××¨×ª ××§×©× ×××××¢ ×××ª××××¡××ª ×××××× ××§×××××ª ××××××ª ××¡×××× ××× ××× ××¨××§×</td>
+          <td>09/03/2025</td>
+          <td class="hidden-on-mobile">09/03/2025</td>
+                            </tr>
+                <tr>
+          <td>×¡×××¨</td>
+          <td>××¢××¨×ª ××§×©× ×××××¢×</td>
+          <td>09/02/2025</td>
+          <td class="hidden-on-mobile">09/03/2025</td>
+                            </tr>
+                <tr>
+          <td>×¡×××¨</td>
+          <td>×§×××ª × ×ª×× ×× ××¨××©×× ××××</td>
+          <td>06/02/2025</td>
+          <td class="hidden-on-mobile">09/02/2025</td>
+                            </tr>
+                <tr>
+          <td>×¡×××¨</td>
+          <td>×¤×ª×××ª ××§×©× ×××××¢</td>
+          <td>06/02/2025</td>
+          <td class="hidden-on-mobile">06/02/2025</td>
+                            </tr>
+                      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="row" id="requirments" tabindex="-1">
+  <div>
+    <div
+      id="btn-requirments"
+      type="button"
+      class="btn btn-defailt btn-header collapsed"
+      data-toggle="collapse"
+      data-target="#table-requirments"
+      role="button"
+    >
+      <span translatable-text>××××× ××¨××©××ª</span>
+      <span class="spn">(96)</span>
+    </div>
+  </div>
+  <div id="table-requirments" class="collapse" style="height: 0px">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th class="th-results-header" translatable-text>××¨××©×</th>
+          <th class="th-results-header" translatable-text>×¡××××¡</th>
+          <th class="th-results-header" translatable-text>×ª××¨××</th>
+          <th class="th-results-header hidden-on-mobile" translatable-text>
+            ××¢×¨××ª
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+                                <tr>
+          <td colspan="4">
+            <strong>×××××ª ××¡×××× - ××§×©× ×××××¢</strong>
+          </td>
+        </tr>
+                        <tr class="">
+          <td>××ª××××¡××ª ×××§×©× ×××××¢ - ×××××ª ××¡××××</td>
+          <td class="no-wrap">×××©××</td>
+          <td>10/03/2025</td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs1')">
+          <td colspan="4">
+            <strong class="spn">×ª× ××× ××§××××ª ××§×©× ××××ª×¨</strong>
+            <strong class="spn">( 12)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs1 tr-hidden">
+          <td>×ª××¡×¤××ª:</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>××¨××©××ª ××¨×× ×¨××©×× - ××××§×ª ××××¢</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- ×ª××§ ××××¢ ××ª××§×£</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- ×××©××¨ ×ª×©××× ×¤××§××× (××××× ××××××¨ ××××¨× ×¤×¨××)</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- ××¤×ª ××××× ×¢×¨××× ×××ª×× ××ª×§× ××ª ××¤"×, ××ª××× ××××××××ª ×××ª××§×£ ××©× ×ª××× ×××× ×§×××ª ×ª××§ ×××××¢</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- ×ª×× ××ª ×××©× ××××  ××§×××¥ DWF+PDF ××ª××× ×¢"× ×××¨×××, ×××§×©, ××¢× ××××ª ×× ××¡ ×××× ××¡</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- ×¦×××× ×ª.× ×©× ×¢××¨× ×××§×©×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- ×¦×××× ×¨××©××× ××ª××§×£ ×©× ×¢××¨× ×××§×©×+ ××ª×× × ××©××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- ××¦××¨×ª ××××§×©, ×¢××¨× ×××ª×× × ××©×× (×××¤×¡  ×××¢×¨××ª ×¨××©×× ××××)</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- × ×¡× ×××× ×¢××× × ×-3 ××××©××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- ×××©××¨ ××ª××× ××ª×× ××ª ×××¦××××ª - ×¢×¤"× ××× ×¤××§××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs1 tr-hidden">
+          <td>- ×××©××¨ ××××¢ ××¢××× ×¢"× ×××¨×ª ×¤×¨×¡×× 36 ×' ××¨×××ª ×ª×¦×××¨ ×× ×××ª××¨ ××¢××× ××¤× ×ª×§× × 36×' ×××ª××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs2')">
+          <td colspan="4">
+            <strong class="spn">××§×¨× ××¨××××ª</strong>
+            <strong class="spn">(  4)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs2 tr-hidden">
+          <td>--------××¨××©××ª ××××§×ª ×¨××©×× ××¨× ××¢×× --------</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs2 tr-hidden">
+          <td>- ×××©×ª ×ª××§ ×¤×¨×¡××-×××¨ ×¤×¨×¡××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs2 tr-hidden">
+          <td>- ×ª×× ××ª ××ª××§× ×ª ×××ª×× ×××¢×¨××ª ×××××§</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs2 tr-hidden">
+          <td>- ××ª××××¡××ª ×××¢×¥ ×ª× ××¢× ×××¢× ××¢××¨××× - ××××× ×××© × ×××¢× ××× ×××ª ×§×××××ª ××××ª×¨ ××× ××ª××¨××.</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs3')">
+          <td colspan="4">
+            <strong class="spn">×©×× ××§×¨×ª ××ª××</strong>
+            <strong class="spn">(  8)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs3 tr-hidden">
+          <td>- ×××©××¨ ×¤××§×× ××¢××¨×£ / ×¤×××¨ ××××× ×××ª×× ××ª×§× ××ª ×¤××§×× ××¢××¨×£</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- ×××©××¨ ×××××£ / ×¤×××¨ ( ××§×©× ××ª××× 100-300 ×××¨ ××¨××§ ××§× ××××£ ×××§×©××ª ×××××××ª ××§×××ª)</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- ××× ×××©×××× ×¡××××× ×××× ×ª×¦×××¨ ××ª×× × ×©×× ×××¦××¨×ª ××× ××¡ - ××¦"× ××¤×¡××				</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- ×××©××¨ ×¨×"×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- ×××©××¨ × ×ª"×¢ ×¡××¤× (×¡×××××ª ××¨×§"× / ×××¨×)</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- ×××©××¨ ×¡××¤× ××××ª×¨ ×××××× ××¡××××ª××ª</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- ××ª×××ª ××××©××¨ ×××¢×¥ ××××××ª ×¢"× ××ª×× ××ª</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs3 tr-hidden">
+          <td>- ××©×××ª ×ª× ×× ××§×¨×ª ××ª×× - ××¨×× ×¨××©××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs4')">
+          <td colspan="4">
+            <strong class="spn">××¨××©××ª ×××××ª ××¡×××× - ××§×¨×ª ×ª××</strong>
+            <strong class="spn">(  4)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs4 tr-hidden">
+          <td>- ××××ª ××¢×ª ××§××¡×××ª</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs4 tr-hidden">
+          <td>- ××"× ×××¢×¥ ×ª×¨×× ×¢× ×¢×××× ××ª×§× 1045</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs4 tr-hidden">
+          <td>- ×¡×§×¨ ××××¦×××ª ××¡××¡× ××ª××× ××××¨×© ×¢× ××× ×¡××§×¨ ×××¨×©×.</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs4 tr-hidden">
+          <td>- ××× ×¨××××ª ×××××¨ ××× ××¤×ª×× ××××¨×××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs5')">
+          <td colspan="4">
+            <strong class="spn">×××©××¨ ××ª××××ª ×¢×××××ª</strong>
+            <strong class="spn">( 17)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs5 tr-hidden">
+          <td>- ××××§ ××§×©× ××ª×× ×¢"× ×××¨×× ××××§××¨×ª</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ××§×©×ª ×××©××¨ ×ª××××ª ×¢×××××ª ××ª×× ×¢"× ×××¨×× ××××§××¨×ª, ×§××× , ×××¨×× ××××¦××¢ ×©×× ××× ×× ×××¢× ××××ª×¨</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ××××ª ×¤×¨×× ×× ×©× ×§×©×¨ ××¢×× ×ª×¤×§×××× ××××× ×× ×××ª×¨ -×××¤×¡ ×3</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ××××¢×ª ××× ×× ××ª×¦×××¨ ×××¨×× ××××§××¨×ª ×¢× ××××¦××¢</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ××××¢×ª ××× ×× ××ª×¦×××¨ ×§××× ×¨×©×× ××××¦××¢ ×©×× ××× ×××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ××××¢×ª ××× ×× ××ª×¦×××¨ ×××¨×× ××××¦××¢ ×©×× ××× ×××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ××××¢×ª ××× ×× ××ª×¦×××¨ ×××× ×××¡××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ××¡×× ××ª×§×©×¨××ª ×¢× ××¢××× ××××¦××¢ ××××§××ª ×¢"×¤ ×××§ ××ª×× ×× ×××× ××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ×××©××¨ ×××£ ×××××ª ××¡××××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ×××©××¨ ××××§×ª ×ª×©×ª×××ª -×××©××¨ ×ª×× ××ª ××¡××¨× ×ª× ××¢×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ×××©××¨× ××××§×ª ××× × ×¦××××¨</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ×××©××¨ ×ª×××× ×× ××ª ××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ×××©××¨ ××××§×ª ××× ×× / ×§××××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ×××©××¨ ××××§×ª ×ª××¨×××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ×××©××¨ ××××§×ª ×¤××§×× ×¢××¨×× × (×××××ª ×××¦××ª ×××××)</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ×××©××¨ ××××§×ª ××©×× ××ª×××¨×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs5 tr-hidden">
+          <td>- ×××©××¨ ×ª××××ª ×¢×××××ª ×¢"× ××××¨×× ××××§××¨×ª ×¢× ××××¦××¢</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr>
+          <td colspan="4">
+            <strong>××¨××©××ª ×××××ª ××¡×××× - ×××©××¨ ×ª××××ª ×¢×××××ª</strong>
+          </td>
+        </tr>
+                
+        <tr class="">
+          <td>- ××ª×§×©×¨××ª ×¢× ×§××× ×××¨×©× ××¤×× ×× ××¡××¡× ××××ª×¨ ××¢×××××ª ×××¡××¡× ××××©×¨× ×××× "×¡</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="">
+          <td>- ×××¤×¡ ××¢×¨××ª ××××××ª ×¤×¡×××ª ×× ××.</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="">
+          <td>- ××ª×§×©×¨××ª ×¢× ××ª×¨ ×¤×¡×××ª ×× ××× ×××¨×©×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr>
+          <td colspan="4">
+            <strong>××¨××©××ª ××××§×ª ××©×× - ×××©××¨ ×ª××××ª ×¢×××××ª</strong>
+          </td>
+        </tr>
+                
+        <tr class="">
+          <td>- ×××©××¨ ××¤××¨××§ ×§××× ××ª× ×××× ×× ××× ×××××ª××ª ××× ×××, ×××× ×ª×××× ××× ×××¨×ª ××©××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs6')">
+          <td colspan="4">
+            <strong class="spn">××¨××©××ª ××××× ×××¦××¢</strong>
+            <strong class="spn">(  4)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs6 tr-hidden">
+          <td>-××××× ×¢× ×¢×¨×××ª ×××§××¨×ª ×××ª×¨ ××× ×× ××××¢× ×¡×××× ×§××× ×× ×××, ××¦×¨××£ ××¤×ª ××××× ×¢××× ××ª ×¢× ××¡××××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs6 tr-hidden">
+          <td>- ×××× ×××§××¨×ª ×××ª×¨ ××©×× ×××¨ ××¡××××ª ×¨×¦×¤× ×¨××©×× ×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs6 tr-hidden">
+          <td>- ××××× ×¢× ×¢×¨×××ª ×××§××¨×ª ×××ª×¨ ××× ×× ××××¢× ×××¨ ××§××ª ××©××.</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs6 tr-hidden">
+          <td>- ××××× ×¢× ×¢×¨×××ª ×××§××¨×ª ×××ª×¨ ××× ×× ××××¢× ×××¨ ××× ××.</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs7')">
+          <td colspan="4">
+            <strong class="spn">×ª×¢×××ª ×××¨</strong>
+            <strong class="spn">( 35)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ×ª×¢×××ª ×××¨  ×¢"× ××××¨×× ××××§××¨×ª ×¢× ××××¦××¢</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×ª×¦×××¨ ××××§×©, ×ª×¦×××¨ ×¢××¨× ×××§×©×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×ª×¦×××¨ ×××¨×× ××××§××¨×ª, ×ª×¦×××¨ ××ª×× × ×©×× ××× ×××, ×ª×¦×××¨ ×××¨×× ××××¦××¢ ×©×× ××× ×××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×ª×¦×××¨ ×××× ×××¡××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×ª×¦×××¨ ×××¢×¥ ×ª× ××¢×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×ª×¦×××¨ ×××¢×¥ × ×××©××ª</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×ª×¦×××¨ ×××¢×¥ ××××××ª</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××××§×ª ××× × ×¦××××¨</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××××§×ª ×ª×©×ª×××ª - ××¡××¨× ×ª× ××¢×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ×××××× ××¡××××ª××ª</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ×¢×¨×××××ª</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××××§×ª ×ª××¨×××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××××§×ª ×¤××§×× ×¢××¨×× ×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××××§×ª ×× ×× ×× ××£</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××××§×ª ××× × ××× ××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ×ª×××× ×× ××ª ××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××××× ××©</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××"×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ×××§×©× ×¢"× ×××¨×× ××××§××¨×ª,××¤×§× ×× ××,×× ×× ××××§×ª ×¤××§××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××××× ×××¨×× ××××§××¨×ª</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ××××§××ª ××¢××× ××××©××¨×× × ××××××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××¢××× ×××¡×××ª ××¨×××× ××××§××ª ×××× ×× : ××¡××××ª,×ª×§×¨××ª,×¢×××××,×§××¨××ª ××¢×××ª ××××¨×××ª</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××¢××× ×××¡×××ª ×××××§××ª ××× ×××¨×× ××××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××¢××× ×××¡×××ª ×××××××ª ×××¨×× ×××××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××¢××× ×××¡×××ª ×××××××ª ××¢××¤×ª ×× ×××, ××××ª, ×××× ××ª, ×§××¨××ª ×××¨×¤×¡××ª</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××¢××× ×××¡×××ª ×××××§ ××××§×ª ×¦××¤×× ×××¥ ××¢×××××ª× ×××××¨ ×××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××¢××× ×××¡×××ª ×××××§×ª ××× ×ª"× 2378 ×××§ 1+2</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××¢××× ×××¡×××ª ×××¢×¨×××ª ×¡× ×××¨×××ª :××× ×¡×××¦×× ×©× ×××, ×××× ×× ××§××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××¢××× ×××¡×××ª ××ª×§×× ××ª ××¢×¨××ª ×××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××¢××× ×××¡×××ª ××ª×©×ª××ª ×××ª×§× ××§××××ª ×©××××¨ ×××××/×××××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××¢××× ×××¡×××ª ××ª×§×× ××ª ××¢×§××ª</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ×××××§×ª ×ª×§×× ××ª ××¢×××ª ×¢"× ××©×¨× ××¢××××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ××× ××¡ ××"× ×¢× ××××§×ª ××¨×× ××××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ×××©××¨ ×ª×©××× ×××¨× ×ª×¢×××ª ×××¨ (××¦××¨×£ ×§××©××¨ ××××××)</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs7 tr-hidden">
+          <td>- ××× ××¡×× ××××¨×× ××××§××¨×ª ×¢× ××××¦××¢</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr class="accordion-toggle collapsed" onclick="toggelDrishot(this,'rqs8')">
+          <td colspan="4">
+            <strong class="spn">××¨××©××ª ×××××ª ××¡×××× - ×ª×¢×××ª ×××¨</strong>
+            <strong class="spn">(  6)</strong>
+          </td>
+        </tr>
+                
+        <tr class="rqs8 tr-hidden">
+          <td>- ×ª×¢××××ª ×©×§××× ××××©××¨ ×¤×× ×× ×¤×¡×××ª ×× ××× ×××ª×¨ ××××¨×©×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs8 tr-hidden">
+          <td>- ×ª×¢××××ª ×©×§××× ××××©××¨ ×¤×× ×× ××¡××¡× ×××ª×¨ ×××¨×©×</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs8 tr-hidden">
+          <td>- ×××©××¨ ×××¢×¥ ××§××¡×× ×¢× ×××¦××¢ ×××ª×× ××××"× ×©×××©×¨× ××©×× ×§×××ª ××××ª×¨.</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs8 tr-hidden">
+          <td>- ×××"× ×××¨××× ×¢× ×× ××× ×ª×¨×××ª ××¤× ×ª×§× 1045</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs8 tr-hidden">
+          <td>- ×××©××¨ ×××¢×¥ ××× ×¡×××¦××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                <tr class="rqs8 tr-hidden">
+          <td>- ×××ª×¨ ×¨×¢××× ×× ×¤×××¨ ××××©×¨× ×××× "×¡.</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+        
+                        <tr>
+          <td colspan="4">
+            <strong>××¨××©××ª ××××§×ª ××©×× - ×ª×¢×××ª ×××¨</strong>
+          </td>
+        </tr>
+                
+        <tr class="">
+          <td>- ××××§×ª ××ª×§× ××××§ ××©××</td>
+          <td class="no-wrap">×× ×××©××</td>
+          <td></td>
+          <td class="hidden-on-mobile">
+                      </td>
+        </tr>
+                
+              </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="row" id="archive" tabindex="-1">
+  <div>
+    <div
+      id="btn-archive"
+      type="button"
+      class="btn btn-defailt btn-header collapsed"
+      data-toggle="collapse"
+      data-target="#table-archive"
+      role="button"
+    >
+      <span translatable-text>××¨××× ××¡××××</span>
+      <span class="spn">(0)</span>
+    </div>
+  </div>
+  <div id="table-archive" class="collapse" style="height: 0px">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th class="th-results-header" translatable-text>×©× ×××¡××</th>
+          <th class="th-results-header hidden-on-mobile" translatable-text>× ××©×</th>
+                    <th class="th-results-header" translatable-text>×ª××¨××</th>
+                  </tr>
+      </thead>
+      <tbody>
+                <tr>
+          <td colspan="3" translatable-text>×× × ××¦×× × ×ª×× ××</td>
+        </tr>
+              </tbody>
+    </table>
+  </div>
+</div>
+
+<br />
+
+<button id="print-btn" class="btn btn-primary hidden-xs">
+  <span class="glyphicon glyphicon-print"></span>
+  &nbsp;
+  <span translatable-text>×××¤×¡×</span>
+</button>
+
+&nbsp;&nbsp;&nbsp;
+
+<button
+  id="mail-btn"
+  class="btn btn-primary hidden-xs"
+  data-toggle="modal"
+  data-target="#mailModal"
+  data-keyboard="true"
+  onclick="$('#mailAddress').val('')"
+>
+  <span class="glyphicon glyphicon-envelope"></span>
+  &nbsp;
+  <span translatable-text>×©××××ª ××××</span>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="mailModal" role="dialog" aria-hidden="true" tabindex="-1">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">×©××××ª ××××</h3>
+      </div>
+      <div dir="rtl" class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="mailAddress" class="col-form-label">××ª×××ª ×××××:</label>
+            <input dir="ltr" type="text" class="form-control" style="width: 100%" id="mailAddress" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">×××</button>
+        <button type="button" class="btn btn-primary" onclick="btnSendMail_Clicked(20250079)">×©××</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button
+  translatable-title
+  translatable-bs-title
+  id="back-to-top"
+  href="#"
+  class="btn btn-primary scroll-back-to-top"
+  title="×××¨× ××¨××© ×××£"
+  onClick="scrollToElement(MAIN_CONTAINER_SELECTOR,500); return false;"
+  data-toggle="tooltip"
+  data-placement="left"
+>
+  <span class="glyphicon glyphicon-chevron-up"></span>
+</button>
+
+<script>
+  $(function() {
+    $(MAIN_CONTAINER_SELECTOR).find("#btn-baaley-inyan,#btn-gushim-helkot,#btn-meetings,#btn-agrot,#btn-archive").click();
+  });
+
+  function toggelDrishot(elm, clss) {
+  	var tr = $(elm);
+  	if (tr.hasClass('collapsed')) {
+  		tr.removeClass('collapsed');
+  	} else {
+  		tr.addClass('collapsed');
+  	}
+  	$('#table-requirments').find('tr.' + clss).toggle();
+  }
+
+  function showDrishaRemarks(elm, numerator) {
+  	var siteId = getSiteId();
+  	var urlformat = "{0}ShowRemark&siteid={1}&r={2}&arguments=siteid,r";
+  	var url = urlformat.format(xpaBaseURL, siteId, numerator);
+
+  	goTo(url, '#modalcontent');
+
+  	$("#modal-window").on('hidden.bs.modal', function (e) {
+  		$(elm).focus();
+  	});
+  }
+</script>
